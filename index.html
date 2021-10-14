@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/anim.css">
+    <link rel="stylesheet" href="css/root.css">
+
+    <link rel="stylesheet" href="css/mediaqueries/style_media_web.css">
+    <link rel="stylesheet" href="css/mediaqueries/style_media_alt.css">
+    <link rel="stylesheet" href="css/mediaqueries/style_media_mob.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/script.js" defer></script>
+
+    <title>todo</title>
+</head>
+
+<body>
+<div class="main">
+    <div class="save">
+        <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
+    </div>
+    <div class="content">
+        <div class="todoContainer">
+            <div id="myDIV" class="header">
+                <h2 class="date">Todo List</h2>
+                <input type="text" id="myInput" placeholder="Ajouter une tâche">
+                <div class="categories">
+                    <input id="all" type="radio" value="radio" name="categories" checked>
+                    <label for="all">All</label>
+                    <input id="imp" type="radio" value="radio" name="categories">
+                    <label for="imp">Important</label>
+                    <input id="special" type="radio" value="radio" name="categories">
+                    <label for="special">Special</label>
+                </div>
+                <hr>
+            </div>
+            <ul id="myUL"></ul>
+        </div>
+    
+        <div class="noteContainer">
+            <div class="header">
+                <h2 class="date">Note list</h2>
+                <didv class="addItems">
+                    <input type="text"
+                           id="filterNote"
+                           onkeyup="filterNotes()"
+                           placeholder="Rechercher">
+                    <button onclick="createNote()">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                </didv>
+        
+            </div>
+            <ul id="myUL_note"></ul>
+        </div>
+        
+        
+    </div>
+        <div class="replicate"></div>
+    
+    
+    
+</div>
+
+</body>
+
+
+</html>

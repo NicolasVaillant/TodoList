@@ -1,0 +1,495 @@
+@charset "utf-8";
+
+.main{
+    width: 80%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 20vh auto;
+    font-family: 'Open Sans', sans-serif, Bahnschrift;
+}
+.content{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2em;
+}
+.save{
+    padding: 1em;
+    background: var(--b_sec);
+    border-radius: var(--border1);
+    color: var(--w);
+}
+.save p{
+    display: flex;
+    gap: .5em;
+}
+.save span{
+    color: var(--red);
+}
+
+.todoContainer,
+.noteContainer{
+    width: 50%;
+    background: #141313d4;
+    border-radius: 10px;
+    height: fit-content;
+    overflow-y: hidden;
+}
+ul {
+    margin: 0;
+    overflow-x: hidden;
+    padding: 2em 3em;
+}
+
+.todoContainer ul li,
+.noteContainer ul li{
+    cursor: pointer;
+    position: relative;
+    list-style-type: none;
+    color: white;
+    /* padding: .5em 1em; */
+    margin: 1em 0 0;
+    border-radius: var(--border1);
+    font-size: var(--font1);
+    transition: 0.2s;
+    word-break: break-word;
+    /* display: grid; */
+    grid-auto-flow: column;
+    grid-template-columns: 10% 1fr 8% 8%;
+    /*background: #3c3b3b;*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 5;
+}
+.li_sub{
+    width: 100% !important;
+    background: red!important;
+    /*padding: 0 1em 0 0!important;*/
+    padding: .5em 1em .5em .5em!important;
+    margin: .5em 0 .5em auto !important;
+    display: grid!important;
+    grid-auto-flow: column!important;
+    grid-template-columns: 1fr 8%!important;
+}
+
+.input_sub{
+    background: none;
+    transition: var(--transition2);
+    height: fit-content;
+    background: transparent;
+}
+/*input.input_sub:focus {*/
+/*    background: var(--b_sec_o);*/
+/*}*/
+/*.input_sub:hover{*/
+/*    background: var(--b_sec);*/
+/*    transition: var(--transition2);*/
+/*}*/
+.noteContainer ul li{
+    display: flex;
+    padding: .2em;
+    border: 0;
+    flex-direction: column;
+}
+
+#myUL_note input{
+    margin: 0;
+    background: none;
+    color: var(--b);
+    font-size: inherit;
+    border-radius: 0;
+}
+.contentNote{
+    display: flex;
+    background: var(--grey1o) !important;
+    height:auto;
+    background: none;
+    border: 0;
+    margin: 0 1em 1em;
+    flex-direction: column;
+    cursor: text;
+    border-radius: var(--border1);
+    padding: .5em;
+    font-size: inherit;
+    color: var(--b);
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    min-height: 15vh;
+}
+i[name="morebut"]{
+    display: flex!important;
+    align-items: center;
+    margin: auto 0 auto auto!important;
+    transform: scale(1);
+    transition: var(--transition2);
+}
+.close{
+    margin: auto 0  auto auto;
+    font-size: 1.1em;
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: var(--transition2);
+}
+.close:hover{
+    transform: scale(1.8) !important;
+    transition: var(--transition2);
+}
+i[name="morebut"]:hover{
+    transform: scale(1.4) !important;
+    transition: var(--transition2);
+}
+
+.moreOptionsClass{
+    height: 4vh;
+    width: 100%;
+    background:var(--b_sec);
+    border-radius: var(--border1);
+    transform: translateY(-50px);
+    z-index: 10;
+    transition: var(--transition2);
+    display: none;
+}
+
+
+.todoContainer ul li:hover {
+    /*background: #22262a;*/
+}
+
+.all:hover{
+    /*background: #c1ffd7;*/
+    /*height: calc(100% + 4vh + 1em);*/
+}
+.todoContainer div:hover >.moreOptionsClass {
+
+    transform: translateY(0)!important;
+    /*display: flex;*/
+    transition: var(--transition2);
+}
+
+.todoContainer ul li.checked {
+    background: #888;
+    color: #fff;
+    text-decoration: line-through;
+}
+
+.todoContainer ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+
+.header {
+    padding: 2em 3em 0;
+    color: white;
+    text-align: center;
+}
+input[type=checkbox]{
+    width: auto;
+    margin: auto 0;
+    transform: scale(1.5);
+}
+
+input {
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: var(--b_sec);
+    color: white;
+    width: 100%;
+    padding: 1em;
+    font-size: 16px;
+}
+.liChecked{
+    opacity: .5;
+    background: #c1ffd7!important;
+    color: var(--b) !important;
+    border: 2px solid transparent!important;
+}
+h2{margin-bottom: 1em;}
+
+
+
+#filterNote{
+    background-image: url('/ressources/img/search.png');
+    background-position: .5em;
+    background-size: 2em;
+    background-repeat: no-repeat;
+    padding: 1em 2.8em;
+
+    color: var(--w);
+}
+.addItems{
+    display: flex;
+    gap: 1em;
+    flex-direction: row;
+}
+button{
+    background: none;
+    outline: none;
+    /*padding: 1em;*/
+    border: 0;
+    cursor: pointer;
+}
+button i{
+    color: var(--w);
+    font-size: var(--font3);
+    transform: scale(1);
+    transition: var(--transition2);
+}
+button i:hover{
+    /*color: var(--b_sec);*/
+    transform: scale(.9);
+    transition: var(--transition2);
+}
+
+.noteCard{
+    cursor: default!important;
+    min-height: 10vh;
+    width: 100%;
+}
+
+.slideOut{
+    transform: translateX(-50vw) skewX(-10deg);
+    filter: blur(.1em);
+    transition: var(--transition2);
+}
+
+.headerTitle{
+    position: relative;
+}
+.headerTitle,
+.headerTitleIcon{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+.headerTitleIcon{
+    padding: 0 1em 0 0;
+    gap: .5em;
+    color: var(--b_sec);
+}
+.headerTitleIcon i {
+    cursor: pointer;
+    transform: scale(1);
+    padding: .2em;
+    transition: var(--transition2);
+}
+.headerTitleIcon i:hover{
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: var(--transition2);
+}
+.fa-minus-circle:hover{
+    color: var(--red);
+}
+
+.optionNote{
+    position: absolute;
+    background: var(--b);
+    top: 15%;
+    left: 50%;
+    box-shadow: 0 0 15px 0px black;
+    transform: translate(-50%, 50%) scale(-.2) skew(-50deg) rotate(-20deg);
+    transform-origin: top right;
+    opacity: 0;
+    transition: var(--transition3);
+    height: 5vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    border-radius: var(--border3);
+}
+.optionNote i{
+    cursor: pointer;
+    transform: scale(1);
+    transition: var(--transition2);
+}
+.optionNote i:hover{
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: var(--transition2);
+}
+.expendNoteOption{
+    transform: translate(-50%, 50%) scale(1) skew(0) rotate(0);
+    opacity: 1;
+    transition: var(--transition3);
+}
+.expendNoteOption_active{
+    background: var(--b);
+    color: var(--w);
+    transform: scale(1.4) !important;
+    padding: .2em;
+    border-radius: var(--border3);
+}
+
+.categories{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 1em;
+    width: 100%;
+    margin: 1em auto;
+}
+.categories label{
+    width: 100%;
+    border-radius: var(--border1);
+    background: var(--b_sec);
+    padding: 1em;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.categories input:checked + label {
+    border: 2px solid var(--red);
+}
+.categories input{display: none}
+hr{background: var(--w);}
+
+
+.collapsible{
+    padding:0;
+    /*margin-bottom: 1em;*/
+}
+.collapsible-header{
+    display: -webkit-box;
+    height: auto;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 1rem;
+    gap: var(--gap1);
+    align-items: center;
+    display: flex;
+    border: 2px dashed var(--grey2);
+    margin: 0 0 1em 0;
+    align-content: center;
+    -webkit-align-content: center;
+    grid-auto-flow: column;
+    -moz-transition: var(--transition1);
+    -webkit-transition: var(--transition1);
+    list-style-type: none;
+    color: white;
+    border-radius: var(--border1);
+    transition: 0.2s;
+    word-break: break-word;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 5;
+}
+.collapsible li{margin: 0!important;}
+
+.collapsible-body {
+    display: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: justify;
+    margin: 0;
+    padding: 0 0 1em 0;
+    border-radius:var(--border1);
+    -webkit-border-radius:var(--border1);
+    -moz-border-radius:var(--border1);
+
+}
+.collapsible_div_bodyContent{
+    gap: .5em;
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed var(--grey2)!important;
+    border-radius: var(--border1);
+}
+.collapsible-body span:hover::before {
+    transform: scaleX(0);
+    transform-origin: bottom left;
+
+    -webkit-transform: scale(0);
+    -webkit-transform-origin: bottom left;
+
+    -moz-transform: scale(0);
+    -moz-transform-origin: bottom left;
+}
+
+.expandChevron{
+    transform: rotate(-90deg);
+    transition: var(--transition2);
+    -webkit-transition: var(--transition2);
+    -moz-transition: var(--transition2);
+}
+
+.collapsible li.active > .collapsible-header i{
+    transform: rotate(0deg);
+    transition: var(--transition2);
+    -webkit-transition: var(--transition2);
+    -moz-transition: var(--transition2);
+}
+.todoBanMain{
+    width: 100%;
+    position: relative;
+    height: auto;
+}
+.todoBanMainContainer{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 2px solid transparent;
+    z-index: 100;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    align-content: center;
+    padding: 0 15px 0 0;
+}
+.todoBanMainContainer span,
+.todoBanMainContainer i{
+    cursor: pointer;
+    color: var(--w);
+}
+.todoBanMainContainer span{
+    margin-left: 1em;
+}
+.collapsible_div_bodyContent_staticContent{
+    height: auto;
+    width: 100%;
+    background: var(--b_sec);
+    padding: 1em 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+    flex-direction: row;
+    gap: 1em;
+}
+.collapsible_div_bodyContent_staticContent i{
+    transform: scale(1);
+    transition: var(--transition2);
+}
+.collapsible_div_bodyContent_staticContent i:hover{
+    transform: scale(1.4) !important;
+    transition: var(--transition2);
+}

@@ -1,0 +1,98 @@
+@charset "utf-8";
+*,
+ ::before,
+ ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    user-select: none;
+}
+
+:root {
+    --w: #fff;
+    --b: #2a2e35;
+        --b_sec:#2c2a28de;
+        --b_sec_o: rgba(44, 42, 40, 0.4);
+
+    --grey1: #5f5f61;
+        --grey1o: rgba(95, 95, 97, 0.13);
+    --grey2: #9d9c9bde;
+    --red : rgb(229, 60, 112);
+
+
+    --border1: 5px;
+    --border2: 15px;
+    --border3: 500px;
+
+    --marg1: 15%;
+    --marg2: 5%;
+    --gap1: 15px;
+    --inseta: 10px;
+    --insetb: -10px;
+
+    --font1:1.2em;
+    --font2:2em;
+    --font3:2.2em;
+
+    --transition1 : all 1s!important;
+    --transition2 : all .5s!important;
+    --transition3 : all .2s!important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+/*body{*/
+/*    display: flex;*/
+/*    text-align: center;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin: auto;*/
+/*}*/
+
+::-webkit-scrollbar {
+    width: 1em;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: var(--border2);
+    border-radius: var(--border2);
+    background-color: transparent;
+    -webkit-box-shadow: inset var(--insetb) var(--insetb) 0 var(--grey1), inset var(--inseta) var(--inseta) 0 var(--grey1);
+    box-shadow: inset var(--insetb) var(--insetb) 0 var(--grey1), inset var(--inseta) var(--inseta) 0 var(--grey1);
+    height: 20px;
+    cursor: pointer;
+}
+
+textarea::-webkit-scrollbar {
+    width: .8em;
+    background: transparent;
+    border-radius: 500px;
+    cursor: pointer;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: var(--border2);
+    border-radius: var(--border2);
+    -webkit-box-shadow: inset var(--insetb) var(--insetb) 0 var(--b_sec), inset var(--inseta) var(--inseta) 0 var(--b_sec);
+    box-shadow: inset var(--insetb) var(--insetb) 0 var(--b_sec), inset var(--inseta) var(--inseta) 0 var(--b_sec);
+    height: 20px;
+    cursor: pointer;
+}
+
+textarea::-webkit-resizer {
+    /*width: 1em;*/
+    /*background-image: url('/ressources/img/resize.png');*/
+    /*background-size: 1em;*/
+    background-color: var(--grey1o);
+    border-radius: 500px;
+    /*background-repeat: no-repeat;*/
+    /*border-radius: 500px;*/
+}
+
