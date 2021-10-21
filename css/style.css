@@ -19,14 +19,42 @@
     gap: 2em;
 }
 .save{
-    padding: 1em;
+    padding: 1em 3em;
+    display: flex;
     background: var(--b_sec);
     border-radius: var(--border1);
     color: var(--w);
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    transition: var(--transition1);
+    justify-content: space-between;
 }
+.color-mode{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    font-size: .8em;
+    gap: 1em;
+}
+.color-mode i{
+    color: var(--w);
+    font-size: var(--font3);
+    transform: scale(1) rotate(0);
+    transition: var(--transition1);
+    cursor: pointer;
+}
+.color-mode i:last-child:hover{
+    transform: scale(.9);
+    transition: var(--transition2);
+}
+
+
 .save p{
     display: flex;
     gap: .5em;
+    font-size: var(--font1);
+    transition: var(--transition1);
 }
 .save span{
     color: var(--red);
@@ -35,10 +63,11 @@
 .todoContainer,
 .noteContainer{
     width: 50%;
-    background: #141313d4;
+    background: var(--b_sec);
     border-radius: 10px;
     height: fit-content;
     overflow-y: hidden;
+    transition: var(--transition1);
 }
 ul {
     margin: 0;
@@ -70,12 +99,13 @@ ul {
 }
 .li_sub{
     width: 100% !important;
-    background: red!important;
+    background: var(--li_sub)!important;
     /*padding: 0 1em 0 0!important;*/
     padding: .5em 1em .5em .5em!important;
     margin: .5em 0 .5em auto !important;
     display: grid!important;
     grid-auto-flow: column!important;
+    transition: var(--transition1);
     grid-template-columns: 1fr 8%!important;
 }
 
@@ -105,6 +135,7 @@ ul {
     color: var(--b);
     font-size: inherit;
     border-radius: 0;
+    transition: var(--transition1);
 }
 .contentNote{
     display: flex;
@@ -124,12 +155,15 @@ ul {
     resize: none;
     min-height: 15vh;
 }
-i[name="morebut"]{
+.todoBanMainContainer i{
     display: flex!important;
     align-items: center;
-    margin: auto 0 auto auto!important;
+
     transform: scale(1);
     transition: var(--transition2);
+}
+.todoBanMainContainer i[name="morebut"]{
+    margin: 0 1em;
 }
 .close{
     margin: auto 0  auto auto;
@@ -142,7 +176,8 @@ i[name="morebut"]{
     transform: scale(1.8) !important;
     transition: var(--transition2);
 }
-i[name="morebut"]:hover{
+i[name="morebut"]:hover,
+i[name="reminder"]:hover{
     transform: scale(1.4) !important;
     transition: var(--transition2);
 }
@@ -209,12 +244,29 @@ input {
     border: none;
     border-radius: 5px;
     outline: none;
-    background: var(--b_sec);
+    background: var(--b_sec_o);
     color: white;
     width: 100%;
     padding: 1em;
     font-size: 16px;
+    transition: var(--transition1);
 }
+#myInput,
+#filterNote{
+    border: 2px solid transparent;
+}
+
+#myInput:hover,
+.addItems input:hover{
+    background: var(--b_sec);
+}
+
+#myInput:focus,
+#filterNote:focus{
+    border: 2px solid var(--red);
+}
+
+
 .liChecked{
     opacity: .5;
     background: #c1ffd7!important;
@@ -231,7 +283,6 @@ h2{margin-bottom: 1em;}
     background-size: 2em;
     background-repeat: no-repeat;
     padding: 1em 2.8em;
-
     color: var(--w);
 }
 .addItems{
@@ -242,7 +293,7 @@ h2{margin-bottom: 1em;}
 button{
     background: none;
     outline: none;
-    /*padding: 1em;*/
+    font-size: 1em;
     border: 0;
     cursor: pointer;
 }
@@ -359,6 +410,13 @@ button i:hover{
     padding: 1em;
     cursor: pointer;
     border: 2px solid transparent;
+    transition: var(--transition1);
+}
+.categories label:last-child{
+    width: 20%;
+}
+.categories label:hover{
+    background: var(--b_sec_o);
 }
 
 .categories input:checked + label {
@@ -470,9 +528,7 @@ hr{background: var(--w);}
     cursor: pointer;
     color: var(--w);
 }
-.todoBanMainContainer span{
-    margin-left: 1em;
-}
+
 .collapsible_div_bodyContent_staticContent{
     height: auto;
     width: 100%;
@@ -484,12 +540,34 @@ hr{background: var(--w);}
     align-content: center;
     flex-direction: row;
     gap: 1em;
+    transition: var(--transition1);
 }
 .collapsible_div_bodyContent_staticContent i{
     transform: scale(1);
+    color: var(--w);
     transition: var(--transition2);
 }
 .collapsible_div_bodyContent_staticContent i:hover{
     transform: scale(1.4) !important;
     transition: var(--transition2);
+}
+#myUL > div:last-child .collapsible-body{padding: 0}
+#myUL_note > li:first-child{margin: 0}
+
+@media all and (max-width: 1200px) {
+    .todoContainer, .noteContainer{width: 100%}
+    .content{flex-direction: column;
+        gap: 1em;}
+}
+@media all and (max-width: 600px) {
+    .categories{flex-direction: column}
+    .header,ul{padding: 2em}
+    #myUL_note,#myUL{padding: 0 2em 2em 2em}
+}
+
+.replicate{
+    background: #a17373;
+    min-height: 20vh;
+    width: 100%;
+    border-radius: var(--border1);
 }

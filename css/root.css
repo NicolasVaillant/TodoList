@@ -14,11 +14,23 @@
     --b: #2a2e35;
         --b_sec:#2c2a28de;
         --b_sec_o: rgba(44, 42, 40, 0.4);
+    --b_sec_o_hover: rgba(66, 63, 63, 0.4);
+    --li_sub : #4e4d4d;
+
+    --b_sec_dm : #523650de;
+    --b_sec_o_dm :#382638;
+    --b_sec_o_hover_dm : #563c56;
+    --li_sub_dm :#684866;
+
+    --background-color: #fff;
 
     --grey1: #5f5f61;
         --grey1o: rgba(95, 95, 97, 0.13);
     --grey2: #9d9c9bde;
-    --red : rgb(229, 60, 112);
+
+    /*rgb(229, 60, 112);*/
+    --red : rgb(255, 147, 181);
+    --green : #F9F871;
 
 
     --border1: 5px;
@@ -35,6 +47,7 @@
     --font2:2em;
     --font3:2.2em;
 
+    --transition1b : all 1.5s!important;
     --transition1 : all 1s!important;
     --transition2 : all .5s!important;
     --transition3 : all .2s!important;
@@ -43,13 +56,11 @@
 html {
     scroll-behavior: smooth;
 }
-/*body{*/
-/*    display: flex;*/
-/*    text-align: center;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    margin: auto;*/
-/*}*/
+
+body{
+    background: var(--background-color);
+    transition: var(--transition1);
+}
 
 ::-webkit-scrollbar {
     width: 1em;
@@ -96,3 +107,18 @@ textarea::-webkit-resizer {
     /*border-radius: 500px;*/
 }
 
+@media screen and (max-width:500px){
+    @media (prefers-color-scheme: dark){
+        :root{
+            --background-color: #1b0e17;
+        }
+    }
+}
+
+.toggle_mode{
+    --background-color: #1b0e17;
+    --b_sec: var(--b_sec_dm);
+    --b_sec_o: var(--b_sec_o_dm);
+    --b_sec_o_hover: var(--b_sec_o_hover_dm);
+    --li_sub: var(--li_sub_dm);
+}

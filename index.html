@@ -30,6 +30,10 @@
 <div class="main">
     <div class="save">
         <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
+        <div class="color-mode">
+            <i id="rb" class="fas fa-sync-alt"></i>
+            <i id="dm" class="fas fa-adjust"></i>
+        </div>
     </div>
     <div class="content">
         <div class="todoContainer">
@@ -37,12 +41,33 @@
                 <h2 class="date">Todo List</h2>
                 <input type="text" id="myInput" placeholder="Ajouter une tâche">
                 <div class="categories">
-                    <input id="all" type="radio" value="radio" name="categories" checked>
+                    <input id="all"
+                           type="radio"
+                           value="radio"
+                           name="categories"
+                           onclick="filterTasks(this.id)"
+                           checked>
                     <label for="all">All</label>
-                    <input id="imp" type="radio" value="radio" name="categories">
-                    <label for="imp">Important</label>
-                    <input id="special" type="radio" value="radio" name="categories">
-                    <label for="special">Special</label>
+                    <input id="importantTasks"
+                           type="radio"
+                           value="radio"
+                           name="categories"
+                           onclick="filterTasks(this.id)">
+                    <label for="importantTasks">Important</label>
+                    <input id="specialTasks"
+                           type="radio"
+                           value="radio"
+                           name="categories"
+                           onclick="filterTasks(this.id)">
+                    <label for="specialTasks">Special</label>
+                    <input id="reminder"
+                           type="radio"
+                           value="radio"
+                           name="categories"
+                           onclick="filterTasks(this.id)">
+                    <label for="reminder">
+                        <i class="fas fa-clock"></i>
+                    </label>
                 </div>
                 <hr>
             </div>
@@ -68,10 +93,9 @@
         
         
     </div>
-        <div class="replicate"></div>
-    
-    
-    
+        <div class="replicate">
+            <div class="todoBanMain"></div>
+        </div>
 </div>
 
 </body>
