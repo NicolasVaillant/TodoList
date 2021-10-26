@@ -9,6 +9,12 @@
     transform:  scale(1) rotate(-360deg)!important;
     transition: var(--transition1) !important;
 }
+.selectorVisibility{
+    opacity: 1!important;
+    visibility: visible!important;
+    transform: translateX(0)!important;
+    transition: var(--transition2);
+}
 
 @keyframes rotateOneSens {
     from{
@@ -23,13 +29,43 @@
 
 .importantTasks{
     border: 2px dashed var(--red);
+    background: var(--red_bg)!important;
 }
 .importantTasks_color{
     color: var(--red)!important;
 }
 .specialTasks{
     border: 2px dashed var(--green);
+    background: var(--green_bg) !important;
 }
 .specialTasks_color{
     color: var(--green)!important;
+}
+.colorFont{
+    color: var(--b_sec) !important;
+}
+
+.endTasks{
+    background: #c1ffd7;
+    border: 2px solid green;
+    /*opacity: .3;*/
+    transition: var(--transition1);
+}
+.circle{
+    background: none;
+    border-radius: var(--border3);
+    border: 2px solid var(--b);
+    width: 1em;
+    height: 1em;
+}
+
+.bumpOnRClick{
+    transform: scale(.99);
+    transition: var(--transition3);
+}
+
+.slideOut{
+    transform: translateX(-100vw) skewX(-10deg);
+    filter: blur(.1em);
+    transition: var(--transition2);
 }

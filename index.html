@@ -1,4 +1,4 @@
-<html>
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -28,18 +28,50 @@
 
 <body>
 <div class="main">
-    <div class="save">
-        <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
-        <div class="color-mode">
-            <i id="rb" class="fas fa-sync-alt"></i>
-            <i id="dm" class="fas fa-adjust"></i>
+    <div class="choose_user" id="account" style="display: none">
+        <div class="container">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="selector">
+            <input id="check_user_1"
+                   type="radio"
+                   value="radio"
+                   name="check_user"
+                   onclick="chooseUser(this.id)"
+                   checked>
+            <label id="check_user_1_lab" for="check_user_1">Nicolas</label>
+            <input id="check_user_2"
+                   type="radio"
+                   value="radio"
+                   name="check_user"
+                   onclick="chooseUser(this.id)">
+            <label id="check_user_2_lab" for="check_user_2">Thérence</label>
         </div>
     </div>
+    <div class="container_header">
+        <div class="save">
+            <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
+            <div class="color-mode">
+                <i id="rb" class="fas fa-sync-alt"></i>
+                <i id="dm" class="fas fa-adjust"></i>
+            </div>
+        </div>
+    </div>
+    
     <div class="content">
         <div class="todoContainer">
             <div id="myDIV" class="header">
                 <h2 class="date">Todo List</h2>
-                <input type="text" id="myInput" placeholder="Ajouter une tâche">
+                <div class="searchBar">
+                    <input type="text" id="myInput" placeholder="Ajouter une tâche">
+                    <div class="filterTop">
+                        <div>
+<!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
+                            <i id="impTask_start" class="fas fa-exclamation-circle"></i>
+                            <i id="speTask_start" class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="categories">
                     <input id="all"
                            type="radio"
@@ -71,13 +103,18 @@
                 </div>
                 <hr>
             </div>
+            <div class="nothingToShow">
+                <div class="card">
+                    <p>Rien à afficher ici pour le moment.</p>
+                </div>
+            </div>
             <ul id="myUL"></ul>
         </div>
     
         <div class="noteContainer">
             <div class="header">
                 <h2 class="date">Note list</h2>
-                <didv class="addItems">
+                <div class="addItems">
                     <input type="text"
                            id="filterNote"
                            onkeyup="filterNotes()"
@@ -85,18 +122,83 @@
                     <button onclick="createNote()">
                         <i class="fas fa-plus-circle"></i>
                     </button>
-                </didv>
+                </div>
         
             </div>
             <ul id="myUL_note"></ul>
         </div>
-        
-        
     </div>
-        <div class="replicate">
-            <div class="todoBanMain"></div>
-        </div>
 </div>
+<div id="contextMenu" class="context-menu"
+     style="display: none">
+    <ul>
+        <li id="enTask">
+            <div class="i_div"><i id="i_zone_1"></i></div>
+            <div><p class="txt_zone_1"></p></div>
+        </li>
+        <li id="deleteTask">
+            <div class="i_div"><i class="fas fa-times"></i></div>
+            <div><p class="txt_zone_2"></p></div>
+            
+        </li>
+        <li id="shareTask">
+            <div class="i_div"><i class="fas fa-share-square"></i></div>
+            <div><p class="txt_zone_3">Partager le contenu</p></div>
+        </li>
+    </ul>
+</div>
+
+<div id="contextMenuNote" class="context-menu"
+     style="display: none">
+    <ul>
+        <li>
+            <div class="i_div"><i class="fas fa-palette"></i></div>
+            <div><p class="">Changer la couleur de la note</p></div>
+        </li>
+        <li>
+            <div class="i_div"><i class="fas fa-chevron-circle-up"></i></div>
+            <div><p class="">Mettre en avant</p></div>
+        </li>
+        <li>
+            <div class="i_div"><i class="fas fa-share-square"></i></div>
+            <div><p class="txt_zone_3">Partager le contenu</p></div>
+        </li>
+    </ul>
+</div>
+
+
+<!--
+<div class="filterNewTask" onclick="developChild()">
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="sectionFilter"><hr><p>Important</p></div>
+                            </div>
+                            <div class="collapsible-body"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filterNewTask" onclick="developChild()">
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="sectionFilter"><hr><p>Spécial</p></div>
+                            </div>
+                            <div class="collapsible-body"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filterNewTask" onclick="developChild()">
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="sectionFilter"><hr><p>Autre</p></div>
+                            </div>
+                            <div class="collapsible-body"></div>
+                        </li>
+                    </ul>
+                </div>
+                -->
 
 </body>
 
