@@ -48,7 +48,15 @@
 .endTasks{
     background: #c1ffd7;
     border: 2px solid green;
-    /*opacity: .3;*/
+    color: var(--b_sec);
+    transition: var(--transition1);
+}
+.endTasks_text{
+    color: var(--b_sec) !important;
+    transition: var(--transition1);
+}
+.endTasks_container{
+    background: #3ace71!important;
     transition: var(--transition1);
 }
 .circle{
@@ -68,4 +76,12 @@
     transform: translateX(-100vw) skewX(-10deg);
     filter: blur(.1em);
     transition: var(--transition2);
+}
+
+.disabledOptionsRC{
+    opacity: .2!important;
+    cursor: not-allowed!important;
+}
+.disabledOptionsRC:hover{
+    background: none!important;
 }

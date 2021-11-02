@@ -3,10 +3,14 @@
 // $(document).ready(function(){
 //     $('.collapsible').collapsible();
 // });
+
+
+//----------------------------------------------------------------------
+window.onload = function () {reloadTasks();reloadNote()}
 window.onclick = function (){hideMenu()}
-window.oncontextmenu = function (e){
-    e.preventDefault();
-}
+window.oncontextmenu = function (e){e.preventDefault()}
+//----------------------------------------------------------------------
+
 
 let compteurCard, compteurLiSub = 0;
 
@@ -22,6 +26,8 @@ const myUL = document.getElementById("myUL");
 const myUL_note = document.getElementById("myUL_note");
 const dm = document.querySelector("#dm");
 const refresh_but = document.querySelector("#rb");
+
+const butNote = document.querySelector("#butNote");
 
 const account = document.querySelector("#account");
 const selector = document.querySelector(".selector");
@@ -76,10 +82,9 @@ function inputSubEnter(key,element){
 }
 
 function removeAll(element){
-    // element.parentElement.parentElement.remove()
-    element.parentElement.parentElement.classList.add('slideOut')
+    element.closest('.todoBanMain').classList.add('slideOut')
     setTimeout(function (){
-        element.parentElement.parentElement.remove();
+        element.closest('.todoBanMain').remove();
         saveTasks(false);
     }, 200)
 }
@@ -95,7 +100,6 @@ function removeOne(element){
 function addChild(element){
     compteurLiSub++;
     const div = element.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[1].children[0];
-    console.log(div)
     const staticContent = div.children[0];
 
     const li_sub = document.createElement("li");
@@ -179,6 +183,13 @@ function getDate(){
     }
     return h + "h" + m;
 }
+function getDateDay(){
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + "/" + month + "/" + year;
+}
 function reminder(elem) {
     getDate();
 }
@@ -186,6 +197,9 @@ function reminder(elem) {
 function setFinish(e){
     const parent = e.target.closest('.todoBanMain');
     parent.children[0].children[0].children[0].classList.toggle('endTasks');
+    parent.children[1].children[0].classList.toggle('endTasks_text');
+    parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
+    parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
 }
 function rightClick(e){
     e.preventDefault();
@@ -198,59 +212,124 @@ function rightClick(e){
         parent.classList.remove('bumpOnRClick')
     },200)
 
-    const txt_zone_1 = document.querySelector('.txt_zone_1');
     const i_zone_1 = document.querySelector('#i_zone_1');
+    const txt_zone_1 = document.querySelector('.txt_zone_1');
     const txt_zone_2 = document.querySelector('.txt_zone_2');
+    const txt_zone_3 = document.querySelector('.txt_zone_3');
+    const txt_zone_4 = document.querySelector('.txt_zone_4');
+
+    const menu = document.getElementById("contextMenu")
+
+    menu.children[0].children[6].children[1].children[0].innerHTML =  "Créée le " + `${parent.dataset.date}` +
+        " à " + `${parent.dataset.hour}`;
+
+    txt_zone_2.innerHTML = "Ajouter le filtre important";
+    txt_zone_3.innerHTML = "Ajouter le filtre special";
+
+    txt_zone_1.innerHTML = "Marquer comme terminée";
+    i_zone_1.classList.add('fas');
+    i_zone_1.classList.add('fa-check-circle');
 
     if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
         txt_zone_1.innerHTML = "Marquer comme non terminée";
 
+        parent.children[1].children[0].classList.add('endTasks_text');
+        parent.children[1].children[1].children[0].classList.add('endTasks_text');
+        parent.children[1].children[2].children[0].classList.add('endTasks_container');
+
         i_zone_1.classList.remove('fas');
         i_zone_1.classList.remove('fa-check-circle');
         i_zone_1.classList.add('circle');
-    }else{
+
+        menu.children[0].children[1].classList.add('disabledOptionsRC');
+        menu.children[0].children[2].classList.add('disabledOptionsRC');
+
+    }else if(parent.children[0].children[0].children[0].classList.contains('importantTasks')){
+
+        txt_zone_2.innerHTML = "Enlever le filtre important";
+        menu.children[0].children[1].classList.remove('disabledOptionsRC');
+
+    }else if(parent.children[0].children[0].children[0].classList.contains('specialTasks')){
+
+        txt_zone_3.innerHTML = "Enlever le filtre special";
+        menu.children[0].children[2].classList.remove('disabledOptionsRC');
+
+    }
+    else{
         txt_zone_1.innerHTML = "Marquer comme terminée";
+        txt_zone_2.innerHTML = "Ajouter le filtre important";
+        txt_zone_3.innerHTML = "Ajouter le filtre special";
 
         i_zone_1.classList.remove('circle');
         i_zone_1.classList.add('fas');
         i_zone_1.classList.add('fa-check-circle');
+
+        parent.children[1].children[0].classList.remove('endTasks_text');
+        parent.children[1].children[1].children[0].classList.remove('endTasks_text');
+        parent.children[1].children[2].children[0].classList.remove('endTasks_container');
+
+        menu.children[0].children[1].classList.remove('disabledOptionsRC');
+        menu.children[0].children[2].classList.remove('disabledOptionsRC');
+
     }
-    txt_zone_2.innerHTML = "Supprimer la tâche";
+    txt_zone_4.innerHTML = "Supprimer la tâche";
 
     function zone1(parent){
         //TODO: cant right click end tasks then click on check and save it
         parent.children[0].children[0].children[0].classList.toggle('endTasks');
-        // for(let i = 0 ; i < parent.children[1].childElementCount ; i++){
-        //     parent.children[1].children[i].classList.toggle('colorFont');
-        // }
+        parent.children[1].children[0].classList.toggle('endTasks_text');
+        parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
+        parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
+
+        parent.children[0].children[0].children[0].classList.remove('importantTasks');
+        parent.children[0].children[0].children[0].classList.remove('specialTasks');
     }
-    function zone2(parent){
+    function zone2(parent,element){
+        if(element.classList.contains('disabledOptionsRC')){}else{
+            parent.children[0].children[0].children[0].classList.toggle('importantTasks');
+            parent.children[0].children[0].children[0].classList.remove('specialTasks');
+        }
+    }
+    function zone3(parent,element){
+        if(element.classList.contains('disabledOptionsRC')){}else{
+            parent.children[0].children[0].children[0].classList.toggle('specialTasks');
+            parent.children[0].children[0].children[0].classList.remove('importantTasks');
+        }
+    }
+    function zone4(parent){
         parent.classList.add('slideOut');
         setTimeout(function (){
             parent.remove()
         }, 200)
     }
-    function zone3(parent){
+    function zone5(parent){
         const check_user_1 = document.querySelector('#check_user_1')
-        const valueInput = parent.children[1].children[1].value;
+        const valueInput = parent.children[1].children[1].children[0].innerHTML;
         let user;
         if (check_user_1.checked) {user = "Nicolas"}else{user= "Thérence"}
         const text = `${user}` + " a partagé le contenu d'une note avec vous. " +
-            `\"${valueInput}\"` + " est le titre de la note.";
+            `\"${valueInput}\"` + " est le titre de la note." + " La note a été créée le " + `${parent.dataset.date}` +
+            " à " + `${parent.dataset.hour}` + ".";
         console.log(text)
     }
 
     if (document.getElementById("contextMenu").style.display === "block")
         hideMenu();
     else{
-        const menu = document.getElementById("contextMenu")
         menu.style.display = 'flex';
         menu.style.left = e.pageX + "px";
         menu.style.top = e.pageY + "px";
 
+        //END
         menu.children[0].children[0].onclick = function(){zone1(parent);saveTasks(false);};
-        menu.children[0].children[1].onclick = function(){zone2(parent);saveTasks(false);};
-        menu.children[0].children[2].onclick = function(){zone3(parent);saveTasks(false);};
+        //IMPORTANT
+        menu.children[0].children[1].onclick = function(){zone2(parent,this);saveTasks(false);};
+        //SPECIAL
+        menu.children[0].children[2].onclick = function(){zone3(parent,this);saveTasks(false);};
+        //DELETE
+        menu.children[0].children[3].onclick = function(){zone4(parent);saveTasks(false);};
+        //SHARE
+        menu.children[0].children[4].onclick = function(){zone5(parent);saveTasks(false);};
     }
 }
 function hideMenu() {
@@ -260,7 +339,7 @@ function hideMenu() {
         "contextMenuNote").style.display = "none";
 }
 
-function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
+function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, data_set) {
     const expand = document.createElement("i");
     expand.onclick = function(){developChild()};
     expand.classList.add("fas");
@@ -279,10 +358,18 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
     //---------------------------------------------------COLLAPSIBLE
     const todoBanMain = document.createElement("div");
     todoBanMain.classList.add('todoBanMain');
+
     const div_option = document.createElement("div");
     const div_option_container = document.createElement("div");
     div_option.classList.add('div_option');
-    todoBanMain.setAttribute("data-hierarchy", compteurTodoBanMain.toString());
+    const div_option_static = document.createElement("div");
+    const div_option_container_static = document.createElement("div");
+    div_option_static.classList.add('div_optionstatic');
+
+    let nb_subtask = 0;
+    const numberOfElement = document.createElement("p");
+    numberOfElement.innerText = `${nb_subtask}` + " sous-tâche(s) restante(s).";
+
     const todoBanMainContainer = document.createElement("div");
     todoBanMainContainer.classList.add('todoBanMainContainer')
     const collapsible_ul = document.createElement("ul");
@@ -328,9 +415,12 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
     todoBanMain.oncontextmenu= rightClick;
     //---------------------------------------------------AppendChild
     collapsible_div_header.appendChild(expand);
+    div_option_container_static.appendChild(itag_imp);
+    div_option_container_static.appendChild(itag_star);
+    div_number.appendChild(numberOfElement);
+    div_option_static.appendChild(div_option_container_static);
     collapsible_div_bodyContent_staticContent.appendChild(div_number);
-    collapsible_div_bodyContent_staticContent.appendChild(itag_imp);
-    collapsible_div_bodyContent_staticContent.appendChild(itag_star);
+    collapsible_div_bodyContent_staticContent.appendChild(div_option_static);
     collapsible_div_bodyContent.appendChild(collapsible_div_bodyContent_staticContent);
     collapsible_div_body.appendChild(collapsible_div_bodyContent);
     collapsible_li.appendChild(collapsible_div_header);
@@ -340,7 +430,7 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
     div_text.appendChild(text);
     todoBanMainContainer.appendChild(div_text);
     // todoBanMainContainer.appendChild(itac);
-    div_option_container.appendChild(itag);
+    // div_option_container.appendChild(itag);
     div_option_container.appendChild(itage);
     div_option.appendChild(div_option_container);
     todoBanMainContainer.appendChild(div_option);
@@ -349,10 +439,18 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
     //---------------------------------------------------VALIDATION
     const spanhas = document.createElement("span");
     spanhas.classList.add('colorhastags');
-    const emptyTasks = localStorage.getItem("Node");
-
+    const emptyTasks = localStorage.getItem("Node_todo");
+    let hour,date_act;
     if(keypress === "input" || keypress === "button"){
+        compteurTodoBanMain ++;
+        hour = getDate();
+        date_act = getDateDay();
         if (inputValue !== ''){
+            todoBanMain.setAttribute("data-hour", hour)
+            todoBanMain.setAttribute("data-date", date_act);
+
+            todoBanMain.setAttribute("data-hierarchy", compteurTodoBanMain.toString());
+
             myUL.appendChild(todoBanMain);
             input.value = "";
             text.innerHTML = inputValue;
@@ -391,21 +489,30 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
                 spanhas.appendChild(txt);
                 div_text.appendChild(spanhas);
             }
-
         }
-    }else{ //LS
+    }else{ //LS : ON RELOAD
         text.innerHTML = valueLS.split("#")[0];
-        // console.log(hastag)
-        //
+
         if(hastag !== "undefined"){
             spanhas.appendChild(document.createTextNode(hastag));
             div_text.appendChild(spanhas);
         }
 
+        todoBanMain.setAttribute("data-hour", data_set.hour)
+        todoBanMain.setAttribute("data-date", data_set.date)
+        todoBanMain.setAttribute("data-hierarchy", data_set.hierarchy)
+
         if(stateLS.length !== 1){
             for(let i = 0 ; i < stateLS.length ; i++){
                 collapsible_div_header.classList.add(stateLS[i]);
+                if(stateLS[i] === "endTasks"){
+                    // console.log(todoBanMain.children[1].children[0])
+                    todoBanMain.children[1].children[0].classList.toggle('endTasks_text');
+                    todoBanMain.children[1].children[1].children[0].classList.toggle('endTasks_text');
+                    todoBanMain.children[1].children[2].children[0].classList.toggle('endTasks_container');
+                }
             }
+
         }
         myUL.appendChild(todoBanMain);
     }
@@ -413,20 +520,13 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag) {
 
 function saveTasks(hourSaveClick){
     const containerTodo = document.querySelector('#myUL');
-    const containerTodoChildren = containerTodo.children;
-    const containerTodo_subChild = document.querySelector('.collapsible_div_bodyContent');
-    const containerTodo_subChildChildren = containerTodo_subChild.children;
+    const containerTodoChildren = containerTodo.children; //todoBanMain
+    let containerTodo_subChildChildren;
 
-
+    //CHILD-------------------------------------------
     let childClass = {
         length: 0,
         findClass: function ajoutElem (elem) {
-            [].push.call(this, elem);
-        }
-    };
-    let subChildClass = {
-        length: 0,
-        findClassSub: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
@@ -436,14 +536,12 @@ function saveTasks(hourSaveClick){
             [].push.call(this, elem);
         }
     };
-
     let childParent= {
         length: 0,
         findParent: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
-
     let childValue= {
         length: 0,
         findValue: function ajoutElem (elem) {
@@ -456,28 +554,62 @@ function saveTasks(hourSaveClick){
             [].push.call(this, elem);
         }
     };
+    let childDataSet= {
+        length: 0,
+        findDataSet: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    //SUB CHILD-------------------------------------------
+    let subChildClass = {
+        length: 0,
+        findClassSub: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
     let subChildValue= {
         length: 0,
         findValueSub: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
-
-    for(let i = 0 ; i < containerTodoChildren.length ; i++){
-        childClass.findClass(containerTodoChildren[i].className);
-        child_classNameState.findClassState(containerTodoChildren[i].children[0].children[0].children[0].className);
-        childParent.findParent(containerTodoChildren[i].closest(".todoBanMain"));
-        childValue.findValue(containerTodoChildren[i].children[1].children[1].children[0].innerHTML);
-        // if(containerTodoChildren[i].children[1].children[1].childElementCount > 1){
-        childValue_has.findValueHas(containerTodoChildren[i].children[1].children[1].children[1].innerHTML);
-        // }else{}
-    }
-    for(let i = 0 ; i < containerTodo_subChildChildren.length ; i++){
-        if(containerTodo_subChildChildren[i].className === "li_sub"){
-            subChildClass.findClassSub(containerTodo_subChildChildren[i].className);
-            subChildValue.findValueSub(containerTodo_subChildChildren[i].children[0].value);
+    if(containerTodoChildren.length !== 0){
+        for(let i = 0 ; i < containerTodoChildren.length ; i++){
+            childClass.findClass(containerTodoChildren[i].className);
+            child_classNameState.findClassState(containerTodoChildren[i].children[0].children[0].children[0].className);
+            childParent.findParent(containerTodoChildren[i].closest(".todoBanMain"));
+            childValue.findValue(containerTodoChildren[i].children[1].children[1].children[0].innerHTML);
+            // if(containerTodoChildren[i].children[1].children[1].childElementCount > 1){
+            childValue_has.findValueHas(containerTodoChildren[i].children[1].children[1].children[1].innerHTML);
+            // }else{}
+            childDataSet.findDataSet(containerTodoChildren[i].dataset);
         }
     }
+    // if(containerTodoChildren.length !== 0){
+    //     for(let i = 0 ; i < containerTodo_subChildChildren.length ; i++){
+    //         if(containerTodo_subChildChildren[i].className === "li_sub"){
+    //             subChildClass.findClassSub(containerTodo_subChildChildren[i].className);
+    //             subChildValue.findValueSub(containerTodo_subChildChildren[i].children[0].value);
+    //
+    //         }
+    //     }
+    // }
+    // if(containerTodo.childElementCount !== 0){
+    //     // for(let i = 0 ; i < containerTodoChildren.length; i++){
+    //     const containerTodo_subChild = document.querySelectorAll('.collapsible_div_bodyContent');
+    //
+    //     containerTodo_subChild.forEach(function(element){
+    //         for(let i = 0 ; i < containerTodo_subChild.childElementCount; i++){
+    //             console.log(element.children[i])
+    //             console.log(element.children)
+    //         }
+    //
+    //     })
+    //     // containerTodo_subChildChildren = containerTodo_subChild.children;
+    //     // }
+    //
+    // }else{containerTodo_subChildChildren = null}
+
 
     let hourSave;
     if (hourSaveClick === false) {
@@ -491,32 +623,18 @@ function saveTasks(hourSaveClick){
         child_classNameState : child_classNameState,
         child_value : childValue,
         childValue_has : childValue_has,
+        childDataSet : childDataSet,
         lastSave : hourSave,
-        subChild_className : subChildClass,
-        subChild_value : subChildValue
+        // subChild_className : subChildClass,
+        // subChild_value : subChildValue,
+        counterTasks : compteurTodoBanMain
     }
-    localStorage.setItem("Node", JSON.stringify(cTodo));
+    localStorage.setItem("Node_todo", JSON.stringify(cTodo));
 }
 
-window.onload = function (){
-    // choose_user.style.width = choose_user.offsetWidth;
-    reloadTasks();
-    const filterTopdiv = document.querySelector('.filterTop');
-    const div_option = document.querySelectorAll('.div_option');
-    for(let i = 0 ; i < div_option.childElementCount ; i++){
-        div_option[i].children[0].style.width = filterTopdiv.children[0].offsetWidth;
-    }
-}
-window.onresize = function (){
-    const filterTopdiv = document.querySelector('.filterTop');
-    const div_option = document.querySelectorAll('.div_option');
-    for(let i = 0 ; i < div_option.childElementCount ; i++){
-        div_option[i].children[0].style.width = filterTopdiv.children[0].offsetWidth;
-    }
 
-}
 function reloadTasks(){
-    const elem = JSON.parse(localStorage.getItem("Node"));
+    const elem = JSON.parse(localStorage.getItem("Node_todo"));
     let nb_child = elem.child_nb;
     lastSaveTime.innerHTML =  elem.lastSave;
 
@@ -525,18 +643,60 @@ function reloadTasks(){
         let state_child = elem.child_classNameState[i];
         let value_child = elem.child_value[i];
         let value_child_has = elem.childValue_has[i];
-        createTask(false, false,nb_child, state_child.split(" "), class_child,value_child, value_child_has);
+        let dataset_child = elem.childDataSet[i];
+        // console.log(dataset_child)
+        createTask(
+            false,
+            false,
+            nb_child,
+            state_child.split(" "),
+            class_child,
+            value_child,
+            value_child_has,
+            dataset_child
+        );
+    }
+}
+
+function reloadNote(){
+    const parse_Note = JSON.parse(localStorage.getItem("Node_note"));
+    let nb_child = parse_Note.child_nb;
+    // lastSaveTime.innerHTML =  parse.lastSave;
+
+    for(let i = 0 ; i < nb_child ; i++){
+        let class_child = parse_Note.child_className[i];
+        let value_content = parse_Note.child_content[i];
+        let value_title = parse_Note.child_title[i];
+        let value_style = parse_Note.child_style[i];
+        let value_dataset = parse_Note.childDataSet[i];
+
+        createNote(
+            false,
+            nb_child,
+            class_child,
+            value_title,
+            value_content,
+            value_style,
+            value_dataset
+        );
     }
 }
 
 
 input.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-        compteurTodoBanMain++;
         createTask("input",false);
         saveTasks(false);
     }
 }, false);
+
+
+butNote.addEventListener('click', function(e) {
+    createNote("button");
+    saveNote();
+
+}, false);
+
 
 impTask_start.addEventListener('click', function (e){
     createTask("button","important");
@@ -601,7 +761,7 @@ function toTop(element){
 
 function changeColor(element){
     //Ajout d'un test pour éviter de retomber directement sur la même couleur
-    const elem = element.parentElement.parentElement;
+    const elem = element.closest('.noteCard');
 
     const colorNotes = ["rgb(181, 222, 255)","rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
 
@@ -645,9 +805,8 @@ function infoNote(element){
     }
 }
 
-function createNote(){
+function createNote(keypress,nb,class_note,title_note,content,style,dataset){
     compteurCard++;
-
     const lin = document.createElement("li");
     const div = document.createElement("div");
     const divicon = document.createElement("div");
@@ -661,11 +820,11 @@ function createNote(){
     cont_in.setAttribute("type", "text");
     cont_in.setAttribute("placeholder", "Contenu");
     cont_in.setAttribute("onkeyup", "SizeTextarea(this)");
-
     lin.classList.add('noteCard');
     lin.oncontextmenu= rightClickNote;
-    lin.setAttribute("data-name", compteurCard);
-    lin.style.background = colorNotes[Math.floor(Math.random()*colorNotes.length)];
+
+    cont_in.onkeyup = function(){saveNote()};
+    titre_in.onkeyup = function(){saveNote()};
 
     const itagi = document.createElement("i");
 
@@ -675,7 +834,6 @@ function createNote(){
     itagi.onmouseover = function(){mouseEnter(this)};
 
     // divicon.appendChild(itagi);
-
 
     //divOption NOT PREFERED
     const divOption = document.createElement("div");
@@ -687,16 +845,16 @@ function createNote(){
 
     itagp.classList.add("fas");
     itagp.classList.add("fa-palette");
-    itagp.onclick = function(){changeColor(this)};
+    itagp.onclick = function(){changeColor(this);saveNote()};
 
     itagtt.classList.add("fas");
     itagtt.classList.add("fa-chevron-circle-up");
-    itagtt.onclick = function(){toTop(this)};
+    itagtt.onclick = function(){toTop(this);saveNote();};
 
     itagtl.classList.add("fas");
     // itagtl.classList.add("fa-link");
     itagtl.classList.add("fa-share-square");
-    itagtl.onclick = function(){linkToNote(this)};
+    itagtl.onclick = function(){linkToNote(this);saveNote();};
 
     // divOption.appendChild(itagtt);
     // divOption.appendChild(itagp);
@@ -709,9 +867,10 @@ function createNote(){
     span.className = "close";
     span.appendChild(txt);
 
-    span.onclick = function(){removeNote(this)};
+    span.onclick = function(){removeNote(this);saveNote();};
 
-    divicon.appendChild(itagtt);
+    //FONCTION setToTop()
+    // divicon.appendChild(itagtt);
     divicon.appendChild(itagp);
     divicon.appendChild(itagtl);
     divicon.appendChild(span);
@@ -723,15 +882,23 @@ function createNote(){
     lin.appendChild(divOption);
     lin.appendChild(cont_in);
 
-    myUL_note.appendChild(lin)
+    if(keypress === "button"){
+        let hour = getDate();
+        let date_act = getDateDay();
 
-    for (let i = 0; i < close.length; i++) {
-        close[i].onclick = function() {
-            const div = this.parentElement;
-            // div.style.display = "none";
-            div.remove();
-        }
+        lin.setAttribute("data-hour", hour)
+        lin.setAttribute("data-date", date_act);
+
+        lin.setAttribute("data-name", compteurCard);
+        lin.style.background = colorNotes[Math.floor(Math.random()*colorNotes.length)];
+        myUL_note.appendChild(lin);
+    }else{ //LS
+        lin.style.background = style;
+        titre_in.value = title_note;
+        cont_in.innerHTML = content
+        myUL_note.appendChild(lin);
     }
+
 }
 
 let i = 0;
@@ -749,97 +916,19 @@ function SizeTextarea(e) {
 //Creer sous categories pour filter taches
 //si on selectionne une taches (avec checkbox) on peut lui attribuer un niveau d'importance
 
-//setInterval(
-function h(){
-    const dateObj = new Date();
-    let h = dateObj.getHours();
-    if (h < 10) { h = "0" + h }
-    let m = dateObj.getMinutes();
-    if (m < 10) { m = "0" + m }
-
-    const containerTodo = document.querySelector('#myUL');
-    const containerTodoChildren = containerTodo.children;
-    const subChildContainerTodo = containerTodo.querySelectorAll('.li_sub');
-    const containerNote = document.querySelector('#myUL_note');
-
-
-    let childClass = {
-        length: 0,
-        findClass: function ajoutElem (elem) {
-            [].push.call(this, elem);
-        }
-    };
-    let subChildClass = {
-        length: 0,
-        findClass: function ajoutElem (elem) {
-            [].push.call(this, elem);
-        }
-    };
-    let childParent= {
-        length: 0,
-        findParent: function ajoutElem (elem) {
-            [].push.call(this, elem);
-        }
-    };
-    // let childDataset= {
-    //     length: 0,
-    //     findDataset: function ajoutElem (elem) {
-    //         [].push.call(this, elem);
-    //     }
-    // };
-    let childValue= {
-        length: 0,
-        findValue: function ajoutElem (elem) {
-            [].push.call(this, elem);
-        }
-    };
-
-    for(let i = 0 ; i < containerTodoChildren.length ; i++){
-        childClass.findClass(containerTodoChildren[i].className);
-        childParent.findParent(containerTodoChildren[i].closest(".todoBanMain"));
-        // childDataset.findDataset(containerTodoChildren[i].dataset);
-        childValue.findValue(containerTodoChildren[i].children[1].children[0].value);
-    }
-
-    for(let i = 0 ; i < subChildContainerTodo.length ; i++){
-        subChildClass.findClass(subChildContainerTodo[i].className);
-    }
-
-    const cTodo = {
-
-        child_nb : containerTodo.childElementCount,
-        child_className : childClass,
-        child_value : childValue,
-
-        // subChild_ : {subChildContainerTodo,childParent},
-        // subChild_nb : subChildContainerTodo.length,
-        // subChild_className : subChildClass,
-    }
-    const cNote= {
-        nbElem : containerNote.childElementCount,
-    }
-
-    localStorage.setItem("Node", JSON.stringify(cTodo));
-
-    return cTodo;
-}
-
+//----------------------------------------------------------------------
+const url = "https://nicolasvaillant.net/local/prive/todo/tempfiles/temp.php";
 function saveData(){
-    post(url, {value: h()}).then(r =>
+    post(url, {value: xxxxxxx}).then(r =>
         console.log(r)
     );
 }
-const url = "https://nicolasvaillant.net/local/prive/todo/tempfiles/temp.php";
-
 window.post = function(url, data) {
     return fetch(url, {method: "POST", body: JSON.stringify(data)});
 }
-
 window.get = function(url) {
     return fetch(url, {method: "GET", mode: "cors"});
 }
-
-
 function getData(){
     const xmltype_2 = new XMLHttpRequest();
     xmltype_2.onreadystatechange = function() {
@@ -852,6 +941,7 @@ function getData(){
     xmltype_2.open("GET", "https://nicolasvaillant.net/local/prive/todo/tempfiles/results.php", true);
     xmltype_2.send();
 }
+//----------------------------------------------------------------------
 
 
 const currentTheme = localStorage.getItem("theme");
@@ -895,25 +985,6 @@ function rightClickNote(e){
         parent.classList.remove('bumpOnRClick')
     },200)
 
-    // const txt_zone_1 = document.querySelector('.txt_zone_1');
-    // const i_zone_1 = document.querySelector('#i_zone_1');
-    // const txt_zone_2 = document.querySelector('.txt_zone_2');
-
-    // if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
-    //     txt_zone_1.innerHTML = "Marquer comme non terminée";
-    //
-    //     i_zone_1.classList.remove('fas');
-    //     i_zone_1.classList.remove('fa-check-circle');
-    //     i_zone_1.classList.add('circle');
-    // }else{
-    //     txt_zone_1.innerHTML = "Marquer comme terminée";
-    //
-    //     i_zone_1.classList.remove('circle');
-    //     i_zone_1.classList.add('fas');
-    //     i_zone_1.classList.add('fa-check-circle');
-    // }
-    // txt_zone_2.innerHTML = "Supprimer la tâche";
-
     function zone1_note(parent){
 
     }
@@ -938,19 +1009,61 @@ function rightClickNote(e){
     }
 }
 
+function saveNote(){
+    const containerNote = document.querySelector('#myUL_note');
+    const containerNoteChildren = containerNote.children;
 
+    //CHILD-------------------------------------------
+    let childClass = {
+        length: 0,
+        findClass: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    let childStyle= {
+        length: 0,
+        findStyle: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    let childTitle= {
+        length: 0,
+        findValue: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    let childContent= {
+        length: 0,
+        findValueC: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    let childDataSet= {
+        length: 0,
+        findDataSet: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
 
+    if(containerNoteChildren.length !== 0){
+        for(let i = 0 ; i < containerNoteChildren.length ; i++){
+            childClass.findClass(containerNoteChildren[i].className);
+            childStyle.findStyle(containerNoteChildren[i].style.background);
+            childTitle.findValue(containerNoteChildren[i].children[0].children[0].value);
+            childContent.findValueC(containerNoteChildren[i].children[2].value);
+            childDataSet.findDataSet(containerNoteChildren[i].dataset);
+        }
+    }
 
-/*
-mam contre le reste du mnde
-
-plusieurs cadeaux
-questions debile : record d'invié anniversairz
-
-en fonction des heux elle gagne des chocolats qui vont dans une bol quon pese al afin et juste prix
-
-juste prix du poids en gramme du cadeau
-
-ou est charlie mam
-
- */
+    const cNote = {
+        child_nb : containerNote.childElementCount,
+        child_className : childClass,
+        child_style : childStyle,
+        child_title : childTitle,
+        child_content : childContent,
+        childDataSet : childDataSet,
+        // lastSave : hourSave,
+        // counterTasks : compteurTodoBanMain
+    }
+    localStorage.setItem("Node_note", JSON.stringify(cNote));
+}

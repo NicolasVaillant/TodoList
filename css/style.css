@@ -72,7 +72,7 @@
 }
 ul {
     margin: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     padding: 1em 3em 2em;
 }
 
@@ -85,7 +85,7 @@ ul {
     /* padding: .5em 1em; */
     margin: 1em 0 0;
     border-radius: var(--border1);
-    font-size: var(--font1);
+    /*font-size: var(--font1);*/
     transition: 0.2s;
     word-break: break-word;
     /* display: grid; */
@@ -185,8 +185,7 @@ ul {
     transform: scale(1.8) !important;
     transition: var(--transition2);
 }
-i[name="morebut"]:hover,
-i[name="reminder"]:hover{
+.div_option i:hover{
     transform: scale(1.4) !important;
     transition: var(--transition2);
 }
@@ -260,7 +259,7 @@ input {
     font-size: 16px;
     transition: var(--transition1);
 }
-.searchBar{
+.addTask_bar{
     position: relative;
 }
 .filterTop{
@@ -274,10 +273,15 @@ input {
     align-items: center;
     align-content: center;
     justify-content: center;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: var(--transition3);
 }
 .filterTop div{
     border-radius: var(--border1);
     gap: 1em;
+    width: 80px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -294,9 +298,9 @@ input {
     transform: scale(1.2) !important;
     transition: var(--transition2);
 }
-.filterTop i:hover{color: var(--red)}
-.filterTop i:first-child:hover{color: #2196f3}
-.filterTop i:last-child:hover{color: var(--green)}
+.filterTop i:hover, .div_optionstatic div i[name="important"]{color: var(--red)!important}
+/*.filterTop i:first-child:hover{color: #2196f3}*/
+.filterTop i:last-child:hover, .div_optionstatic div i[name="star"]{color: var(--green)!important}
 
 .sectionFilter{
     position: relative;
@@ -316,13 +320,17 @@ input {
 
 
 #myInput,
-#filterNote{
-    border: 2px solid transparent;
-}
+#filterNote{border: 2px solid transparent}
 
 #myInput:hover,
 .addItems input:hover{
     background: var(--b_sec);
+}
+.addTask_bar:hover .filterTop,
+#myInput:focus ~.filterTop{
+    opacity: 1;
+    transform: scaleX(1);
+    transition: var(--transition3);
 }
 
 #myInput:focus,
@@ -331,13 +339,18 @@ input {
 }
 
 
+
 .liChecked{
     opacity: .5;
     background: #c1ffd7!important;
     color: var(--b) !important;
     border: 2px solid transparent!important;
 }
-h2{margin-bottom: 1em;}
+h2{
+    margin-bottom: 15px;
+    text-align: initial;
+    font-size: var(--font3);
+}
 
 
 
@@ -378,20 +391,27 @@ button i:hover{
     min-height: 10vh;
     width: 100%;
 }
-.div_option{
+.div_option,
+.div_optionstatic{
     border: 2px solid transparent;
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    display: flex;
+    display: flex!important;
     padding: .2em;
     align-items: center;
     align-content: center;
     justify-content: center;
     width: auto!important;
+    opacity: 0;
+    transition: var(--transition3);
 }
-.div_option div{
+.div_optionstatic{
+    opacity: 1!important;
+}
+.div_option div,
+.div_optionstatic div{
     border-radius: var(--border1);
     gap: 1em;
     display: flex;
@@ -400,10 +420,17 @@ button i:hover{
     justify-content: center;
     background: var(--grey_p);
     padding: .8em;
-    width: auto;
+    width: 80px;
 }
 .headerTitle{
     position: relative;
+}
+.headerTitle:hover .headerTitleIcon,
+.headerTitle input:hover ~.headerTitleIcon,
+.headerTitle input:focus ~.headerTitleIcon{
+    opacity: 1;
+    transform: scaleX(1);
+    transition: var(--transition3);
 }
 .headerTitle,
 .headerTitleIcon{
@@ -416,6 +443,8 @@ button i:hover{
     padding: 0 1em 0 0;
     gap: 1em;
     color: var(--b_sec);
+    opacity: 0;
+    transition: var(--transition3);
 }
 .headerTitleIcon i {
     cursor: pointer;
@@ -514,6 +543,7 @@ hr{background: var(--w);}
 .collapsible-header{
     display: -webkit-box;
     height: auto;
+    font-size: 1.1em;
     display: -webkit-flex;
     display: -ms-flexbox;
     cursor: pointer;
@@ -545,7 +575,7 @@ hr{background: var(--w);}
 .collapsible li{margin: 0!important;}
 
 .collapsible-body {
-    display: none;
+    /*display: none;*/
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -576,10 +606,11 @@ hr{background: var(--w);}
 }
 
 .expandChevron{
+    /*TODO: CHEKC GOOD CONDITION*/
     transform: rotate(-90deg);
-    transition: var(--transition2);
-    -webkit-transition: var(--transition2);
-    -moz-transition: var(--transition2);
+    transition: transform .5s!important;
+    -webkit-transition: transform .5s!important;
+    -moz-transition: transform .5s!important;
 }
 
 .collapsible li.active > .collapsible-header i{
@@ -592,6 +623,10 @@ hr{background: var(--w);}
     width: 100%;
     position: relative;
     height: auto;
+    transition: var(--transition3);
+}
+.todoBanMain:hover .div_option{
+    opacity: 1;
     transition: var(--transition3);
 }
 .todoBanMainContainer{
@@ -618,12 +653,13 @@ hr{background: var(--w);}
 
 .collapsible_div_bodyContent_staticContent{
     height: auto;
+    position: relative;
     width: 100%;
     background: var(--b_sec);
     padding: 1em 15px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    /*justify-content: flex-end;*/
     align-content: center;
     flex-direction: row;
     gap: 1em;
@@ -761,6 +797,10 @@ hr{background: var(--w);}
 
 /*-------------------*/
 
+.context-menu hr {
+    background: var(--b_sec);
+    margin: 0 1em;
+}
 .context-menu {
     font-family: 'Open Sans', sans-serif, Bahnschrift;
     position: absolute;
@@ -795,6 +835,10 @@ hr{background: var(--w);}
     align-items: center;
     justify-content: flex-start;
 }
+.context-menu ul li:last-child:hover {
+    background: none;
+    cursor: initial
+}
 .i_div{
     width: 10%;
     display: flex;
@@ -807,6 +851,8 @@ hr{background: var(--w);}
 #deleteTask:hover{color: #ed143d}
 #shareTask:hover{color: #3d3dcf}
 #enTask:hover{color: #0c660c}
+/*#speTask:hover{color: #c3c112}*/
+/*#impTask:hover{color: var(--red)}*/
 
 .context-menu ul li:hover {
     background: var(--grey3);
