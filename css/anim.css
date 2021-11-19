@@ -28,15 +28,21 @@
 }
 
 .importantTasks{
-    border: 2px dashed var(--red);
+    border: 1px dashed var(--red);
     background: var(--red_bg)!important;
 }
 .importantTasks_color{
     color: var(--red)!important;
 }
+.importantTasks_cross{
+    background: red!important;
+}
+.specialTasks_cross{
+    background: #d7d748!important;
+}
 .specialTasks{
-    border: 2px dashed var(--green);
-    background: var(--green_bg) !important;
+    border: 1px dashed var(--green);
+    background: #FCFFA6 !important;
 }
 .specialTasks_color{
     color: var(--green)!important;
@@ -47,7 +53,7 @@
 
 .endTasks{
     background: #c1ffd7;
-    border: 2px solid green;
+    border: 1px solid green;
     color: var(--b_sec);
     transition: var(--transition1);
 }
@@ -58,6 +64,9 @@
 .endTasks_container{
     background: #3ace71!important;
     transition: var(--transition1);
+}
+.todoBanMainContainer .circle{
+    border: 2px solid var(--td_color_grey);
 }
 .circle{
     background: none;
@@ -71,11 +80,16 @@
     transform: scale(.99);
     transition: var(--transition3);
 }
+.bumpOnClick{
+    transform: scale(.96);
+    transition: var(--transition3);
+}
 
 .slideOut{
-    transform: translateX(-100vw) skewX(-10deg);
+    transform: translateX(-100vw) skewX(-10deg) scaleY(0);
+    opacity: 0;
     filter: blur(.1em);
-    transition: var(--transition2);
+    transition: all 1s!important;
 }
 
 .disabledOptionsRC{
@@ -84,4 +98,26 @@
 }
 .disabledOptionsRC:hover{
     background: none!important;
+}
+
+.shareTask{
+    border: 2px dashed #3d3dcf;
+}
+
+.choosingNote{
+    filter: blur(.2em);
+    cursor: pointer;
+    transition: var(--transition1);
+}
+.noteChoose{
+    filter: none;
+    transition: var(--transition3);
+}
+.choosingNote:hover{
+    filter: none;
+    transition: var(--transition3);
+}
+
+.show{
+    display: flex!important;
 }

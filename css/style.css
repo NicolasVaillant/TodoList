@@ -3,8 +3,8 @@
 .main{
     width: 80%;
     height: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -22,9 +22,12 @@
     padding: 1em 3em;
     display: flex;
     width: 100%;
-    background: var(--b_sec);
+
+    background: var(--td_bg_container);
+    box-shadow: var(--td_bx_shadow_container);
+    color: var(--td_color_title);
+
     border-radius: var(--border1);
-    color: var(--w);
     align-items: center;
     align-content: center;
     flex-direction: row;
@@ -39,7 +42,8 @@
     gap: 1em;
 }
 .color-mode i{
-    color: var(--w);
+    color: var(--td_color_title);
+
     font-size: var(--font3);
     transform: scale(1) rotate(0);
     transition: var(--transition1);
@@ -55,19 +59,21 @@
     display: flex;
     gap: .5em;
     font-size: var(--font1);
-    transition: var(--transition1);
+    /*transition: var(--transition1);*/
 }
 .save span{
-    color: var(--red);
+    color: var(--td_color_grey);
 }
 
 .todoContainer,
 .noteContainer{
     width: 50%;
-    background: var(--b_sec);
-    border-radius: 10px;
+    /*background: var(--b_sec);*/
+    background: var(--td_bg_container);
+    box-shadow: var(--td_bx_shadow_container);
+    border-radius: var(--border1);
     height: fit-content;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
     transition: var(--transition1);
 }
 ul {
@@ -81,7 +87,7 @@ ul {
     cursor: pointer;
     position: relative;
     list-style-type: none;
-    color: white;
+    color: var(--td_color_grey);
     /* padding: .5em 1em; */
     margin: 1em 0 0;
     border-radius: var(--border1);
@@ -100,14 +106,18 @@ ul {
 }
 .li_sub{
     width: 100% !important;
-    background: var(--li_sub)!important;
+    /*background: var(--li_sub)!important;*/
     /*padding: 0 1em 0 0!important;*/
+    z-index: 100!important;
     padding: .5em 1em .5em .5em!important;
     margin: .5em 0 .5em auto !important;
     display: grid!important;
     grid-auto-flow: column!important;
     transition: var(--transition1);
     grid-template-columns: 1fr 8%!important;
+}
+.li_sub input{
+    background: var(--td_bg_body);
 }
 
 .textTask{
@@ -116,7 +126,7 @@ ul {
     height: fit-content;
     background: transparent;
     padding: 1em;
-    color: var(--w);
+    color: var(--td_color_grey);
 }
 .todoBanMainContainer div{
     width: inherit;
@@ -142,7 +152,6 @@ ul {
     margin: 0;
     background: none;
     color: var(--b);
-    font-size: inherit;
     border-radius: 0;
     transition: var(--transition1);
 }
@@ -252,13 +261,40 @@ input {
     border: none;
     border-radius: 5px;
     outline: none;
-    background: var(--b_sec_o);
-    color: white;
+    background: none;
+    color: var(--td_color_grey);
     width: 100%;
     padding: 1em;
     font-size: 16px;
     transition: var(--transition1);
 }
+input::placeholder{
+    color: var(--td_color_grey);
+}
+input::selection{
+    background: var(--td_color_title);
+}
+.filter_selector{
+    width: fit-content;
+    position: relative;
+    z-index: 999!important;
+    background: var(--td_bg_body);
+    padding: 0.5em;
+    margin: .5em 0 auto auto;
+    border-radius: var(--border1);
+    transform: scale(1);
+    transition: transform .2s!important;
+}
+.filter_selector p{
+    color: var(--td_color_grey);
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+}
+
+
 .addTask_bar{
     position: relative;
 }
@@ -286,7 +322,7 @@ input {
     align-items: center;
     align-content: center;
     justify-content: center;
-    background: var(--grey_p);
+    background: var(--td_color_grey);
     padding: .8em;
 }
 .filterTop i{
@@ -320,11 +356,11 @@ input {
 
 
 #myInput,
-#filterNote{border: 2px solid transparent}
+#filterNote{border: 2px solid var(--td_bg_body);}
 
 #myInput:hover,
 .addItems input:hover{
-    background: var(--b_sec);
+    background: var(--td_bg_body);
 }
 .addTask_bar:hover .filterTop,
 #myInput:focus ~.filterTop{
@@ -335,7 +371,7 @@ input {
 
 #myInput:focus,
 #filterNote:focus{
-    border: 2px solid var(--grey2);
+    /*border: 2px solid var(--grey2);*/
 }
 
 
@@ -349,7 +385,9 @@ input {
 h2{
     margin-bottom: 15px;
     text-align: initial;
+    color: var(--td_color_title);
     font-size: var(--font3);
+    transition: var(--transition1);
 }
 
 
@@ -360,7 +398,7 @@ h2{
     background-size: 2em;
     background-repeat: no-repeat;
     padding: 1em 2.8em;
-    color: var(--w);
+    color: var(--td_color_grey);
 }
 .addItems{
     display: flex;
@@ -375,7 +413,8 @@ button{
     cursor: pointer;
 }
 button i{
-    color: var(--w);
+    color: var(--td_color_title);
+
     font-size: var(--font3);
     transform: scale(1);
     transition: var(--transition2);
@@ -391,12 +430,48 @@ button i:hover{
     min-height: 10vh;
     width: 100%;
 }
+.descriptionLink{
+    padding: 1em 3em 0;
+    /*display: flex;*/
+    width: 100%;
+    /*opacity: 0;*/
+    transition: var(--transition2);
+    display: none;
+}
+.descriptionLink div{
+    background: var(--red);
+    border-radius: var(--border1);
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+.descriptionLink div p{
+    text-align: justify;
+}
+.descriptionLink div i{
+    cursor: pointer;
+    height: fit-content;
+    transform: scale(1);
+    transition: var(--transition3);
+}
+.txt_link_todo{
+    margin: 0 1em 0.5em;
+}
+.descriptionLink div i:hover{
+    transform: scale(1.2);
+    transition: var(--transition3);
+}
+
+
 .div_option,
 .div_optionstatic{
     border: 2px solid transparent;
     position: absolute;
     top: 0;
     right: 0;
+    z-index:2000!important;
     height: 100%;
     display: flex!important;
     padding: .2em;
@@ -418,9 +493,10 @@ button i:hover{
     align-items: center;
     align-content: center;
     justify-content: center;
-    background: var(--grey_p);
+    background: var(--td_bg_container_on);
     padding: .8em;
-    width: 80px;
+    /*width: 80px;*/
+    box-shadow: var(--td_bx_shadow_container);
 }
 .headerTitle{
     position: relative;
@@ -505,28 +581,50 @@ button i:hover{
 
 .categories{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    position: absolute;
+    z-index: 800!important;
+    top: 100%;
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%, 0) scaleY(0);
+    transition: all .2s!important;
+    transform-origin: top;
+    border-radius: var(--border1);
+    background: var(--td_bg_container);
     align-items: center;
     justify-content: center;
     align-content: center;
-    gap: 1em;
-    width: 100%;
-    margin: 1em auto;
+    gap: .1em;
+    box-shadow: var(--td_bx_shadow_container);
+    padding: 0.5em;
+    margin: .5em auto;
 }
+
+.categories label:hover {
+    background: var(--grey3);
+}
+
+.categories_show{
+    opacity: 1;
+    transform: translate(-50%, 0) scaleY(1);
+    transition: transform .2s!important;
+}
+
 .categories label{
     width: 100%;
     border-radius: var(--border1);
-    background: var(--b_sec);
-    padding: 1em;
+    color: var(--td_color_grey);
+    padding: .5em;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: var(--transition1);
+    /*transition: var(--transition1);*/
 }
 .categories label:last-child{
     width: 20%;
 }
 .categories label:hover{
-    background: var(--b_sec_o);
+    background: var(--td_bg_body);
 }
 
 .categories input:checked + label {
@@ -552,7 +650,8 @@ hr{background: var(--w);}
     gap: var(--gap1);
     align-items: center;
     display: flex;
-    border: 2px dashed var(--grey2);
+    /*border: 2px dashed var(--grey2);*/
+    border: 1px solid var(--grey2);
     margin: 0 0 1em 0;
     align-content: center;
     -webkit-align-content: center;
@@ -560,7 +659,7 @@ hr{background: var(--w);}
     -moz-transition: var(--transition1);
     -webkit-transition: var(--transition1);
     list-style-type: none;
-    color: white;
+    color: var(--td_color_grey);
     border-radius: var(--border1);
     transition: 0.2s;
     word-break: break-word;
@@ -575,7 +674,7 @@ hr{background: var(--w);}
 .collapsible li{margin: 0!important;}
 
 .collapsible-body {
-    /*display: none;*/
+    display: none;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -589,9 +688,11 @@ hr{background: var(--w);}
 }
 .collapsible_div_bodyContent{
     gap: .5em;
+    background: var(--w);
     display: flex;
     flex-direction: column;
-    border: 2px dashed var(--grey2)!important;
+    /*border: 2px dashed var(--grey2)!important;*/
+    border: 1px solid var(--grey2)!important;
     border-radius: var(--border1);
 }
 .collapsible-body span:hover::before {
@@ -633,20 +734,24 @@ hr{background: var(--w);}
     position: absolute;
     top: 0;
     right: 0;
-    border: 2px solid transparent;
+    /*border: 2px solid transparent;*/
     z-index: 100;
     width: 90%;
     display: flex;
     align-items: center;
     flex-direction: row;
     align-content: center;
-    padding: 0 15px 0 0;
+    /*padding: 0 15px 0 0;*/
 }
 .todoBanMainContainer span,
 .todoBanMainContainer i{
     cursor: pointer;
-    color: var(--w);
+    color: var(--td_bg_container);
 }
+.todoBanMainContainer .fa-check-circle{
+    color: var(--td_color_grey);
+}
+
 .todoBanMainContainer i:first-child{
     /*margin-right: 1em;*/
 }
@@ -655,7 +760,7 @@ hr{background: var(--w);}
     height: auto;
     position: relative;
     width: 100%;
-    background: var(--b_sec);
+    background: var(--td_color_grey_2);
     padding: 1em 15px;
     display: flex;
     align-items: center;
@@ -663,6 +768,8 @@ hr{background: var(--w);}
     align-content: center;
     flex-direction: row;
     gap: 1em;
+    /*border-radius: 0 0 var(--border1) var(--border1);*/
+    border-radius: var(--border1);
     cursor: default;
     transition: var(--transition1);
 }
@@ -687,6 +794,40 @@ hr{background: var(--w);}
         flex-direction: column!important;
         gap: 1em!important;
     }
+
+
+    .overlay{
+        background:none;
+        z-index: 1;
+        margin: auto;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        display: none;
+    }
+    .segment{
+        min-height: 10vh;
+        width: 85vw;
+        border: 10px solid blue;
+        border-radius: var(--border1);
+        z-index: 10;
+        position: absolute;
+        left: -85%;
+    }
+    .noVisibility{
+        position: absolute;
+        background: none;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        z-index: 20;
+        right: 0;
+        overflow: hidden;
+    }
+
 }
 @media all and (max-width: 600px) {
     .categories{flex-direction: column}
@@ -772,39 +913,36 @@ hr{background: var(--w);}
 .nothingToShow{
     width: 100%;
     border-radius: var(--border1);
-    margin-top: 2em;
+    margin-top: .5em;
     display: none;
     flex-direction: column;
     padding: 0 3em;
 }
 .card{
-    background: var(--b_sec_o);
+    background: var(--td_color_grey);
     border-radius: var(--border1);
     display: flex;
     height: 20vh;
     width: 100%;
     color: var(--w);
+    gap: 1em;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     transition: var(--transition1);
 }
-.show{
-    display: flex!important;
-}
-
-
-
 
 /*-------------------*/
 
 .context-menu hr {
-    background: var(--b_sec);
-    margin: 0 1em;
+    /*background: var(--b_sec);*/
+    margin: 0 0.5em;
+    border: 1px solid  var(--b_sec);
+    border-radius: var(--border1);
 }
 .context-menu {
     font-family: 'Open Sans', sans-serif, Bahnschrift;
     position: absolute;
-    /*text-align: center;*/
     background: var(--w);
     border-radius: var(--border1);
     z-index: 1000;
@@ -825,7 +963,7 @@ hr{background: var(--w);}
 .context-menu ul li {
     border-radius: var(--border1);
     background: var(--w);
-    padding: 1em ;
+    padding: 1em;
     gap: 1em;
     word-break: break-word;
     display: flex;
@@ -836,7 +974,7 @@ hr{background: var(--w);}
     justify-content: flex-start;
 }
 .context-menu ul li:last-child:hover {
-    background: none;
+    background: var(--w);
     cursor: initial
 }
 .i_div{
@@ -846,7 +984,7 @@ hr{background: var(--w);}
     justify-content: center;
 }
 .context-menu ul li div p{
-    margin: auto;
+    margin: auto auto 0 0;
 }
 #deleteTask:hover{color: #ed143d}
 #shareTask:hover{color: #3d3dcf}
@@ -855,7 +993,43 @@ hr{background: var(--w);}
 /*#impTask:hover{color: var(--red)}*/
 
 .context-menu ul li:hover {
-    background: var(--grey3);
+    background: var(--td_bg_body);
+}
+
+#shareTask{
+    position: relative;
+}
+.context-menu ul{
+    overflow: visible!important;
+    border-radius: var(--border1);
+}
+.extend_share{
+    position: absolute;
+    right: -150px;
+    width: 150px;
+    top: 0;
+    opacity: 0;
+    /*transition: var(--transition1);*/
+}
+.extend_share ul{padding: 0;margin-left: 1em;background: var(--w)}
+.extend_share ul li{background: var(--w)}
+.extend_share ul li:hover,.extend_share ul li:last-child:hover{background: var(--td_bg_body);cursor: pointer}
+.extend_share ul li:last-child:hover{
+    border-radius: 0 0 var(--border1) var(--border1);
+}
+.extend_share ul li:first-child:hover{
+    border-radius: var(--border1) var(--border1) 0 0;
+}
+
+#shareTaskContainer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+#shareTask:hover .extend_share{
+    opacity: 1;
+    /*transition: var(--transition1);*/
 }
 
 

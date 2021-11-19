@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/anim.css">
     <link rel="stylesheet" href="css/root.css">
+    <link rel="stylesheet" href="css/tooltip.css">
 
     <link rel="stylesheet" href="css/mediaqueries/style_media_web.css">
     <link rel="stylesheet" href="css/mediaqueries/style_media_alt.css">
@@ -22,7 +23,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/script.js" defer></script>
-
+    
     <title>Todo List</title>
 </head>
 
@@ -52,8 +53,15 @@
         <div class="save">
             <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
             <div class="color-mode">
-                <i id="rb" class="fas fa-sync-alt"></i>
-                <i id="dm" class="fas fa-adjust"></i>
+                
+                <div class="tooltip" id="tooltip_0">
+                    <button class="button_tooltip"><i id="rb" class="fas fa-sync-alt"></i></button>
+                    <div class="label_tooltip" id="for_tooltip_0"><p>Synchroniser</p></div>
+                </div>
+                <div class="tooltip" id="tooltip_1">
+                    <button class="button_tooltip"><i id="dm" class="fas fa-adjust"></i></button>
+                    <div class="label_tooltip" id="for_tooltip_1"><p>Mode sombre</p></div>
+                </div>
             </div>
         </div>
     </div>
@@ -72,40 +80,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="categories">
-                    <input id="all"
-                           type="radio"
-                           value="radio"
-                           name="categories"
-                           onclick="filterTasks(this.id)"
-                           checked>
-                    <label for="all">All</label>
-                    <input id="importantTasks"
-                           type="radio"
-                           value="radio"
-                           name="categories"
-                           onclick="filterTasks(this.id)">
-                    <label for="importantTasks">Important</label>
-                    <input id="specialTasks"
-                           type="radio"
-                           value="radio"
-                           name="categories"
-                           onclick="filterTasks(this.id)">
-                    <label for="specialTasks">Special</label>
-                    <input id="reminder"
-                           type="radio"
-                           value="radio"
-                           name="categories"
-                           onclick="filterTasks(this.id)">
-<!--                    <label for="reminder">-->
-<!--                        <i class="fas fa-clock"></i>-->
-<!--                    </label>-->
+                <div class="filter_selector">
+                    <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
+                    <div class="categories">
+                        <input id="all"
+                               type="radio"
+                               value="radio"
+                               name="categories"
+                               onclick="filterTasks(this.id)"
+                               checked>
+                        <label for="all">All</label>
+                        <input id="importantTasks"
+                               type="radio"
+                               value="radio"
+                               name="categories"
+                               onclick="filterTasks(this.id)">
+                        <label for="importantTasks">Important</label>
+                        <input id="specialTasks"
+                               type="radio"
+                               value="radio"
+                               name="categories"
+                               onclick="filterTasks(this.id)">
+                        <label for="specialTasks">Spécial</label>
+                        <input id="reminder"
+                               type="radio"
+                               value="radio"
+                               name="categories"
+                               onclick="filterTasks(this.id)">
+                        <!--                    <label for="reminder">-->
+                        <!--                        <i class="fas fa-clock"></i>-->
+                        <!--                    </label>-->
+                        <input id="share"
+                               type="radio"
+                               value="radio"
+                               name="categories"
+                               onclick="filterTasks(this.id)">
+                        <!--                    <label for="share">-->
+                        <!--                        <i class="fas fa-share-square"></i>-->
+                        <!--                    </label>-->
+                    </div>
                 </div>
-                <hr>
+                
+<!--                <hr>-->
             </div>
             <div class="nothingToShow">
                 <div class="card">
                     <p>Rien à afficher ici pour le moment.</p>
+                    <p class="nothingToShow_more"></p>
                 </div>
             </div>
             <ul id="myUL"></ul>
@@ -119,11 +140,22 @@
                            id="filterNote"
                            onkeyup="filterNotes()"
                            placeholder="Rechercher">
-                    <button id="butNote">
-                        <i class="fas fa-plus-circle"></i>
-                    </button>
+                   <div class="tooltip" id="tooltip_2"> <!-- butNote-->
+                        <button class="button_tooltip"> <i class="fas fa-plus-circle"></i></button>
+                        <div class="label_tooltip" id="for_tooltip_2"><p>Créer une note</p></div>
+                    </div>
                 </div>
         
+            </div>
+            <div class="descriptionLink">
+                <div>
+                    <p><i class="fas fa-link"></i>
+                        Ce bouton vous permet d'attacher une note à votre todo.
+                        Choisissez le todo en cliquant sur le bouton "<i class="fas fa-link"></i>",
+                        cliquez ensuite sur la note choisie pour la sélectionner.
+                    </p>
+                    <i class="fas fa-times" onclick="this.parentElement.parentElement.remove()"></i>
+                </div>
             </div>
             <ul id="myUL_note"></ul>
         </div>
@@ -150,7 +182,20 @@
         </li>
         <li id="shareTask">
             <div class="i_div"><i class="fas fa-share-square"></i></div>
-            <div><p class="txt_zone_5">Partager le contenu</p></div>
+            <div id="shareTaskContainer">
+                <p class="txt_zone_5">Partager</p>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="extend_share">
+                <ul>
+                    <li>
+                        <i class="fas fa-quote-right"></i>
+                        Le contenu de la note</li>
+                    <li>
+                        <i class="fas fa-sticky-note"></i>
+                        La note</li>
+                </ul>
+            </div>
         </li>
         <hr>
         <li id="infoTask">
@@ -182,7 +227,6 @@
         </li>
     </ul>
 </div>
-
 
 <!--
 <div class="filterNewTask" onclick="developChild()">

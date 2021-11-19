@@ -4,14 +4,6 @@
 //     $('.collapsible').collapsible();
 // });
 
-
-//----------------------------------------------------------------------
-window.onload = function () {reloadTasks();reloadNote()}
-window.onclick = function (){hideMenu()}
-window.oncontextmenu = function (e){e.preventDefault()}
-//----------------------------------------------------------------------
-
-
 let compteurCard, compteurLiSub = 0;
 
 let compteurTodoBanMain = 0;
@@ -27,23 +19,65 @@ const myUL_note = document.getElementById("myUL_note");
 const dm = document.querySelector("#dm");
 const refresh_but = document.querySelector("#rb");
 
-const butNote = document.querySelector("#butNote");
+const todoContainer = document.querySelector(".todoContainer");
+
+const descriptionLink = document.querySelector(".descriptionLink");
+
+const butNote = document.querySelector("#tooltip_2"); //butNote
 
 const account = document.querySelector("#account");
 const selector = document.querySelector(".selector");
 
+const nb_label = document.querySelector("#nb_label");
+
 const nothingToShow = document.querySelector(".nothingToShow");
+const nothingToShow_more = document.querySelector(".nothingToShow_more");
 
 const impTask_start = document.querySelector("#impTask_start");
 const speTask_start = document.querySelector("#speTask_start");
 const addHas = document.querySelector("#addHas");
 
 
+const main = document.querySelector(".main");
 
+//----------------------------------------------------------------------
+let main_height = 0;
+window.onload = function () {
+    reloadNote();reloadTasks();
+    nb_label.innerHTML = "(" + myUL.childElementCount + "/" + myUL.childElementCount + ")";
+    main_height = Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight);
+}//reloadNote(); -- getShareTask()
+window.onclick = function (){hideMenu()}
+window.oncontextmenu = function (e){e.preventDefault()}
+window.onscroll = function (){
+    // console.log("scrollY : " +window.scrollY)
+    const menu = document.getElementById("contextMenu");
+    if (menu.style.display === "flex"){
+
+        let out_height = window.innerHeight + window.scrollY - (menu.offsetTop + menu.offsetHeight);
+
+        if(menu.offsetTop + menu.offsetHeight > window.innerHeight + window.scrollY){
+            menu.style.top = menu.offsetTop + out_height + "px";
+        }else{
+            menu.style.top = menu.offsetTop + "px";
+        }
+
+        let out_width = window.innerWidth + window.scrollX - (menu.offsetLeft + menu.offsetWidth);
+
+        if(menu.offsetLeft + menu.offsetWidth > window.innerWidth + window.scrollX){
+            menu.style.left = menu.offsetLeft + out_width + "px";
+        }else{
+            menu.style.left = menu.offsetLeft + "px";
+        }
+    }
+}
+//----------------------------------------------------------------------
 function filterTasks(check_id){
     const nbElem = [];
+    const items = [];
     for(let i = 0 ; i < myUL.childElementCount ; i++){
         if(myUL.childElementCount !== 0){
+
             if(check_id === "all"){
                 myUL.children[i].style.display = "";
                 nbElem.push(true)
@@ -65,11 +99,30 @@ function filterTasks(check_id){
 
             if(counts[false] === myUL.childElementCount){
                 nothingToShow.style.display = "flex";
+                if(check_id === "importantTasks"){
+                    nothingToShow_more.innerHTML = "Cliquer sur \"<i class='fas fa-exclamation-circle'></i>\" pour ajouter " +
+                        "une tâche importante."
+                    items.push(counts)
+                }else if(check_id === "specialTasks"){
+                    nothingToShow_more.innerHTML = "Cliquer sur \"<i class='fas fa-star'></i>\" pour ajouter " +
+                        "une tâche spéciale."
+                    items.push(counts)
+                }
             }else{
+                items.push(counts)
                 nothingToShow.style.display = "none";
             }
-        }else{return;}
+        }else{
+            console.log("ok")}
     }
+    if(isNaN(items[myUL.childElementCount - 1].true)){
+        nb_label.innerHTML = "(" + 0 + "/" + myUL.childElementCount + ")"
+    }else{
+        // console.log(items[myUL.childElementCount - 1].true)
+        nb_label.innerHTML = "(" + items[myUL.childElementCount - 1].true + "/" + myUL.childElementCount + ")"
+    }
+    // console.log(items[myUL.childElementCount - 1].true)
+    // nb_label_all.innerHTML = items;
 
 //    faire un test sur style: none des children pour afficher ou non
 //    nothingToShow.classList.add('show');
@@ -86,7 +139,7 @@ function removeAll(element){
     setTimeout(function (){
         element.closest('.todoBanMain').remove();
         saveTasks(false);
-    }, 200)
+    }, 500)
 }
 
 function removeOne(element){
@@ -94,35 +147,88 @@ function removeOne(element){
     setTimeout(function (){
         element.parentElement.remove();
         saveTasks(false);
-    }, 200)
+    }, 500)
 }
 
-function addChild(element){
+function addChild(element, localstorage, valueLS, it){
     compteurLiSub++;
+    console.log("value : " + valueLS)
+    // console.log("compt :" + compteurLiSub)
     const div = element.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[1].children[0];
     const staticContent = div.children[0];
 
-    const li_sub = document.createElement("li");
-    li_sub.classList.add('li_sub');
-    li_sub.setAttribute("data-hierarchy", compteurLiSub);
+    let increment = 0;
 
-    const input_set = document.createElement("input");
-    input_set.setAttribute("type", "text");
-    // input_set.setAttribute("autofocus", "");
-    input_set.classList.add('input_sub');
-    input_set.onkeypress = function(e){inputSubEnter(e.key,this)};
-    li_sub.appendChild(input_set);
+    if(localstorage === true){
+        // console.log(indexes_class.length)
+        // console.log(arr_child_val.length)
+        // console.log(arr_child_val)
+        // console.log(arr_child_class)
+        // console.log(indexes_class)
+        // console.log(indexes_class.length)
+        print("valueLS", valueLS, "red")
+        // console.log(it)
+        // for(let i = 0 ; i < indexes_class.length ; i++){
+            const li_sub = document.createElement("li");
+            li_sub.classList.add('li_sub');
+            li_sub.setAttribute("data-hierarchy", compteurLiSub);
 
-    const span = document.createElement("span");
-    const txt = document.createTextNode("\u00D7");
+            const input_set = document.createElement("input");
+            input_set.setAttribute("type", "text");
+            // input_set.setAttribute("autofocus", "");
+            input_set.classList.add('input_sub');
+            input_set.onkeypress = function(e){inputSubEnter(e.key,this)};
 
-    span.className = "close";
-    span.appendChild(txt);
-    span.onclick = function(){removeOne(this);saveTasks(false);};
-    li_sub.appendChild(span);
+            input_set.value = arr_child_val[it];
+            li_sub.appendChild(input_set);
 
-    // div.appendChild(li_sub);
-    div.insertBefore(li_sub, staticContent);
+            const span = document.createElement("span");
+            const txt = document.createTextNode("\u00D7");
+
+            span.className = "close";
+            span.appendChild(txt);
+            span.onclick = function(){removeOne(this);saveTasks(false);};
+            li_sub.appendChild(span);
+
+            // div.appendChild(li_sub);
+            div.insertBefore(li_sub, staticContent);
+
+
+            //while array !== de undefined ou collapsible_div_bodyContent_staticContent on met les input
+            //sinon create task
+
+            // console.log(arr_child_class[i])
+            // if(arr_child_class[it] === "collapsible_div_bodyContent_staticContent"){
+            //     increment++;
+            // }
+
+        // }
+    }else{
+        const li_sub = document.createElement("li");
+        li_sub.classList.add('li_sub');
+        li_sub.setAttribute("data-hierarchy", compteurLiSub);
+
+        const input_set = document.createElement("input");
+        input_set.setAttribute("type", "text");
+        // input_set.setAttribute("autofocus", "");
+        input_set.classList.add('input_sub');
+        input_set.onkeypress = function(e){inputSubEnter(e.key,this)};
+
+        // input_set.value = arr_child_val[a];
+        li_sub.appendChild(input_set);
+
+        const span = document.createElement("span");
+        const txt = document.createTextNode("\u00D7");
+
+        span.className = "close";
+        span.appendChild(txt);
+        span.onclick = function(){removeOne(this);saveTasks(false);};
+        li_sub.appendChild(span);
+
+        // div.appendChild(li_sub);
+        div.insertBefore(li_sub, staticContent);
+    }
+    console.log("----------------")
 }
 
 list.addEventListener('click', function(ev) {
@@ -148,7 +254,20 @@ function checkBox(element){
     }
 }
 
-function developChild(){
+
+
+function developChild(element){
+    const overlay = document.querySelector('.overlay');
+
+    const el = element.closest('.todoBanMain').children[0].children[0]
+
+    if(el.classList.contains("active")){
+        displayLink(false, overlay);
+    }else{
+        displayLink(true, overlay);
+    }
+
+
     $('.collapsible').collapsible()
 }
 
@@ -196,10 +315,25 @@ function reminder(elem) {
 
 function setFinish(e){
     const parent = e.target.closest('.todoBanMain');
+
+    if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
+        //logical not
+        e.target.classList.remove('fas');
+        e.target.classList.remove('fa-check-circle');
+        e.target.classList.add('circle');
+    }else{
+        parent.children[0].children[0].children[0].classList.remove('specialTasks')
+        parent.children[0].children[0].children[0].classList.remove('importantTasks')
+        e.target.classList.remove('circle');
+        e.target.classList.add('fas');
+        e.target.classList.add('fa-check-circle');
+    }
+
     parent.children[0].children[0].children[0].classList.toggle('endTasks');
     parent.children[1].children[0].classList.toggle('endTasks_text');
     parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
     parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
+    saveTasks(false);
 }
 function rightClick(e){
     e.preventDefault();
@@ -281,18 +415,30 @@ function rightClick(e){
         parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
         parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
 
+        if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
+            parent.children[1].children[0].classList.remove('circle');
+            parent.children[1].children[0].classList.add('fas');
+            parent.children[1].children[0].classList.add('fa-check-circle');
+        }else{
+            parent.children[1].children[0].classList.add('circle');
+            parent.children[1].children[0].classList.remove('fas');
+            parent.children[1].children[0].classList.remove('fa-check-circle');
+        }
+
         parent.children[0].children[0].children[0].classList.remove('importantTasks');
         parent.children[0].children[0].children[0].classList.remove('specialTasks');
     }
     function zone2(parent,element){
         if(element.classList.contains('disabledOptionsRC')){}else{
             parent.children[0].children[0].children[0].classList.toggle('importantTasks');
+            parent.children[1].children[2].children[0].classList.toggle('importantTasks_cross');
             parent.children[0].children[0].children[0].classList.remove('specialTasks');
         }
     }
     function zone3(parent,element){
         if(element.classList.contains('disabledOptionsRC')){}else{
             parent.children[0].children[0].children[0].classList.toggle('specialTasks');
+            parent.children[1].children[2].children[0].classList.toggle('specialTasks_cross');
             parent.children[0].children[0].children[0].classList.remove('importantTasks');
         }
     }
@@ -300,7 +446,7 @@ function rightClick(e){
         parent.classList.add('slideOut');
         setTimeout(function (){
             parent.remove()
-        }, 200)
+        }, 500)
     }
     function zone5(parent){
         const check_user_1 = document.querySelector('#check_user_1')
@@ -312,13 +458,53 @@ function rightClick(e){
             " à " + `${parent.dataset.hour}` + ".";
         console.log(text)
     }
+    function zone5b(parent){
 
-    if (document.getElementById("contextMenu").style.display === "block")
+        let hour = getDate();
+        let date_act = getDateDay();
+
+        const container = parent.children[0].children[0].children[0];
+        container.classList.toggle('shareTask');
+
+        let share_class = parent.className;
+        let share_state = parent.children[0].children[0].children[0].className;
+        let share_value = parent.children[1].children[1].children[0].innerHTML;
+        let share_has = parent.children[1].children[1].children[1].innerHTML;
+        let share_dataset = parent.dataset;
+
+
+        const cTodo_share = {
+            child_className : share_class,
+            child_classNameState : share_state,
+            child_value : share_value,
+            childValue_has : share_has,
+            childDataSet : share_dataset,
+            lastSave : hour + "-" + date_act
+        }
+        //TODO : SEND cTodo_share TO SERVER
+        console.log(cTodo_share);
+    }
+
+    if (document.getElementById("contextMenu").style.display === "flex")
         hideMenu();
     else{
         menu.style.display = 'flex';
-        menu.style.left = e.pageX + "px";
-        menu.style.top = e.pageY + "px";
+        let out_height = window.innerHeight + window.scrollY - (e.pageY + menu.offsetHeight);
+
+        if(e.pageY + menu.offsetHeight > window.innerHeight + window.scrollY){
+            menu.style.top = e.pageY + out_height + "px";
+        }else{
+            menu.style.top = e.pageY + "px";
+        }
+
+        let out_width = window.innerWidth + window.scrollX - (e.pageX + 2*menu.offsetWidth);
+
+        if(e.pageX + 2*menu.offsetWidth > window.innerWidth + window.scrollX){
+            menu.style.left = e.pageX + out_width + "px";
+        }else{
+            menu.style.left = e.pageX + "px";
+        }
+
 
         //END
         menu.children[0].children[0].onclick = function(){zone1(parent);saveTasks(false);};
@@ -329,7 +515,8 @@ function rightClick(e){
         //DELETE
         menu.children[0].children[3].onclick = function(){zone4(parent);saveTasks(false);};
         //SHARE
-        menu.children[0].children[4].onclick = function(){zone5(parent);saveTasks(false);};
+        menu.children[0].children[4].children[2].children[0].children[0].onclick = function(){zone5(parent);saveTasks(false);};
+        menu.children[0].children[4].children[2].children[0].children[1].onclick = function(){zone5b(parent);saveTasks(false);};
     }
 }
 function hideMenu() {
@@ -338,10 +525,12 @@ function hideMenu() {
     document.getElementById(
         "contextMenuNote").style.display = "none";
 }
+let id_task = 0;
+const arr_new_val = [];
 
-function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, data_set) {
+function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hashtag, data_set, it_i) {
     const expand = document.createElement("i");
-    expand.onclick = function(){developChild()};
+    expand.onclick = function(){developChild(this)};
     expand.classList.add("fas");
     expand.classList.add("fa-chevron-down");
     expand.classList.add("expandChevron");
@@ -352,12 +541,17 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
     text.classList.add("textTask");
     const inputValue = input.value;
     const itag_end = document.createElement("i");
-    itag_end.classList.add("fas");
-    itag_end.classList.add("fa-check-circle");
+    // itag_end.classList.add("fas");
+    // itag_end.classList.add("fa-check-circle");
+
+    itag_end.classList.add('circle');
+
     itag_end.onclick = setFinish;
+    // itag_end.onclick = function(){setFinish;saveTasks(false)};
     //---------------------------------------------------COLLAPSIBLE
     const todoBanMain = document.createElement("div");
     todoBanMain.classList.add('todoBanMain');
+    // todoBanMain.setAttribute("data-", "important");
 
     const div_option = document.createElement("div");
     const div_option_container = document.createElement("div");
@@ -368,7 +562,7 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
 
     let nb_subtask = 0;
     const numberOfElement = document.createElement("p");
-    numberOfElement.innerText = `${nb_subtask}` + " sous-tâche(s) restante(s).";
+    numberOfElement.innerText = `${nb_subtask}` + " sous-tâche(s) restante(s)";
 
     const todoBanMainContainer = document.createElement("div");
     todoBanMainContainer.classList.add('todoBanMainContainer')
@@ -383,7 +577,12 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
     const div_number = document.createElement("div");
     collapsible_div_bodyContent.classList.add('collapsible_div_bodyContent');
     const collapsible_div_bodyContent_staticContent = document.createElement("div");
-    collapsible_div_bodyContent_staticContent.classList.add('collapsible_div_bodyContent_staticContent')
+    collapsible_div_bodyContent_staticContent.classList.add('collapsible_div_bodyContent_staticContent');
+    const ital = document.createElement("i");
+    ital.classList.add("fas");
+    ital.classList.add("fa-link");
+    ital.setAttribute("data-name", "linkToNote");
+    // ital.onclick = function(){linkToNoteC(this);saveTasks(false)};
     const itag_imp = document.createElement("i");
     itag_imp.classList.add("fas");
     itag_imp.classList.add("fa-exclamation-circle");
@@ -415,6 +614,7 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
     todoBanMain.oncontextmenu= rightClick;
     //---------------------------------------------------AppendChild
     collapsible_div_header.appendChild(expand);
+    div_option_container_static.appendChild(ital);
     div_option_container_static.appendChild(itag_imp);
     div_option_container_static.appendChild(itag_star);
     div_number.appendChild(numberOfElement);
@@ -493,8 +693,8 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
     }else{ //LS : ON RELOAD
         text.innerHTML = valueLS.split("#")[0];
 
-        if(hastag !== "undefined"){
-            spanhas.appendChild(document.createTextNode(hastag));
+        if(hashtag !== "undefined"){
+            spanhas.appendChild(document.createTextNode(hashtag));
             div_text.appendChild(spanhas);
         }
 
@@ -502,115 +702,189 @@ function createTask(keypress,filter, nbLS, stateLS, classLS, valueLS, hastag, da
         todoBanMain.setAttribute("data-date", data_set.date)
         todoBanMain.setAttribute("data-hierarchy", data_set.hierarchy)
 
+        // console.log(todoBanMain)
+        // console.log(arr_child_val)
+        // console.log(indexes_class)
+        // for(let i = 0 ; i < arr_child_val.length ; i++){
+        //     print("arr_child_val", arr_child_val, "pink");
+
+        for(let i = 0 ; i < indexes_class.length ; i++){
+            print("indexes_class", indexes_class)
+            console.log(indexes_class)
+            console.log(indexes_class[indexes_class.length - 1] - indexes_class[i])
+        }
+            // addChild(
+            //     todoBanMain.children[0].children[0].children[1].children[0],
+            //     true,
+            //     arr_child_val[it_i],
+            //     it_i
+            // );
+        // }
+        // console.log(arr_new_val)
+
         if(stateLS.length !== 1){
             for(let i = 0 ; i < stateLS.length ; i++){
                 collapsible_div_header.classList.add(stateLS[i]);
                 if(stateLS[i] === "endTasks"){
                     // console.log(todoBanMain.children[1].children[0])
                     todoBanMain.children[1].children[0].classList.toggle('endTasks_text');
+                    todoBanMain.children[1].children[0].classList.add('fas');
+                    todoBanMain.children[1].children[0].classList.add('fa-check-circle');
+                    todoBanMain.children[1].children[0].classList.remove('circle');
                     todoBanMain.children[1].children[1].children[0].classList.toggle('endTasks_text');
                     todoBanMain.children[1].children[2].children[0].classList.toggle('endTasks_container');
+                }else if(stateLS[i] === "specialTasks") {
+                    todoBanMain.children[1].children[2].children[0].classList.toggle('specialTasks_cross');
+                }else if(stateLS[i] === "importantTasks") {
+                    todoBanMain.children[1].children[2].children[0].classList.toggle('importantTasks_cross');
+                }else{
+                    // todoBanMain.children[1].children[0].classList.remove('fas');
+                    // todoBanMain.children[1].children[0].classList.remove('fa-check-circle');
+                    todoBanMain.children[1].children[0].classList.add('circle');
                 }
             }
 
         }
         myUL.appendChild(todoBanMain);
     }
+    // saveTodo(todoBanMain);
 }
+
+function createVisibleLink(parent, child){
+    console.log(parent);
+    console.log(child);
+
+    const overlay = document.createElement("div");
+    overlay.classList.add('overlay');
+    displayLink(true, overlay);
+    overlay.style.height = main_height + "px";
+
+    const segment = document.createElement("div");
+    segment.classList.add('segment');
+    const fromTop = parent.offsetTop + parent.offsetHeight/2; //+ todoContainer.offsetTop
+    const heightDiv = (child.offsetTop - fromTop) + child.offsetHeight/2;
+
+    segment.style.marginTop = fromTop + "px";
+    segment.style.height = heightDiv + "px";
+
+    const noVisibility = document.createElement("div");
+    noVisibility.classList.add('noVisibility');
+
+    noVisibility.style.height = main_height + "px";
+
+    // overlay.appendChild(segment)
+    // overlay.appendChild(noVisibility)
+    noVisibility.appendChild(segment)
+    overlay.appendChild(noVisibility)
+
+    document.body.appendChild(overlay)
+}
+
+function displayLink(state, element){
+    if(state){
+        if(element){element.classList.add('show')}
+    }else{element.classList.remove('show')}
+}
+
+function linkToNoteC(element){
+    let comp_select = 0;
+
+    const div = element.closest(".todoBanMain");
+    descriptionLink.classList.add('show');
+
+    for(let i = 0 ; i < myUL_note.childElementCount ; i++){
+        myUL_note.children[i].classList.add('choosingNote');
+
+        myUL_note.children[i].onclick = function (e){
+            if(comp_select++ === 0){
+                const res = e.target.closest('.noteCard');
+                res.classList.add("noteChoose");
+                myUL_note.children[i].querySelector('.txt_link_todo').innerText = "Todo " +
+                    `\"${div.children[1].children[1].children[0].innerText}\"` + " sélectionnée";
+                for(let i = 0 ; i < myUL_note.childElementCount ; i++){
+                    myUL_note.children[i].classList.remove('choosingNote');
+                }
+                descriptionLink.classList.remove('show');
+                createVisibleLink(div,myUL_note.children[i]);
+            }
+        }
+    }
+}
+
+function print(title, value, color="green"){
+    console.log("%c Print " + `${title}` + " : " + value, "color : " +`${color}`+ ";font-size:1.2em");
+}
+
+const todo_array = [];
 
 function saveTasks(hourSaveClick){
     const containerTodo = document.querySelector('#myUL');
     const containerTodoChildren = containerTodo.children; //todoBanMain
-    let containerTodo_subChildChildren;
 
-    //CHILD-------------------------------------------
-    let childClass = {
+    let childClass= {
         length: 0,
-        findClass: function ajoutElem (elem) {
+        SAfindClass: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
-    let child_classNameState = {
+    let child_classNameState= {
         length: 0,
-        findClassState: function ajoutElem (elem) {
+        SAfindClassState: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
     let childParent= {
         length: 0,
-        findParent: function ajoutElem (elem) {
+        SAfindParent: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
-    };
-    let childValue= {
+    };let childValue= {
         length: 0,
-        findValue: function ajoutElem (elem) {
+        SAfindValue: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
-    };
-    let childValue_has= {
+    };let childValue_has= {
         length: 0,
-        findValueHas: function ajoutElem (elem) {
+        SAfindValueHas: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
-    };
-    let childDataSet= {
+    };let childDataSet= {
         length: 0,
-        findDataSet: function ajoutElem (elem) {
+        SAfindDataSet: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
-    //SUB CHILD-------------------------------------------
     let subChildClass = {
         length: 0,
         findClassSub: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
-    let subChildValue= {
+    let subChildValue = {
         length: 0,
         findValueSub: function ajoutElem (elem) {
             [].push.call(this, elem);
         }
     };
     if(containerTodoChildren.length !== 0){
-        for(let i = 0 ; i < containerTodoChildren.length ; i++){
-            childClass.findClass(containerTodoChildren[i].className);
-            child_classNameState.findClassState(containerTodoChildren[i].children[0].children[0].children[0].className);
-            childParent.findParent(containerTodoChildren[i].closest(".todoBanMain"));
-            childValue.findValue(containerTodoChildren[i].children[1].children[1].children[0].innerHTML);
-            // if(containerTodoChildren[i].children[1].children[1].childElementCount > 1){
-            childValue_has.findValueHas(containerTodoChildren[i].children[1].children[1].children[1].innerHTML);
-            // }else{}
-            childDataSet.findDataSet(containerTodoChildren[i].dataset);
+        for(let i = 0 ; i < containerTodoChildren.length ; i++) {
+            for (let a = 0; a < containerTodoChildren[i].children[0].children[0].children[1].children[0].childElementCount; a++) {
+                subChildClass.findClassSub(containerTodoChildren[i].children[0].children[0].children[1].children[0].children[a].className)
+                subChildValue.findValueSub(containerTodoChildren[i].children[0].children[0].children[1].children[0].children[a].children[0].value)
+            }
         }
     }
-    // if(containerTodoChildren.length !== 0){
-    //     for(let i = 0 ; i < containerTodo_subChildChildren.length ; i++){
-    //         if(containerTodo_subChildChildren[i].className === "li_sub"){
-    //             subChildClass.findClassSub(containerTodo_subChildChildren[i].className);
-    //             subChildValue.findValueSub(containerTodo_subChildChildren[i].children[0].value);
-    //
-    //         }
-    //     }
-    // }
-    // if(containerTodo.childElementCount !== 0){
-    //     // for(let i = 0 ; i < containerTodoChildren.length; i++){
-    //     const containerTodo_subChild = document.querySelectorAll('.collapsible_div_bodyContent');
-    //
-    //     containerTodo_subChild.forEach(function(element){
-    //         for(let i = 0 ; i < containerTodo_subChild.childElementCount; i++){
-    //             console.log(element.children[i])
-    //             console.log(element.children)
-    //         }
-    //
-    //     })
-    //     // containerTodo_subChildChildren = containerTodo_subChild.children;
-    //     // }
-    //
-    // }else{containerTodo_subChildChildren = null}
-
-
+    // console.log(subChildValue)
+    if(containerTodoChildren.length !== 0){
+        for(let i = 0 ; i < containerTodoChildren.length ; i++){
+        childClass.SAfindClass(containerTodoChildren[i].className);
+        child_classNameState.SAfindClassState(containerTodoChildren[i].children[0].children[0].children[0].className);
+        childParent.SAfindParent(containerTodoChildren[i].closest(".todoBanMain"));
+        childValue.SAfindValue(containerTodoChildren[i].children[1].children[1].children[0].innerHTML);
+        childValue_has.SAfindValueHas(containerTodoChildren[i].children[1].children[1].children[1].innerHTML);
+        childDataSet.SAfindDataSet(containerTodoChildren[i].dataset);
+        }
+    }
     let hourSave;
     if (hourSaveClick === false) {
         hourSave = getDate();
@@ -619,24 +893,151 @@ function saveTasks(hourSaveClick){
     }
     const cTodo = {
         child_nb : containerTodo.childElementCount,
-        child_className : childClass,
+        child_className :  childClass,
+        child_value :  childValue,
         child_classNameState : child_classNameState,
-        child_value : childValue,
         childValue_has : childValue_has,
         childDataSet : childDataSet,
         lastSave : hourSave,
-        // subChild_className : subChildClass,
-        // subChild_value : subChildValue,
+        subChild_className : subChildClass,
+        subChild_value : subChildValue,
         counterTasks : compteurTodoBanMain
     }
-    localStorage.setItem("Node_todo", JSON.stringify(cTodo));
+
+    localStorage.setItem("todo", JSON.stringify(cTodo));
 }
 
+const arr_child_val = [];
+const arr_child_class = [];
+
+function storage(a,b){
+    arr_child_val.push(a);
+    arr_child_class.push(b);
+    return {arr_child_val,arr_child_class};
+}
+
+function saveTodo(todo){
+
+    let subChildClass = {
+        length: 0,
+        findClassSub: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    let subChildValue = {
+        length: 0,
+        findValueSub: function ajoutElem (elem) {
+            [].push.call(this, elem);
+        }
+    };
+    // if(containerTodoChildren.length !== 0){
+    //     for(let i = 0 ; i < containerTodoChildren.length ; i++) {
+    //         for (let a = 0; a < containerTodoChildren[i].children[0].children[0].children[1].children[0].childElementCount - 1; a++) {
+    //             subChildClass.findClassSub(containerTodoChildren[i].children[0].children[0].children[1].children[0].children[a].className)
+    //             subChildValue.findValueSub(containerTodoChildren[i].children[0].children[0].children[1].children[0].children[a].children[0].value)
+    //         }
+    //     }
+    // }
+
+    // let hourSave;
+    // if (hourSaveClick === false) {
+    //     hourSave = getDate();
+    // }else {
+    //     hourSave = hourSaveClick;
+    // }
+    // const number = containerTodoChildren.length - 1;
+    const todoLS = JSON.parse(localStorage.getItem("Node_todo"));
+
+    for(let i = 0 ; i < todoLS.length ; i++){
+        if(todo.dataset.hierarchy === todoLS[i].childDataSet.hierarchy){
+            console.log(i)
+            break;
+        }
+    }
+
+    const cTodo = {
+        child_className :  todo.className,
+        child_value :  todo.children[1].children[1].children[0].innerHTML,
+        child_classNameState : todo.children[0].children[0].children[0].className,
+        childValue_has : todo.children[1].children[1].children[1].innerHTML,
+        childDataSet : todo.dataset,
+        // lastSave : hourSave,
+        // subChild_className : subChildClass,
+        // subChild_value : subChildValue,
+        // counterTasks : compteurTodoBanMain
+    }
+
+    todo_array.push(cTodo)
+    localStorage.setItem("Node_todo", JSON.stringify(todo_array));
+}
+
+function test(){
+    const test = [];
+    for(let i = 0 ; i <= 2; i++){
+        for(let a = 0 ; a <= 4; a++){
+            test.push([a, i]);
+        }
+    }
+    console.log(test);
+}
+
+let indexes_class;
 
 function reloadTasks(){
-    const elem = JSON.parse(localStorage.getItem("Node_todo"));
+    const elem = JSON.parse(localStorage.getItem("todo"));
     let nb_child = elem.child_nb;
     lastSaveTime.innerHTML =  elem.lastSave;
+
+    for(let i = 0 ; i < elem.subChild_value.length ; i++) {
+        storage(elem.subChild_value[i],elem.subChild_className[i]);
+        // console.log("value : " + elem.subChild_value[i])
+        // console.log("class : " + elem.subChild_className[i])
+    }
+
+    function setChild(){
+        if(arr_child_class.includes("collapsible_div_bodyContent_staticContent")){
+            function getAllIndexes(arr, val) {
+                let indexes = [], i = -1;
+                while ((i = arr.indexOf(val, i+1)) !== -1){
+                    indexes.push(i);
+                }
+                return indexes;
+            }
+
+            indexes_class = getAllIndexes(arr_child_class, "collapsible_div_bodyContent_staticContent");
+
+            for(let i = 0 ; i < indexes_class.length ; i++){
+                arr_child_val.splice(indexes_class[i] - i, 1);
+            }
+        }
+        // console.log(arr_child_class)
+    }
+    setChild();
+
+    for(let i = 0 ; i < nb_child ; i++){
+        console.log("nb child : " + i)
+        let class_child = elem.child_className[i];
+        let state_child = elem.child_classNameState[i];
+        let value_child = elem.child_value[i];
+        let value_child_has = elem.childValue_has[i];
+        let dataset_child = elem.childDataSet[i];
+        createTask(
+            false,
+            false,
+            nb_child,
+            state_child.split(" "),
+            class_child,
+            value_child,
+            value_child_has,
+            dataset_child,
+            i
+        );
+    }
+}
+
+function getShareTask(){
+    const elem = 0 ;
+    let nb_child = elem.child_nb;
 
     for(let i = 0 ; i < nb_child ; i++){
         let class_child = elem.child_className[i];
@@ -660,6 +1061,7 @@ function reloadTasks(){
 
 function reloadNote(){
     const parse_Note = JSON.parse(localStorage.getItem("Node_note"));
+    console.log(parse_Note)
     let nb_child = parse_Note.child_nb;
     // lastSaveTime.innerHTML =  parse.lastSave;
 
@@ -690,13 +1092,11 @@ input.addEventListener('keypress', function(e) {
     }
 }, false);
 
-
 butNote.addEventListener('click', function(e) {
     createNote("button");
     saveNote();
 
 }, false);
-
 
 impTask_start.addEventListener('click', function (e){
     createTask("button","important");
@@ -776,7 +1176,7 @@ function removeNote(element) {
     element.parentElement.parentElement.parentElement.classList.add('slideOut')
     setTimeout(function (){
         element.parentElement.parentElement.parentElement.remove();
-    }, 200)
+    }, 500)
 }
 
 let mouse = false;
@@ -785,13 +1185,13 @@ function mouseEnter(element){
     mouse = true;
     infoNote(element);
 }
+
 function mouseLeave(element){
     setTimeout(function (){
         mouse = false;
         infoNote(element);
     },100)
 }
-
 
 function infoNote(element){
     const res =  element.parentElement.parentElement.parentElement.children[1];
@@ -812,6 +1212,11 @@ function createNote(keypress,nb,class_note,title_note,content,style,dataset){
     const divicon = document.createElement("div");
     const titre_in = document.createElement("input");
     const cont_in = document.createElement("textarea");
+
+    const txt_link_todo = document.createElement("p");
+    txt_link_todo.classList.add('txt_link_todo')
+    txt_link_todo.innerHTML = "Aucun todo sélectionné."
+
     cont_in.classList.add('contentNote')
     div.classList.add('headerTitle')
     divicon.classList.add('headerTitleIcon')
@@ -881,6 +1286,7 @@ function createNote(keypress,nb,class_note,title_note,content,style,dataset){
     lin.appendChild(div);
     lin.appendChild(divOption);
     lin.appendChild(cont_in);
+    lin.appendChild(txt_link_todo);
 
     if(keypress === "button"){
         let hour = getDate();
@@ -973,6 +1379,18 @@ account.addEventListener('click', function (e){
 function chooseUser(id){
     console.log(id)
 }
+const filterTask = document.querySelector('.filter_selector');
+filterTask.addEventListener('click', function (e){
+    if(e.target.tagName === "P" || e.target.tagName === "I"){
+        document.querySelector('.filter_selector').classList.add('bumpOnClick');
+        setTimeout(function (){
+            document.querySelector('.filter_selector').classList.remove('bumpOnClick')
+        },200)
+        document.querySelector('.categories').classList.toggle('categories_show')
+    }else{
+        document.querySelector('.categories').classList.remove('categories_show')
+    }
+});
 
 function rightClickNote(e){
     e.preventDefault();

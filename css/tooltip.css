@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+
+
+.tooltip{
+    position: relative;
+    margin: auto;
+}
+.label_tooltip{
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    left: 50%;
+    transform: translate(-50%, 35px);
+
+    background: var(--td_bg_body);
+    box-shadow: var(--td_bx_shadow_container);
+    color: var(--td_color_title);
+
+    border-radius: var(--border1);
+    padding: 0.3em;
+
+    z-index: 1000;
+    opacity: 0;
+    transition: var(--transition3);
+}
+.label_tooltip p{
+    font-size: var(--font_tooltip)!important;
+}
+#tooltip_0:hover #for_tooltip_0{
+    opacity: 1;
+    transition: var(--transition3);
+}
+#tooltip_1:hover #for_tooltip_1{
+    opacity: 1;
+    transition: var(--transition3);
+}
+#tooltip_2:hover #for_tooltip_2{
+    opacity: 1;
+    transition: var(--transition3);
+}
