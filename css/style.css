@@ -40,6 +40,7 @@
     align-items: center;
     font-size: .8em;
     gap: 1em;
+    padding: 0 2em;
 }
 .color-mode i{
     color: var(--td_color_title);
@@ -78,11 +79,11 @@
 }
 ul {
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 1em 3em 2em;
 }
 
-.todoContainer ul li,
+.todoContainer ul li:not(.li_sub),
 .noteContainer ul li{
     cursor: pointer;
     position: relative;
@@ -104,20 +105,24 @@ ul {
     user-select: none;
     z-index: 5;
 }
+
 .li_sub{
-    width: 100% !important;
-    /*background: var(--li_sub)!important;*/
-    /*padding: 0 1em 0 0!important;*/
     z-index: 100!important;
-    padding: .5em 1em .5em .5em!important;
-    margin: .5em 0 .5em auto !important;
-    display: grid!important;
-    grid-auto-flow: column!important;
+    padding: 0 1em 0 .5em!important;
+    display: flex!important;
+    cursor: default!important;
     transition: var(--transition1);
-    grid-template-columns: 1fr 8%!important;
+
+    background: var(--td_bg_body);
+    margin: 0 0.5em 0.5em!important;
+    border-radius: var(--border1);
+}
+.li_sub:first-child{
+    margin:0.5em!important;
 }
 .li_sub input{
     background: var(--td_bg_body);
+    padding: 0 1em!important;
 }
 
 .textTask{
@@ -128,11 +133,38 @@ ul {
     padding: 1em;
     color: var(--td_color_grey);
 }
+.pickerHour{
+    opacity: 0;
+    /*width: 100%;*/
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition3);
+}
+.pickerHour span{
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    opacity: 0;
+    width: max-content;
+    cursor: default!important;
+    background: var(--td_bg_container);
+    border: 1px solid var(--td_color_grey);
+    border-radius: var(--border1);
+    box-shadow: var(--td_bx_shadow_container_2);
+    padding: .5em;
+    transform: translate(-50%, 50%);
+    color: var(--td_color_grey)!important;
+}
+.pickerHour:hover span{
+    opacity: 1!important;
+    transition: var(--transition3);
+}
 .todoBanMainContainer div{
-    width: inherit;
+    width: 100%;
+    /*overflow: hidden;*/
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-content: center;
     flex-direction: row;
 }
@@ -184,10 +216,11 @@ ul {
     /*margin: 0 1em;*/
 }
 .close{
-    margin: auto 0  auto auto;
+    margin: 1em 0 1em 1em;
     font-size: 1.1em;
     cursor: pointer;
     transform: scale(1.4);
+    opacity: .5;
     transition: var(--transition2);
 }
 .close:hover{
@@ -250,6 +283,13 @@ ul {
     color: white;
     text-align: center;
 }
+.headerOne{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 0 0 1em 0;
+}
 input[type=checkbox]{
     width: auto;
     margin: auto 0;
@@ -274,13 +314,63 @@ input::placeholder{
 input::selection{
     background: var(--td_color_title);
 }
+.shareAllContainer{
+    cursor: pointer;
+    background: var(--td_bg_container);
+    padding: 0.5em;
+    border-radius: var(--border1);
+    transition: var(--transition2);
+}
+.shareAllContainer p{
+    color: var(--td_color_grey);
+}
+.shareAllContainer:hover{
+    background: var(--td_bg_body);
+    transition: var(--transition2);
+}
+.subSearch{
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 1em;
+}
+.subSearch p{
+    color: var(--td_color_grey);
+    /*cursor: pointer;*/
+}
+.sendRequest{
+    border: 1px solid var(--td_bg_body);
+    padding: 0.5em 1em;
+    border-radius: var(--border1);
+    background: var(--td_bg_container);
+    transition: var(--transition3);
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.sendRequest i{font-size: inherit}
+.sendRequest:hover{
+    background: var(--td_bg_body);
+    transition: var(--transition3);
+}
+.separator{
+    border: 1px solid var(--td_color_grey);
+    border-radius: var(--border1);
+    margin:  0;
+}
 .filter_selector{
     width: fit-content;
     position: relative;
     z-index: 999!important;
     background: var(--td_bg_body);
     padding: 0.5em;
-    margin: .5em 0 auto auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
     border-radius: var(--border1);
     transform: scale(1);
     transition: transform .2s!important;
@@ -296,28 +386,40 @@ input::selection{
 
 
 .addTask_bar{
+    display: flex;
+    gap: 1em;
+    flex-direction: row;
     position: relative;
+    overflow: visible!important;
 }
 .filterTop{
-    border: 2px solid transparent;
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: relative;
     height: 100%;
     display: flex;
-    padding: .2em;
-    align-items: center;
+    align-items: stretch;
     align-content: center;
     justify-content: center;
-    opacity: 0;
-    transform: scaleX(0);
-    transform-origin: right;
     transition: var(--transition3);
 }
-.filterTop div{
+#pickerHour{
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    left: 50%;
+    width: auto;
+    opacity: 0;
+    transform: translate(-50%, 60px) scale(0);
+    transform-origin: top;
+    background: var(--td_bg_container);
+    box-shadow: var(--td_bx_shadow_container);
+    z-index: 600;
+    border: 1px solid var(--td_color_grey);
+    transition: none;
+}
+.filterTop_selector{
     border-radius: var(--border1);
     gap: 1em;
-    width: 80px;
+    /*width: 80px;*/
     display: flex;
     align-items: center;
     align-content: center;
@@ -325,8 +427,11 @@ input::selection{
     background: var(--td_color_grey);
     padding: .8em;
 }
+
 .filterTop i{
     cursor: pointer;
+    font-size: 1em;
+    color: var(--w);
     transform: scale(1);
     transition: var(--transition2);
 }
@@ -334,9 +439,9 @@ input::selection{
     transform: scale(1.2) !important;
     transition: var(--transition2);
 }
-.filterTop i:hover, .div_optionstatic div i[name="important"]{color: var(--red)!important}
-/*.filterTop i:first-child:hover{color: #2196f3}*/
-.filterTop i:last-child:hover, .div_optionstatic div i[name="star"]{color: var(--green)!important}
+/*.filterTop_selector div button i:hover, .div_optionstatic div i[name="important"]{color: var(--red)!important}*/
+/*.filterTop_selector div button i:first-child:hover{color: #2196f3!important;}*/
+/*.filterTop_selector div button i:last-child:hover, .div_optionstatic div i[name="star"]{color: var(--green)!important}*/
 
 .sectionFilter{
     position: relative;
@@ -383,8 +488,8 @@ input::selection{
     border: 2px solid transparent!important;
 }
 h2{
-    margin-bottom: 15px;
     text-align: initial;
+    margin: 0 0 .5em 0;
     color: var(--td_color_title);
     font-size: var(--font3);
     transition: var(--transition1);
@@ -463,6 +568,9 @@ button i:hover{
     transform: scale(1.2);
     transition: var(--transition3);
 }
+.div_option_container i{
+    color: var(--td_color_grey) !important;
+}
 
 
 .div_option,
@@ -484,6 +592,9 @@ button i:hover{
 }
 .div_optionstatic{
     opacity: 1!important;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 .div_option div,
 .div_optionstatic div{
@@ -493,10 +604,11 @@ button i:hover{
     align-items: center;
     align-content: center;
     justify-content: center;
-    background: var(--td_bg_container_on);
+    /*background: var(--td_bg_container_on);*/
+    background: none;
     padding: .8em;
     /*width: 80px;*/
-    box-shadow: var(--td_bx_shadow_container);
+    /*box-shadow: var(--td_bx_shadow_container);*/
 }
 .headerTitle{
     position: relative;
@@ -671,7 +783,7 @@ hr{background: var(--w);}
 }
 
 
-.collapsible li{margin: 0!important;}
+.collapsible li:not(.li_sub){margin: 0!important;}
 
 .collapsible-body {
     display: none;
@@ -693,6 +805,7 @@ hr{background: var(--w);}
     flex-direction: column;
     /*border: 2px dashed var(--grey2)!important;*/
     border: 1px solid var(--grey2)!important;
+    box-shadow: 0px 4px 0px 0px grey;
     border-radius: var(--border1);
 }
 .collapsible-body span:hover::before {
@@ -739,6 +852,7 @@ hr{background: var(--w);}
     width: 90%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex-direction: row;
     align-content: center;
     /*padding: 0 15px 0 0;*/
@@ -748,12 +862,17 @@ hr{background: var(--w);}
     cursor: pointer;
     color: var(--td_bg_container);
 }
+/*.todoBanMainContainer span{padding: 1em 1em 1em 0}*/
+
 .todoBanMainContainer .fa-check-circle{
     color: var(--td_color_grey);
 }
 
-.todoBanMainContainer i:first-child{
-    /*margin-right: 1em;*/
+.todoBanMainContainer .div_option i:first-child{
+    transform: scale(1.2) !important;
+}
+.todoBanMainContainer .div_option i{
+    transform: scale(1.4) !important;
 }
 
 .collapsible_div_bodyContent_staticContent{
@@ -775,12 +894,12 @@ hr{background: var(--w);}
 }
 .collapsible_div_bodyContent_staticContent i{
     transform: scale(1);
-    color: var(--w);
+    /*color: var(--w);*/
     cursor: pointer;
     transition: var(--transition2);
 }
 .collapsible_div_bodyContent_staticContent i:hover{
-    transform: scale(1.4) !important;
+    transform: scale(1.4);
     transition: var(--transition2);
 }
 #myUL > div:last-child .collapsible-body{padding: 0}
@@ -831,7 +950,7 @@ hr{background: var(--w);}
 }
 @media all and (max-width: 600px) {
     .categories{flex-direction: column}
-    .header,ul{padding: 2em}
+    .header,ul,.save{padding: 2em}
     #myUL_note,#myUL{padding: 0 2em 2em 2em}
 }
 
@@ -1067,4 +1186,28 @@ hr{background: var(--w);}
     border-radius:var(--border1);
     -webkit-border-radius:var(--border1);
     -moz-border-radius:var(--border1);
+}
+
+@media screen and (max-width:700px){
+    .canvasChart{display: none!important;}
+}
+
+.containerChart{
+    width: auto!important;
+    margin: 0 20% 0 auto;
+}
+.canvasChart{
+    background: none;
+    width: 45px !important;
+    margin: 0;
+    height: 45px;
+    padding: 20%;
+    position: relative;
+}
+.canvasChart_p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--td_color_grey);
 }

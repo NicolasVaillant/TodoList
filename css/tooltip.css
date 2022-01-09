@@ -1,17 +1,21 @@
 @charset "utf-8";
 
-
-
 .tooltip{
     position: relative;
     margin: auto;
 }
+.clickMenu{
+    background: var(--td_bg_body) !important;
+    transition: var(--transition3);
+}
+
 .label_tooltip{
     position: absolute;
     bottom: 0;
     white-space: nowrap;
     left: 50%;
     transform: translate(-50%, 35px);
+    cursor: default!important;
 
     background: var(--td_bg_body);
     box-shadow: var(--td_bx_shadow_container);
@@ -24,18 +28,16 @@
     opacity: 0;
     transition: var(--transition3);
 }
+.label_tooltip.ss_sub{transform: translate(-50%, 45px);}
 .label_tooltip p{
     font-size: var(--font_tooltip)!important;
 }
-#tooltip_0:hover #for_tooltip_0{
-    opacity: 1;
-    transition: var(--transition3);
-}
-#tooltip_1:hover #for_tooltip_1{
-    opacity: 1;
-    transition: var(--transition3);
-}
-#tooltip_2:hover #for_tooltip_2{
+#tooltip_0:hover ~#for_tooltip_0,
+#tooltip_1:hover ~#for_tooltip_1,
+#tooltip_2:hover ~#for_tooltip_2,
+#tooltip_3:hover ~#for_tooltip_3,
+#tooltip_4:hover ~#for_tooltip_4,
+#tooltip_5:hover ~#for_tooltip_5{
     opacity: 1;
     transition: var(--transition3);
 }

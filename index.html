@@ -7,27 +7,48 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-
+    
+    <link rel="icon" href="ressources/favicon/check.ico">
+    <link rel="icon" href="ressources/favicon/check_16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="ressources/favicon/check_32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="ressources/favicon/check_48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="ressources/favicon/check_64.png" sizes="64x-4" type="image/png">
+    
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/anim.css">
     <link rel="stylesheet" href="css/root.css">
     <link rel="stylesheet" href="css/tooltip.css">
+    <link rel="stylesheet" href="css/menu.css">
 
     <link rel="stylesheet" href="css/mediaqueries/style_media_web.css">
     <link rel="stylesheet" href="css/mediaqueries/style_media_alt.css">
     <link rel="stylesheet" href="css/mediaqueries/style_media_mob.css">
+    
+    <link rel="stylesheet" href="css/attr.css">
+    
+    <link rel="manifest" href="manifest.json">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <link rel="stylesheet" href="fontawesome/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/0.6.1/progressbar.min.js"></script>
+    
     <script src="js/script.js" defer></script>
+    <script src="js/backup.js" defer></script>
+    
+<!--    <script src="node_modules/pickerjs/src/js/picker.js" defer></script>-->
+<!--    <link rel="stylesheet" href="node_modules/pickerjs/src/css/picker.css">-->
     
     <title>Todo List</title>
 </head>
 
 <body>
+
+
 <div class="main">
     <div class="choose_user" id="account" style="display: none">
         <div class="container">
@@ -53,73 +74,115 @@
         <div class="save">
             <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
             <div class="color-mode">
-                
-                <div class="tooltip" id="tooltip_0">
-                    <button class="button_tooltip"><i id="rb" class="fas fa-sync-alt"></i></button>
+                <div class="tooltip" id="clickMenu1">
+                    <button class="button_tooltip" id="tooltip_0"><i id="rb" class="fas fa-sync-alt"></i></button>
                     <div class="label_tooltip" id="for_tooltip_0"><p>Synchroniser</p></div>
                 </div>
-                <div class="tooltip" id="tooltip_1">
-                    <button class="button_tooltip"><i id="dm" class="fas fa-adjust"></i></button>
-                    <div class="label_tooltip" id="for_tooltip_1"><p>Mode sombre</p></div>
+                <div class="menu"  id="clickMenu2">
+                    <i id="menu" class="fas fa-ellipsis-h"></i>
+                    <div class="menu_der">
+                        <ul>
+                            <li id="first_label_menu">
+                                <i id="dm" class="fas fa-adjust"></i>
+                                <p>Mode sombre</p>
+                            </li>
+                            <li id="switchDirection" onclick="switchDirection(this)">
+                                <div class="iconDirection">
+                                    <div class="square1"></div>
+                                    <div class="square2"></div>
+                                </div>
+                                <p class="flexDirectionMode">View Ligne</p>
+                            </li>
+                            <li>
+                                <a href="https://nicolasvaillant.net">
+                                    <i class="fas fa-globe-europe"></i>
+                                    <p>Site internet</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
     <div class="content">
         <div class="todoContainer">
             <div id="myDIV" class="header">
-                <h2 class="date">Todo List</h2>
+                <div class="headerOne">
+                    <h2 class="date">Todo List</h2>
+                    <div class="shareAllContainer">
+                        <p class="shareAll">Tout partager <i class="fas fa-share-square"></i></p>
+                    </div>
+                </div>
                 <div class="addTask_bar">
                     <input type="text" id="myInput" placeholder="Ajouter une tâche">
-                    <div class="filterTop">
-                        <div>
-<!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
-                            <i id="impTask_start" class="fas fa-exclamation-circle"></i>
-                            <i id="speTask_start" class="fas fa-star"></i>
+                    <div class="subSearch">
+                        <div class="filterTop">
+                            <input type="datetime-local" id="pickerHour">
+                            <div class="filterTop_selector">
+                                <!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
+                                <div class="tooltip">
+                                    <button class="button_tooltip" id="tooltip_3"><i id="clockChoice" class="fas fa-clock"  onclick="createTaskButton(this.id)"></i></button>
+                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_3"><p>Ajouter un rappel dans le temps</p></div>-->
+                                </div>
+                                <div class="tooltip">
+                                    <button class="button_tooltip" id="tooltip_4"><i id="impTask_start" class="fas fa-exclamation-circle" onclick="createTaskButton(this.id)"></i></button>
+                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_4"><p>Créer une tâche importante</p></div>-->
+                                </div>
+                                <div class="tooltip">
+                                    <button class="button_tooltip" id="tooltip_5"><i id="speTask_start" class="fas fa-star" onclick="createTaskButton(this.id)"></i></button>
+                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_5"><p>Créer une tâche spéciale</p></div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <button id="button_start" class="sendRequest" type="button" onclick="createTaskButton(this.id)">
+                            Créer <i class="fas fa-arrow-alt-circle-right"></i>
+                        </button>
+                        <div class="separator"></div>
+                        <div class="filter_selector">
+                            <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
+                            <div class="categories">
+                                <input id="all"
+                                       type="radio"
+                                       value="radio"
+                                       name="categories"
+                                       onclick="filterTasks(this.id)"
+                                       checked>
+                                <label for="all">All</label>
+                                <input id="importantTasks"
+                                       type="radio"
+                                       value="radio"
+                                       name="categories"
+                                       onclick="filterTasks(this.id)">
+                                <label for="importantTasks">Important</label>
+                                <input id="specialTasks"
+                                       type="radio"
+                                       value="radio"
+                                       name="categories"
+                                       onclick="filterTasks(this.id)">
+                                <label for="specialTasks">Spécial</label>
+                                <input id="reminder"
+                                       type="radio"
+                                       value="radio"
+                                       name="categories"
+                                       onclick="filterTasks(this.id)">
+                                <label for="reminder">
+                                    <i class="fas fa-clock"></i>
+                                </label>
+                                <input id="share"
+                                       type="radio"
+                                       value="radio"
+                                       name="categories"
+                                       onclick="filterTasks(this.id)">
+                                <!--                    <label for="share">-->
+                                <!--                        <i class="fas fa-share-square"></i>-->
+                                <!--                    </label>-->
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="filter_selector">
-                    <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
-                    <div class="categories">
-                        <input id="all"
-                               type="radio"
-                               value="radio"
-                               name="categories"
-                               onclick="filterTasks(this.id)"
-                               checked>
-                        <label for="all">All</label>
-                        <input id="importantTasks"
-                               type="radio"
-                               value="radio"
-                               name="categories"
-                               onclick="filterTasks(this.id)">
-                        <label for="importantTasks">Important</label>
-                        <input id="specialTasks"
-                               type="radio"
-                               value="radio"
-                               name="categories"
-                               onclick="filterTasks(this.id)">
-                        <label for="specialTasks">Spécial</label>
-                        <input id="reminder"
-                               type="radio"
-                               value="radio"
-                               name="categories"
-                               onclick="filterTasks(this.id)">
-                        <!--                    <label for="reminder">-->
-                        <!--                        <i class="fas fa-clock"></i>-->
-                        <!--                    </label>-->
-                        <input id="share"
-                               type="radio"
-                               value="radio"
-                               name="categories"
-                               onclick="filterTasks(this.id)">
-                        <!--                    <label for="share">-->
-                        <!--                        <i class="fas fa-share-square"></i>-->
-                        <!--                    </label>-->
-                    </div>
-                </div>
+                
+                
                 
 <!--                <hr>-->
             </div>
@@ -188,12 +251,10 @@
             </div>
             <div class="extend_share">
                 <ul>
-                    <li>
-                        <i class="fas fa-quote-right"></i>
-                        Le contenu de la note</li>
-                    <li>
-                        <i class="fas fa-sticky-note"></i>
-                        La note</li>
+                    <li><i class="fas fa-quote-right"></i>
+                        Le contenu du todo</li>
+                    <li><i class="fas fa-sticky-note"></i>
+                        Le todo</li>
                 </ul>
             </div>
         </li>
@@ -263,5 +324,3 @@
 
 </body>
 
-
-</html>

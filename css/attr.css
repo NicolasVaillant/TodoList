@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+[data-state="disabled"]{
+    color: var(--td_color_grey) !important;
+    opacity: .5!important;
+    cursor: not-allowed!important;
+}
+[data-state="disabled"]:hover{
+    transform: scale(1)!important;
+}

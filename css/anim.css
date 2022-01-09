@@ -47,6 +47,9 @@
 .specialTasks_color{
     color: var(--green)!important;
 }
+.clkTasks_color{
+    color: #89e9ff!important;
+}
 .colorFont{
     color: var(--b_sec) !important;
 }
@@ -80,9 +83,16 @@
     transform: scale(.99);
     transition: var(--transition3);
 }
+.td-transform-none{
+    transform: none!important;
+}
 .bumpOnClick{
     transform: scale(.96);
     transition: var(--transition3);
+}
+.bumpOnClick2{
+    transform: scale(.85) !important;
+    transition: var(--transition4);
 }
 
 .slideOut{
@@ -120,4 +130,41 @@
 
 .show{
     display: flex!important;
+}
+.showPicker{
+    transform:  translate(-50%, -60px) scale(1)!important;
+    opacity: 1!important;
+    /*transition: var(--transition3);*/
+}
+.showHour{
+    transform: translateX(0)!important;
+    opacity: 1!important;
+    transition: var(--transition3);
+}
+
+.td-color-red{color: red!important;}
+.td-color-green{color: green!important;}
+.td-color-orange{color: orange!important;}
+.td-color-default{color: var(--td_color_grey)!important;}
+
+.td-padding{
+    padding: 1em;
+}
+.td-without-padding{
+    padding: 1em 1em 1em 0;
+}
+
+.showMenu{
+    opacity: 1!important;
+    transition: var(--transition3);
+    transform-origin: top right;
+    transform: translate(-0%, 50%) scale(1)!important;
+}
+.gridH{
+    flex-direction: row;
+    gap: 2em;
+}
+.gridV{
+    flex-direction: column;
+    gap: 1em;
 }
