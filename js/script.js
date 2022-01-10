@@ -213,9 +213,6 @@ function updateNBSubChild(element, index){
 
 }
 
-function changeChart(div, value, index){
-    const element = div.querySelector('.containerChart')
-}
 
 
 function removeOne(element){
@@ -233,7 +230,7 @@ function removeOne(element){
     updateNBSubChild(div, todoBanMain.dataset.num)
 }
 
-function addChild(element, localstorage, valueLS, nbSubChild, index){
+function addChild(element, localstorage, valueLS, classLS){
     compteurLiSub++;
 
     const div = element.closest('.todoBanMain').querySelector('.collapsible_div_bodyContent')
@@ -241,11 +238,30 @@ function addChild(element, localstorage, valueLS, nbSubChild, index){
 
     if(localstorage === true){
         // print("valueLS", allValues, "red")
+
+
         let allValues = valueLS.filter(value => Object.keys(value).length !== 0);
 
         for(let i = 0 ; i < allValues.length ; i++){
             const li_sub = document.createElement("li");
-            li_sub.classList.add('li_sub');
+            const disabled_li_sub_obj = document.createElement("span");
+            const end_subTasks = document.createElement("input");
+            let arr = classLS[i].split(" ");
+
+            if(arr.length === 2){
+                li_sub.classList.add(arr[0]);
+                li_sub.classList.add(arr[1]);
+
+                disabled_li_sub_obj.classList.add("disabled_li_sub_obj");
+                disabled_li_sub_obj.classList.add("disabled_li_sub_obj_ACTIVE");
+
+                end_subTasks.checked = true;
+
+            }else{
+                disabled_li_sub_obj.classList.add("disabled_li_sub_obj");
+                li_sub.classList.add(arr[0]);
+            }
+
             li_sub.setAttribute("data-hierarchy", compteurLiSub.toString());
 
             const input_set = document.createElement("input");
@@ -255,6 +271,15 @@ function addChild(element, localstorage, valueLS, nbSubChild, index){
             input_set.onkeyup = function(e){inputSubEnter(e.key,this); saveTasks(getDate("h"));};
 
             input_set.value = allValues[i];
+
+            end_subTasks.setAttribute("type", "checkbox");
+            end_subTasks.classList.add("end");
+            end_subTasks.onclick = function (){changeStateLiSub(end_subTasks);saveTasks(getDate("h"));}
+
+            li_sub.appendChild(disabled_li_sub_obj);
+
+            li_sub.appendChild(end_subTasks);
+
             li_sub.appendChild(input_set);
 
             const span = document.createElement("span");
@@ -281,7 +306,18 @@ function addChild(element, localstorage, valueLS, nbSubChild, index){
         input_set.classList.add('input_sub');
         input_set.onkeyup = function(e){inputSubEnter(e.key,this); saveTasks(getDate("h"));};
 
-        // input_set.value = arr_child_val[a];
+        const disabled_li_sub_obj = document.createElement("span");
+        disabled_li_sub_obj.classList.add("disabled_li_sub_obj");
+
+        const end_subTasks = document.createElement("input");
+        end_subTasks.setAttribute("type", "checkbox");
+        end_subTasks.classList.add("end");
+        end_subTasks.onclick = function (){changeStateLiSub(end_subTasks);saveTasks(getDate("h"));}
+
+        li_sub.appendChild(disabled_li_sub_obj);
+
+        li_sub.appendChild(end_subTasks);
+
         li_sub.appendChild(input_set);
 
         const span = document.createElement("span");
@@ -302,6 +338,21 @@ function addChild(element, localstorage, valueLS, nbSubChild, index){
     const dive = todoBanMain.querySelector('.collapsible_div_bodyContent');
 
     updateNBSubChild(dive, todoBanMain.dataset.num)
+}
+
+function changeStateLiSub(element){
+    const parent = element.parentElement;
+    const fst_child = element.parentElement.children[0];
+
+    if(element.checked){
+        parent.classList.add('li_sub_disabled');
+        fst_child.classList.add('disabled_li_sub_obj_ACTIVE');
+        parent.querySelector('.input_sub').disabled = true;
+    }else{
+        parent.classList.remove('li_sub_disabled');
+        fst_child.classList.remove('disabled_li_sub_obj_ACTIVE');
+        parent.querySelector('.input_sub').disabled = false;
+    }
 }
 
 list.addEventListener('click', function(ev) {
@@ -625,6 +676,7 @@ function createTask(
     data_set,
     valueLS_subChild,
     todos_nbLS_subChild,
+    todos_classLS_subChild,
     index) {
 
     const expand = document.createElement("i");
@@ -881,10 +933,8 @@ function createTask(
 
         text.innerHTML = valueLS.split("#")[0];
 
-
-
         if (Object.keys(valueLS_subChild).length !== 0) {
-            addChild(todoBanMain, true, valueLS_subChild);
+            addChild(todoBanMain, true, valueLS_subChild, todos_classLS_subChild);
         }
 
         if (hashtag !== "undefined") {
@@ -980,7 +1030,7 @@ function createTask(
         div_text.appendChild(containerChart);
         myUL.appendChild(todoBanMain);
     }
-    e(todoBanMain,ctr_todos_chart, Object.keys(valueLS_subChild).length, i);
+    createChart(todoBanMain,ctr_todos_chart);
     return true;
 }
 
@@ -1135,6 +1185,7 @@ function reloadTasks(){
         let todos_value_subChild = localStorageTodos.e[i][4];
         let todos_value_child = localStorageTodos.e[i][5];
         let todos_nb_subChild = localStorageTodos.e[i][6];
+        let todos_class_subChild = localStorageTodos.e[i][7];
 
         createTask(
             false,
@@ -1148,33 +1199,47 @@ function reloadTasks(){
             todos_dataset_child,
             todos_value_subChild,
             todos_nb_subChild,
+            todos_class_subChild,
             i
         );
     }
 }
-
-function e(element, i, nb_subchild){
-    const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-
-    // console.log(localStorageTodos.e)
-
-    const allChart_containers = element.querySelector('.containerChart')
-    const config = {
-        strokeWidth: 10,
-        easing: 'easeInOut',
-        duration: 1400,
-        color: '#9122b6',
-        trailColor: '#cbbcbc',
-        trailWidth: 1,
-        svgStyle: null
-    }
-
-    const a = ["0.9", "0.75", "0.9", "0.5"]
-
-    const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
-    new ProgressBar.Circle(re,config).animate(a[i - 1]);
-
+const config = {
+    strokeWidth: 10,
+    easing: 'easeInOut',
+    duration: 1400,
+    color: '#9122b6',
+    trailColor: '#cbbcbc',
+    trailWidth: 1,
+    svgStyle: null
 }
+
+// function createChart(element, i){
+function createChart(element, value = 0.5){
+    const div = element.closest('.todoBanMain');
+    const allChart_containers = div.querySelector('.containerChart')
+    // const a = ["0.9", "0.75", "0.9", "0.5"]
+    const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
+    // new ProgressBar.Circle(re,config).animate(a[i - 1]);
+    new ProgressBar.Circle(re,config).animate(value);
+}
+
+function changeChart(div, valueNum, index){
+    const element = div.querySelector('.containerChart')
+    console.log(element, valueNum, index)
+
+    element.querySelector('.canvasChart').children[1].remove();
+
+    div.querySelectorAll('.li_sub').forEach( function (child) {
+        console.log(child.className)
+    });
+
+    // console.log(div.querySelectorAll('.li_sub'), valueNum)
+
+    createChart(element, .4);
+}
+
+
 
 function getShareTask(){
     const elem = 0 ;

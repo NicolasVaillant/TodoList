@@ -2,6 +2,7 @@
 
 const array_stocked_element = [];
 const array_stocked_child = [];
+const array_stocked_class_child = [];
 const array_stocked_child_all = [];
 //saveTasks(hourSaveClick)
 function saveTasks(hourSaveClick){
@@ -17,6 +18,9 @@ function saveTasks(hourSaveClick){
             todos[i].querySelectorAll('.input_sub').forEach( function (child) {
                 array_stocked_child.push(child.value);
             });
+            todos[i].querySelectorAll('.li_sub').forEach( function (child) {
+                array_stocked_class_child.push(child.className);
+            });
 
             array_stocked_element.push(
                 todos[i].dataset,
@@ -25,7 +29,8 @@ function saveTasks(hourSaveClick){
                 todos[i].querySelector('.collapsible-header').classList,
                 array_stocked_child.splice(0, array_stocked_child.length).filter(value => Object.keys(value).length !== 0),
                 todos[i].querySelector('.textTask').innerHTML,
-                todos[i].querySelectorAll('.li_sub').length
+                todos[i].querySelectorAll('.li_sub').length,
+                array_stocked_class_child.splice(0, array_stocked_class_child.length).filter(value => Object.keys(value).length !== 0)
             )
             array_stocked_all.push(
                 array_stocked_element.splice(0, array_stocked_element.length)

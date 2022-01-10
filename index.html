@@ -26,8 +26,6 @@
     
     <link rel="stylesheet" href="css/attr.css">
     
-    <link rel="manifest" href="manifest.json">
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <link rel="stylesheet" href="fontawesome/css/all.css">
@@ -40,13 +38,38 @@
     <script src="js/script.js" defer></script>
     <script src="js/backup.js" defer></script>
     
-<!--    <script src="node_modules/pickerjs/src/js/picker.js" defer></script>-->
-<!--    <link rel="stylesheet" href="node_modules/pickerjs/src/css/picker.css">-->
-    
     <title>Todo List</title>
 </head>
 
 <body>
+
+<div class="test">
+    <label for="test">
+        <input type="checkbox" id="test">
+        <input type="text" placeholder="Text">
+    </label>
+</div>
+
+<style>
+    .test{
+        background: rgba(255, 0, 0, 0.68);
+        padding: 1em;
+        margin: 1em;
+    }
+    .test label{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        align-content: center;
+    }
+    .test label input{
+        background: wheat;
+    }
+    #test:checked ~input{
+        background: blue;
+    }
+    
+</style>
 
 
 <div class="main">
@@ -208,7 +231,6 @@
                         <div class="label_tooltip" id="for_tooltip_2"><p>Créer une note</p></div>
                     </div>
                 </div>
-        
             </div>
             <div class="descriptionLink">
                 <div>

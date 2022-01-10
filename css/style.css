@@ -105,14 +105,30 @@ ul {
     user-select: none;
     z-index: 5;
 }
-
+.li_sub_disabled{
+    opacity: .4!important;
+}
+.disabled_li_sub_obj{
+    background: var(--td_color_grey_dm);
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%) scaleX(0);
+    transform-origin: left;
+    transition: var(--transition1);
+}
+.disabled_li_sub_obj_ACTIVE{
+    transform: translate(-50%, 50%) scaleX(1) !important;
+}
 .li_sub{
+    position: relative;
     z-index: 100!important;
-    padding: 0 1em 0 .5em!important;
+    padding: 0 1em 0 1em!important;
     display: flex!important;
     cursor: default!important;
     transition: var(--transition1);
-
     background: var(--td_bg_body);
     margin: 0 0.5em 0.5em!important;
     border-radius: var(--border1);
@@ -215,7 +231,8 @@ ul {
 .todoBanMainContainer i[name="morebut"]{
     /*margin: 0 1em;*/
 }
-.close{
+.close,
+.end{
     margin: 1em 0 1em 1em;
     font-size: 1.1em;
     cursor: pointer;
@@ -223,8 +240,17 @@ ul {
     opacity: .5;
     transition: var(--transition2);
 }
+.end{
+    margin: auto;
+    transform: scale(1.2);
+}
+
 .close:hover{
     transform: scale(1.8) !important;
+    transition: var(--transition2);
+}
+.end:hover{
+    transform: scale(1.4) !important;
     transition: var(--transition2);
 }
 .div_option i:hover{
@@ -805,7 +831,7 @@ hr{background: var(--w);}
     flex-direction: column;
     /*border: 2px dashed var(--grey2)!important;*/
     border: 1px solid var(--grey2)!important;
-    box-shadow: 0px 4px 0px 0px grey;
+    box-shadow: 0 4px 0 0 grey;
     border-radius: var(--border1);
 }
 .collapsible-body span:hover::before {
