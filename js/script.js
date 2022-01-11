@@ -47,7 +47,9 @@ const main = document.querySelector(".main");
 //----------------------------------------------------------------------
 let main_height = 0;
 window.onload = function () {
-    reloadNote();reloadTasks();
+    if(JSON.parse(localStorage.getItem("Node_note")) !== null){reloadNote()}
+    if(JSON.parse(localStorage.getItem("todos_test")) !== null){reloadTasks()}
+
     nb_label.innerHTML = "(" + myUL.childElementCount + "/" + myUL.childElementCount + ")";
     main_height = Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight);
     if (window.matchMedia("(min-width: 1200px)").matches) {
