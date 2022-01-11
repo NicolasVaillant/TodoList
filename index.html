@@ -35,8 +35,12 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/0.6.1/progressbar.min.js"></script>
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/introjs.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/intro.min.js"></script>
+    
     <script src="js/script.js" defer></script>
     <script src="js/backup.js" defer></script>
+    <script src="js/intro.js" defer></script>
     
     <title>Todo List</title>
 </head>
@@ -108,11 +112,21 @@
                     </div>
                 </div>
                 <div class="addTask_bar">
-                    <input type="text" id="myInput" placeholder="Ajouter une tâche">
+                    <label for="myInput">
+                        <input type="text" id="myInput" placeholder="Ajouter une tâche"
+                               data-title="Ajouter une tâche"
+                               data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
+                               data-step="1">
+                    </label>
                     <div class="subSearch">
                         <div class="filterTop">
-                            <input type="datetime-local" id="pickerHour">
-                            <div class="filterTop_selector">
+                            <label for="pickerHour">
+                                <input type="datetime-local" id="pickerHour">
+                            </label>
+                            <div class="filterTop_selector"
+                                 data-title="Paramètres"
+                                 data-intro='Sélectionner un paramètre à associer à votre tâche.'
+                                 data-step="2">
                                 <!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
                                 <div class="tooltip">
                                     <button class="button_tooltip" id="tooltip_3"><i id="clockChoice" class="fas fa-clock"  onclick="createTaskButton(this.id)"></i></button>
@@ -128,7 +142,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="button_start" class="sendRequest" type="button" onclick="createTaskButton(this.id)">
+                        <button id="button_start"
+                                class="sendRequest"
+                                type="button"
+                                onclick="createTaskButton(this.id)"
+                                data-title="Créer une tâche"
+                                data-intro='Cliquer sur "Créer" pour ajouter un tâche paramétrée.'
+                                data-step="3">
                             Créer <i class="fas fa-arrow-alt-circle-right"></i>
                         </button>
                         <div class="separator"></div>

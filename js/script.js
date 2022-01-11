@@ -39,14 +39,20 @@ const nothingToShow_more = document.querySelector(".nothingToShow_more");
 
 const impTask_start = document.querySelector("#impTask_start");
 const speTask_start = document.querySelector("#speTask_start");
-const addHas = document.querySelector("#addHas");
 
 
 const main = document.querySelector(".main");
 
 //----------------------------------------------------------------------
 let main_height = 0;
+
 window.onload = function () {
+
+    if (!localStorage.getItem("todo_first_co") === true || !localStorage.getItem("todo_first_co") === "true") {
+        introJs().start();
+        localStorage.setItem("todo_first_co", "true");
+    }
+
     if(JSON.parse(localStorage.getItem("Node_note")) !== null){reloadNote()}
     if(JSON.parse(localStorage.getItem("todos_test")) !== null){reloadTasks()}
 
@@ -385,8 +391,6 @@ function checkBox(element){
 function developChild(element){
     const overlay = document.querySelector('.overlay');
     const el = element.closest('.todoBanMain').querySelector('.collapsible')
-    const collapsible_header = element.closest('.todoBanMain').querySelector('.collapsible-header')
-    // const collapsible = element.closest('.todoBanMain').querySelector('.collapsible')
 
     if(el.classList.contains("active")){
         displayLink(false, overlay);
@@ -662,8 +666,7 @@ function hideMenu() {
     document.getElementById(
         "contextMenuNote").style.display = "none";
 }
-let id_task = 0;
-const arr_new_val = [];
+
 let ctr_todos_chart = 0;
 
 function createTask(
@@ -711,9 +714,6 @@ function createTask(
     const numberOfElement = document.createElement("p");
     numberOfElement.classList.add('numberOfElement');
 
-    // const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-    let nb_subtask = 0;
-    // console.log(todos_nbLS_subChild)
     numberOfElement.innerText = `${todos_nbLS_subChild}` + " sous-tâche(s) restante(s)";
 
     const todoBanMainContainer = document.createElement("div");
@@ -822,9 +822,7 @@ function createTask(
     const time_span = document.createElement("span");
     // time_span.classList.add("textTask_span");
 
-    const emptyTasks = localStorage.getItem("Node_todo");
     let hour,date_act;
-    let calc;
     if (keypress === "input" || keypress === "button" || keypress === "submit") {
         compteurTodoBanMain++;
         hour = getDate("h");
@@ -857,7 +855,6 @@ function createTask(
             if (inputValue.includes("#")) {
                 let allhastags = inputValue.indexOf("#");
                 const indices = [];
-                const res = [];
                 while (allhastags !== -1) {
                     indices.push(allhastags);
                     allhastags = inputValue.indexOf("#", allhastags + 1);
@@ -1173,7 +1170,6 @@ function test(){
     console.log(test);
 }
 
-let indexes_class;
 
 function reloadTasks(){
     const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
@@ -1237,7 +1233,6 @@ function changeChart(div, valueNum, index){
         console.log(child.className)
     });
 
-    // console.log(div.querySelectorAll('.li_sub'), valueNum)
 
     createChart(element, .4);
 }
@@ -1297,7 +1292,7 @@ function reloadNote(){
 const pickerHour = document.querySelector('#pickerHour');
 const clockChoice = document.querySelector('#clockChoice');
 
-clockChoice.addEventListener('click', function(e) {
+clockChoice.addEventListener('click', function() {
     pickerHour.classList.toggle('showPicker');
 });
 
@@ -1371,7 +1366,7 @@ function createTaskButton(id){
     }
 }
 
-butNote.addEventListener('click', function(e) {
+butNote.addEventListener('click', function() {
     createNote("button");
     saveNote();
 
@@ -1483,7 +1478,7 @@ function infoNote(element){
     }
 }
 
-function createNote(keypress,nb,class_note,title_note,content,style,dataset){
+function createNote(keypress,nb,class_note,title_note,content,style){
     compteurCard++;
     const lin = document.createElement("li");
     const div = document.createElement("div");
@@ -1544,14 +1539,9 @@ function createNote(keypress,nb,class_note,title_note,content,style,dataset){
     // divOption.appendChild(itagtl);
     //------------------------------------
     const span = document.createElement("span");
-    const txt = document.createTextNode("\u00D7");
-    const spanp = document.createElement("span");
-    const pipe = document.createTextNode("|");
     span.className = "close";
     span.classList.add("fas");
-    // itagtl.classList.add("fa-link");
     span.classList.add("fa-times");
-    // span.appendChild(txt);
 
     span.onclick = function(){removeNote(this);saveNote();};
 
@@ -1693,7 +1683,7 @@ shareAll.addEventListener('click', function (e){
 
 function share(title, content, type){
     let multi = "";
-    let tit = "";
+    let tit;
     if(type === "todo"){
         if (Array.isArray(content)) {
             for(let i = 0 ; i < content.length ; i++){
