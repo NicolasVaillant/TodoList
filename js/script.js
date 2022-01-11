@@ -925,6 +925,7 @@ function createTask(
                 pickerHour.value = "";
             }
             canvasChart.setAttribute("id", inputValue.replace(/\s/g, ""))
+            canvasChart_p.innerHTML = "0";
             canvasChart.appendChild(canvasChart_p);
             containerChart.appendChild(canvasChart);
             div_text.appendChild(containerChart);
