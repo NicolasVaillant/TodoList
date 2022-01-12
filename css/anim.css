@@ -168,3 +168,18 @@
     flex-direction: column;
     gap: 1em;
 }
+
+@keyframes pulse {
+    0%{
+        box-shadow: 0 0 0 0 var(--td_color_grey_op);
+        background: var(--td_bg_body);
+    }
+    70%{
+        box-shadow: 0 0 0 10px transparent;
+        background: var(--td_bg_body);
+    }
+    100%{
+        box-shadow: 0 0 0 0 transparent;
+        background: var(--td_bg_body);
+    }
+}

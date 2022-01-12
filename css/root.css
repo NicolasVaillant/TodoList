@@ -54,6 +54,7 @@
     --td_color_title_secondaire:#fff;
     --td_color_title_tertiaire:#5475b1;
     --td_color_grey:#6f7681;
+    --td_color_grey_op: rgba(111, 118, 129, 0.58);
     --td_color_grey_2:#f1f1f1de;
     /*--------------------------------*/
     --td_bg_container_dm:#3b4a53;

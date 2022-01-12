@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="fontawesome/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/0.6.1/progressbar.min.js"></script>
@@ -41,6 +42,7 @@
     <script src="js/script.js" defer></script>
     <script src="js/backup.js" defer></script>
     <script src="js/intro.js" defer></script>
+    <script src="js/speech.js" defer></script>
     
     <title>Todo List</title>
 </head>
@@ -112,11 +114,14 @@
                     </div>
                 </div>
                 <div class="addTask_bar">
-                    <label for="myInput">
+                    <label for="myInput" id="myInput_label">
                         <input type="text" id="myInput" placeholder="Ajouter une tâche"
                                data-title="Ajouter une tâche"
                                data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
                                data-step="1">
+                        <span class="speech">
+                            <i class="fas fa-microphone"></i>
+                        </span>
                     </label>
                     <div class="subSearch">
                         <div class="filterTop">

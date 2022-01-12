@@ -485,7 +485,32 @@ input::selection{
     transform: translate(-50%, -50%);
 }
 
+#myInput_label{position: relative}
+.speech{
+    position: absolute;
+    height: 3em;
+    width: 3em;
+    top: 50%;
+    right: -2%;
+    padding: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--td_color_grey);
+    cursor: pointer;
+    background: var(--w);
+    border-radius: 100px;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 var(--td_color_grey_op);
+    transition: var(--transition3);
+}
 
+.speech:hover{
+    background: var(--td_bg_body);
+    transform: translate(-50%, -50%);
+    transition: var(--transition3);
+
+}
 #myInput,
 #filterNote{border: 2px solid var(--td_bg_body);}
 
@@ -1237,3 +1262,16 @@ hr{background: var(--w);}
     transform: translate(-50%, -50%);
     color: var(--td_color_grey);
 }
+
+
+/*.toast{*/
+/*    position: fixed;*/
+/*    top: 2em!important;*/
+/*    right: 2em!important;*/
+/*    background: var(--td_color_grey);*/
+/*    color: var(--w);*/
+/*    box-shadow: var(--td_bx_shadow_container);*/
+/*    border-radius: var(--border1);*/
+/*    padding: 1em;*/
+/*    font-family: 'Open Sans', sans-serif, Bahnschrift;*/
+/*}*/
