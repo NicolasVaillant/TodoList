@@ -60,6 +60,7 @@
     display: flex;
     gap: .5em;
     font-size: var(--font1);
+    white-space :nowrap;
     /*transition: var(--transition1);*/
 }
 .save span{
@@ -967,8 +968,11 @@ hr{background: var(--w);}
 
 @media all and (max-width: 1200px) {
     .todoContainer, .noteContainer{width: 100%}
-    .content{flex-direction: column;
-        gap: 1em;}
+    .content{
+        flex-direction: column;
+        gap: 1em;
+    }
+    .addTask_bar {flex-direction: column}
     .container_header{
         flex-direction: column!important;
         gap: 1em!important;

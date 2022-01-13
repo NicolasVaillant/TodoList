@@ -63,11 +63,11 @@ window.onload = function () {
 
     nb_label.innerHTML = "(" + myUL.childElementCount + "/" + myUL.childElementCount + ")";
     main_height = Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight);
-    if (window.matchMedia("(min-width: 1200px)").matches) {
-        switchDirectionC.classList.remove('disabledOptionsRC');
-    }else{
-        switchDirectionC.classList.add('disabledOptionsRC');
-    }
+    // if (window.matchMedia("(min-width: 1200px)").matches) {
+    //     switchDirectionC.classList.remove('disabledOptionsRC');
+    // }else{
+    //     switchDirectionC.classList.add('disabledOptionsRC');
+    // }
 }//reloadNote(); -- getShareTask()
 todoBanMainID.oncontextmenu= function (e){
     rightClick;
@@ -102,11 +102,11 @@ window.onscroll = function (){
     }
 }
 window.onresize = function (){
-    if (window.matchMedia("(min-width: 1200px)").matches) {
-        switchDirectionC.classList.remove('disabledOptionsRC');
-    }else{
-        switchDirectionC.classList.add('disabledOptionsRC');
-    }
+    // if (window.matchMedia("(min-width: 1200px)").matches) {
+    //     switchDirectionC.classList.remove('disabledOptionsRC');
+    // }else{
+    //     switchDirectionC.classList.add('disabledOptionsRC');
+    // }
 }
 //----------------------------------------------------------------------
 function filterTasks(check_id){
@@ -1644,16 +1644,16 @@ if (currentTheme === "dark") {
     document.documentElement.classList.add('toggle_mode');
 }
 
-dm.addEventListener('click', function (){
-    dm.classList.toggle("spinMode");
-    document.documentElement.classList.toggle('toggle_mode');
-
-    let theme = "light";
-    if (document.documentElement.classList.contains("toggle_mode")) {
-        theme = "dark";
-    }
-    localStorage.setItem("theme", theme);
-})
+// dm.addEventListener('click', function (){
+//     dm.classList.toggle("spinMode");
+//     document.documentElement.classList.toggle('toggle_mode');
+//
+//     let theme = "light";
+//     if (document.documentElement.classList.contains("toggle_mode")) {
+//         theme = "dark";
+//     }
+//     localStorage.setItem("theme", theme);
+// })
 
 refresh_but.addEventListener('click', function (){
     refresh_but.classList.toggle("spinModeAll");
