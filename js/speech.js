@@ -1,9 +1,9 @@
 // JS FILE
 
-const speech = document.querySelector('.speech');
+const speech = document.querySelector('.speechTodo');
 const fa_microphone = document.querySelector('.fa-microphone');
 
-const speechRecognition = window.webkitSpeechRecognition;
+const speechRecognition = window.webkitSpeechRecognition || SpeechRecognition;
 const recognition = new speechRecognition();
 // const textbox = input
 let content_speech = '';
@@ -20,6 +20,10 @@ recognition.onresult = function(event) {
     const transcript = event.results[current][0].transcript;
     content_speech += transcript;
 
+    if(content_speech === "entrée" || content_speech === "entrer"){
+        console.log("ok")
+    }
+
     input.value = content_speech;
 }
 
@@ -31,13 +35,13 @@ function speechF(){
     click++;
 
     if(click % 2 === 0){
-        recognition.abort();
-        speech.style.animation = "none";
+        recognition.stop();
+        speech.classList.remove('speechOn');
         click = 0;
         // M.toast({html: "Fin de l'enregistrement"})
     }else{
         recognition.start();
-        speech.style.animation = "pulse 2s infinite";
+        speech.classList.add('speechOn');
         // M.toast({html: 'Enregistrement'})
     }
 }

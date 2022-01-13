@@ -169,6 +169,11 @@
     gap: 1em;
 }
 
+.speechOn{
+    color: red!important;
+    animation: 2s pulse infinite;
+}
+
 @keyframes pulse {
     0%{
         box-shadow: 0 0 0 0 var(--td_color_grey_op);

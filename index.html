@@ -119,7 +119,7 @@
                                data-title="Ajouter une tâche"
                                data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
                                data-step="1">
-                        <span class="speech">
+                        <span class="speechTodo">
                             <i class="fas fa-microphone"></i>
                         </span>
                     </label>
@@ -210,6 +210,61 @@
                     <p class="nothingToShow_more"></p>
                 </div>
             </div>
+            <div class="tutoTodo">
+                <div class="todoBanMain"
+                     data-num="0"
+                     data-hour="1h11"
+                     data-date="1/1/2000"
+                     data-hierarchy="1"
+                     data-reminder="none">
+                    <ul class="collapsible">
+                        <li class="active">
+                            <div class="collapsible-header" tabindex="0">
+                                <i class="fas fa-chevron-down expandChevron checkBox"></i>
+                            </div>
+                            <div class="collapsible-body" style="display: block;padding: 0">
+                                <div class="collapsible_div_bodyContent">
+                                    <div class="collapsible_div_bodyContent_staticContent"><div>
+                                        <p class="numberOfElement">1 sous-tâche(s) restante(s)</p>
+                                    </div>
+                                        <div class="div_optionstatic"><div>
+                                            <i class="fas fa-link" data-name="linkToNote" data-state="disabled"></i>
+                                            <i class="fas fa-exclamation-circle" data-name="important"></i>
+                                            <i class="fas fa-star" data-name="star"></i>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="todoBanMainContainer">
+                        <i class="circle"></i>
+                        <div>
+                            <p class="textTask">Acheter du pain</p>
+                            <span class="colorhastags"></span>
+                            <div class="containerChart">
+                                <div class="canvasChart" id="todo_test_tuto">
+                                    <p class="canvasChart_p">1</p>
+                                    <svg viewBox="0 0 100 100">
+                                        <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
+                                              stroke="#cbbcbc" stroke-width="1" fill-opacity="0"></path>
+                                        <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
+                                              stroke="#9122b6" stroke-width="10" fill-opacity="0"
+                                              style="stroke-dasharray: 282.783, 282.783; stroke-dashoffset: 0;"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div_option">
+                            <div class="div_option_container">
+                                <i class="fas fa-plus-circle" name="morebut"></i>
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <ul id="myUL"></ul>
         </div>
     
@@ -217,10 +272,15 @@
             <div class="header">
                 <h2 class="date">Note list</h2>
                 <div class="addItems">
-                    <input type="text"
-                           id="filterNote"
-                           onkeyup="filterNotes()"
-                           placeholder="Rechercher">
+                    <label for="filterNote" id="filterNote_label">
+                        <input type="text"
+                               id="filterNote"
+                               onkeyup="filterNotes()"
+                               placeholder="Rechercher">
+                        <span class="speechNote">
+                            <i class="fas fa-microphone"></i>
+                        </span>
+                    </label>
                    <div class="tooltip" id="tooltip_2"> <!-- butNote-->
                         <button class="button_tooltip"> <i class="fas fa-plus-circle"></i></button>
                         <div class="label_tooltip" id="for_tooltip_2"><p>Créer une note</p></div>

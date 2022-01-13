@@ -486,7 +486,8 @@ input::selection{
 }
 
 #myInput_label{position: relative}
-.speech{
+.speechTodo,
+.speechNote{
     position: absolute;
     height: 3em;
     width: 3em;
@@ -505,7 +506,8 @@ input::selection{
     transition: var(--transition3);
 }
 
-.speech:hover{
+.speechTodo:hover,
+.speechNote:hover{
     background: var(--td_bg_body);
     transform: translate(-50%, -50%);
     transition: var(--transition3);
@@ -548,6 +550,10 @@ h2{
 
 
 
+#filterNote_label{
+    position: relative;
+    width: 100%;
+}
 #filterNote{
     background-image: url('/ressources/img/search.png');
     background-position: .5em;
@@ -1004,7 +1010,9 @@ hr{background: var(--w);}
     .header,ul,.save{padding: 2em}
     #myUL_note,#myUL{padding: 0 2em 2em 2em}
 }
-
+.tutoTodo{
+    padding: 1em 3em 0;
+}
 .replicate{
     background: #a17373;
     min-height: 20vh;
