@@ -169,6 +169,13 @@
     gap: 1em;
 }
 
+.todoBanMainID_remove{
+    opacity: 0!important;
+    transition: var(--transition1);
+    transform-origin: top right;
+    transform: translateY(-10vh)!important;
+}
+
 .speechOn{
     color: red!important;
     animation: 2s pulse infinite;

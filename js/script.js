@@ -42,6 +42,7 @@ const speTask_start = document.querySelector("#speTask_start");
 
 
 const main = document.querySelector(".main");
+const todoBanMainID = document.querySelector("#todoBanMainID");
 
 //----------------------------------------------------------------------
 let main_height = 0;
@@ -50,6 +51,7 @@ window.onload = function () {
 
     if (!localStorage.getItem("todo_first_co") === true || !localStorage.getItem("todo_first_co") === "true") {
         introJs().start();
+        introJs().addHints();
         localStorage.setItem("todo_first_co", "true");
     }
 
@@ -64,6 +66,14 @@ window.onload = function () {
         switchDirectionC.classList.add('disabledOptionsRC');
     }
 }//reloadNote(); -- getShareTask()
+todoBanMainID.oncontextmenu= function (e){
+    rightClick;
+
+    e.target.closest('#todoBanMainID').classList.add('bumpOnRClick');
+    setTimeout(function (){
+        e.target.closest('#todoBanMainID').classList.remove('bumpOnRClick')
+    },200)
+};
 window.onclick = function (){hideMenu()}
 window.oncontextmenu = function (e){e.preventDefault()}
 window.onscroll = function (){
@@ -1301,6 +1311,11 @@ input.addEventListener('keypress', function(e) {
         createTask("input",false, pickerHour.value);
         saveTasks(getDate("h"));
         pickerHour.classList.remove('showPicker');
+
+        todoBanMainID.classList.add('todoBanMainID_remove')
+        setTimeout(function (){
+            todoBanMainID.remove();
+        }, 1000);
     }
 }, false);
 let toggleIMP = false;

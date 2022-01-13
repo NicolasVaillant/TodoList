@@ -210,42 +210,66 @@
                     <p class="nothingToShow_more"></p>
                 </div>
             </div>
-            <div class="tutoTodo">
+            <div class="tutoTodo"
+                 data-hint="Le clic droit est aussi personnalisé !"
+                 data-hintButtonLabel="Compris"
+                 data-hintShowButton="false"
+                 data-hintPosition="middle-middle">
                 <div class="todoBanMain"
+                     id="todoBanMainID"
                      data-num="0"
                      data-hour="1h11"
                      data-date="1/1/2000"
                      data-hierarchy="1"
-                     data-reminder="none">
+                     data-reminder="none"
+                     data-title="Exemple de tâche"
+                     data-intro="Une tâche déroulée affiche aussi des paramètres supplémentaires et les sous-tâches ! OwO"
+                     data-step="5">
                     <ul class="collapsible">
                         <li class="active">
-                            <div class="collapsible-header" tabindex="0">
+                            <div class="collapsible-header" tabindex="0"
+                                 data-title="Exemple de tâche"
+                                 data-intro="Dérouler la tâche en cliqant sur la flèche déroulante.
+                                 Survoler une tâche permet d'afficher des boutons supplémentaires."
+                                 data-step="4">
                                 <i class="fas fa-chevron-down expandChevron checkBox"></i>
                             </div>
-                            <div class="collapsible-body" style="display: block;padding: 0">
+                            <ul class="collapsible-body" style="display: block;padding: 0">
                                 <div class="collapsible_div_bodyContent">
-                                    <div class="collapsible_div_bodyContent_staticContent"><div>
-                                        <p class="numberOfElement">1 sous-tâche(s) restante(s)</p>
-                                    </div>
-                                        <div class="div_optionstatic"><div>
-                                            <i class="fas fa-link" data-name="linkToNote" data-state="disabled"></i>
-                                            <i class="fas fa-exclamation-circle" data-name="important"></i>
-                                            <i class="fas fa-star" data-name="star"></i>
-                                        </div>
+                                    <li class="li_sub li_sub_disabled" data-hierarchy="1">
+                                        <span class="disabled_li_sub_obj disabled_li_sub_obj_ACTIVE"></span>
+                                        <input type="checkbox" class="end" checked>
+                                        <input type="text" class="input_sub" value="Pain aux céréales">
+                                        <span class="close fas fa-times"></span>
+                                    </li>
+                                    <li class="li_sub" data-hierarchy="1">
+                                        <span class="disabled_li_sub_obj"></span>
+                                        <input type="checkbox" class="end">
+                                        <input type="text" class="input_sub" value="Poisson frais">
+                                        <span class="close fas fa-times"></span>
+                                    </li>
+                                    <div class="collapsible_div_bodyContent_staticContent">
+                                        <p class="numberOfElement">2 sous-tâche(s) restante(s)</p>
+                                        <div class="div_optionstatic">
+                                            <div>
+                                                <i class="fas fa-link" data-name="linkToNote" data-state="disabled"></i>
+                                                <i class="fas fa-exclamation-circle" data-name="important"></i>
+                                                <i class="fas fa-star" data-name="star"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </ul>
                         </li>
                     </ul>
                     <div class="todoBanMainContainer">
                         <i class="circle"></i>
                         <div>
-                            <p class="textTask">Acheter du pain</p>
+                            <p class="textTask">Aller faire les courses</p>
                             <span class="colorhastags"></span>
                             <div class="containerChart">
                                 <div class="canvasChart" id="todo_test_tuto">
-                                    <p class="canvasChart_p">1</p>
+                                    <p class="canvasChart_p">2</p>
                                     <svg viewBox="0 0 100 100">
                                         <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
                                               stroke="#cbbcbc" stroke-width="1" fill-opacity="0"></path>
