@@ -14,7 +14,7 @@ recognition.onresult = function(event) {
     const transcript = event.results[current][0].transcript;
     content_speech += transcript;
 
-    console.log(transcript)
+    // console.log(transcript)
 
     // if(content_speech === "entrée" || content_speech === "entrer"){
     //     console.log("ok")

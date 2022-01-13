@@ -43,6 +43,7 @@ const speTask_start = document.querySelector("#speTask_start");
 
 const main = document.querySelector(".main");
 const todoBanMainID = document.querySelector("#todoBanMainID");
+const tutoTodo = document.querySelector(".tutoTodo");
 
 //----------------------------------------------------------------------
 let main_height = 0;
@@ -52,6 +53,8 @@ window.onload = function () {
     if (!localStorage.getItem("todo_first_co") === true || !localStorage.getItem("todo_first_co") === "true") {
         introJs().start();
         introJs().addHints();
+        todoBanMainID.style.display = "block";
+        tutoTodo.style.display = "block";
         localStorage.setItem("todo_first_co", "true");
     }
 
