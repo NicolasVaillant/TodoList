@@ -20,7 +20,7 @@
     opacity: 0;
     transition: var(--transition3);
     transform-origin: top right;
-    z-index: 999;
+    z-index: 9999999;
 }
 .menu_der ul{
     padding: 0.5em;
