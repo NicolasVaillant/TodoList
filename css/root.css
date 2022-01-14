@@ -71,6 +71,8 @@
     --td_color_grey_2_dm:#f1f1f1de;
     /*--------------------------------*/
 
+    --linear-color : linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(219,255,0,1) 50%, rgba(64,200,0,1) 100%);
+
 
     --border1: 5px;
     --border2: 15px;

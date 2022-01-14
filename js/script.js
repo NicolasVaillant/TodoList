@@ -493,6 +493,7 @@ function setFinish(e){
     // parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
     saveTasks(getDate("h"));
 }
+
 function rightClick(e){
     e.preventDefault();
     document.getElementById(
@@ -683,6 +684,7 @@ function rightClick(e){
         menu.children[0].children[4].children[2].children[0].children[1].onclick = function(){zone5b(parent);saveTasks(getDate("h"));};
     }
 }
+
 function hideMenu() {
     document.getElementById(
         "contextMenu").style.display = "none";
@@ -1229,7 +1231,14 @@ function reloadTasks(){
     }
 }
 
-const color_a = ["#40c800","#dbff00","#ff0000"]
+const color_a = [
+    "#43c900",
+    "#88e200",
+    "#d3fc00",
+    "#eb8e00",
+    "#fe0300",
+    "#6e6c6c"
+]
 
 let array_li_sub = [];
 let new_array_li_sub = [];
@@ -1252,14 +1261,19 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
     else{value = hw_li_dis/todos_nbLS_subChild;}
 
     let color;
-    if(value > .33 && value <= .5){
+
+    if(value > 0 && value <= .2){
+        color = color_a[4];
+    }else if(value > .2 && value <= .4){
+        color = color_a[3];
+    }else if(value > .4 && value <= .6){
+        color = color_a[2];
+    }else if(value > .6 && value <= .8){
         color = color_a[1];
-    }else if(value > 5 && value <= .66){
-        color = color_a[1];
-    }else if(value > .66 && value <= 1){
+    }else if(value > .8 && value <= 1){
         color = color_a[0];
     }else{
-        color = color_a[2];
+        color = color_a[5];
     }
     // console.log(value, color)
 
