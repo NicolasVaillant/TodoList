@@ -693,6 +693,7 @@ function hideMenu() {
 }
 
 let ctr_todos_chart = 0;
+let ctr_card = 0;
 
 function createTask(
     keypress,
@@ -853,12 +854,18 @@ function createTask(
         date_act = getDateDay("/", "FR");
         numberOfElement.innerText = "0 sous-tâche(s) restante(s)";
         if (inputValue !== '') {
+            
+            if(localStorageTodos === null){
+                todoBanMain.setAttribute("data-num", ctr_card++)
+                todoBanMain.setAttribute("data-hierarchy", ctr_card++);
+            }else{
+                todoBanMain.setAttribute("data-num", localStorageTodos.v)
+                todoBanMain.setAttribute("data-hierarchy", localStorageTodos.v);
+            }
 
-            todoBanMain.setAttribute("data-num", localStorageTodos.v)
             todoBanMain.setAttribute("data-hour", hour)
             todoBanMain.setAttribute("data-date", date_act);
             todoBanMain.setAttribute("data-reminder", reminderQ);
-            todoBanMain.setAttribute("data-hierarchy", localStorageTodos.v);
 
             myUL.appendChild(todoBanMain);
             input.value = "";
