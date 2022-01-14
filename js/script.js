@@ -728,8 +728,6 @@ function createTask(
     const numberOfElement = document.createElement("p");
     numberOfElement.classList.add('numberOfElement');
 
-    numberOfElement.innerText = `${todos_nbLS_subChild}` + " sous-tâche(s) restante(s)";
-
     const todoBanMainContainer = document.createElement("div");
     todoBanMainContainer.classList.add('todoBanMainContainer')
     const collapsible_ul = document.createElement("ul");
@@ -841,6 +839,7 @@ function createTask(
         compteurTodoBanMain++;
         hour = getDate("h");
         date_act = getDateDay("/", "FR");
+        numberOfElement.innerText = "0 sous-tâche(s) restante(s)";
         if (inputValue !== '') {
             todoBanMain.setAttribute("data-hour", hour)
             todoBanMain.setAttribute("data-date", date_act);
@@ -945,6 +944,7 @@ function createTask(
         let res, hour;
         let dated = new Date();
 
+        numberOfElement.innerText = `${todos_nbLS_subChild}` + " sous-tâche(s) restante(s)";
         text.innerHTML = valueLS.split("#")[0];
 
         if (Object.keys(valueLS_subChild).length !== 0) {
