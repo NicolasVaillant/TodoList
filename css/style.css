@@ -556,11 +556,7 @@ h2{
     width: 100%;
 }
 #filterNote{
-    background-image: url('/ressources/img/search.png');
-    background-position: .5em;
-    background-size: 2em;
-    background-repeat: no-repeat;
-    padding: 1em 2.8em;
+    padding: 1em;
     color: var(--td_color_grey);
 }
 .addItems{
