@@ -19,11 +19,9 @@
 @keyframes rotateOneSens {
     from{
         transform: rotate(0deg);
-        background: none;
     }
     to{
-        background: red;
-        transform: rotate(-36deg)!important;
+        transform: rotate(-180deg)!important;
     }
 }
 

@@ -18,6 +18,7 @@ const myUL = document.getElementById("myUL");
 const myUL_note = document.getElementById("myUL_note");
 const dm = document.querySelector("#dm");
 const refresh_but = document.querySelector("#rb");
+const refresh_but_icon = document.querySelector("#rb_icon");
 const switchDirectionC = document.querySelector("#switchDirection");
 const flexDirectionMode = document.querySelector(".flexDirectionMode");
 const iconDirection = document.querySelector(".iconDirection");
@@ -1656,7 +1657,16 @@ if (currentTheme === "dark") {
 // })
 
 refresh_but.addEventListener('click', function (){
-    refresh_but.classList.toggle("spinModeAll");
+    refresh_but_icon.classList.toggle("spinModeAll");
+
+    setTimeout(function(){
+        const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
+        lastSaveTime.innerHTML =  localStorageTodos.s;
+    }, 100);
+
+    menu.parentElement.classList.remove('clickMenu');
+    menu_der.classList.remove('showMenu');
+
     saveTasks(getDate("h"));
 });
 account.addEventListener('click', function (e){
