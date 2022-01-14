@@ -790,9 +790,9 @@ button i:hover{
     border: 2px solid transparent;
     /*transition: var(--transition1);*/
 }
-.categories label:last-child{
-    width: 20%;
-}
+/*.categories label:last-child{*/
+/*    width: 20%;*/
+/*}*/
 .categories label:hover{
     background: var(--td_bg_body);
 }

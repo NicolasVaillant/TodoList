@@ -7,8 +7,6 @@
 
 let compteurCard, compteurLiSub = 0;
 
-let compteurTodoBanMain = 0;
-
 const colorNotes = ["rgb(181, 222, 255)","rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
 
 const list = document.querySelector('ul');
@@ -241,13 +239,14 @@ function updateNBSubChild(element, index){
 
     setTimeout(function(){
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-        // console.log(localStorageTodos.e[index][6])
-        numberOfElement.innerText = `${localStorageTodos.e[index][6]}` + " sous-tâche(s) restante(s)";
+        console.log(localStorageTodos.e[index])
+        console.log(localStorageTodos.e[index][6])
+        // numberOfElement.innerText = `${localStorageTodos.e[index][6]}` + " sous-tâche(s) restante(s)";
         canvasChart_p.innerText = localStorageTodos.e[index][6];
 
         changeChart(todoBanMain, localStorageTodos.e[index][6], index);
 
-    }, 200);
+    }, 300);
 
 }
 
@@ -260,8 +259,6 @@ function removeOne(element){
         element.parentElement.remove();
         saveTasks(getDate("h"));
     }, 200)
-
-    console.log(todoBanMain.dataset.num)
 
     updateNBSubChild(div, todoBanMain.dataset.num)
 }
@@ -332,7 +329,6 @@ function addChild(element, localstorage, valueLS, classLS){
         }
     }else{
 
-
         const li_sub = document.createElement("li");
         li_sub.classList.add('li_sub');
         li_sub.setAttribute("data-hierarchy", compteurLiSub.toString());
@@ -361,19 +357,17 @@ function addChild(element, localstorage, valueLS, classLS){
         span.classList.add("fas");
         span.classList.add("fa-times");
 
-        // console.log(nbSubChild)
-
         span.onclick = function(){removeOne(this);saveTasks(getDate("h"));};
         li_sub.appendChild(span);
 
-        // div.appendChild(li_sub);
         div.insertBefore(li_sub, staticContent);
+
+        const todoBanMain = element.closest('.todoBanMain');
+        const dive = todoBanMain.querySelector('.collapsible_div_bodyContent');
+
+
+        updateNBSubChild(dive, todoBanMain.dataset.num)
     }
-
-    const todoBanMain = element.closest('.todoBanMain');
-    const dive = todoBanMain.querySelector('.collapsible_div_bodyContent');
-
-    updateNBSubChild(dive, todoBanMain.dataset.num)
 }
 
 function changeStateLiSub(element){
@@ -429,7 +423,6 @@ function developChild(element){
         displayLink(true, overlay);
     }
 
-    // console.log(collapsible_header)
     $('.collapsible').collapsible()
 }
 
@@ -625,7 +618,6 @@ function rightClick(e){
         const text = `${user}` + " a partagé le contenu d'une note avec vous. " +
             `\"${valueInput}\"` + " est le titre de la note." + " La note a été créée le " + `${parent.dataset.date}` +
             " à " + `${parent.dataset.hour}` + ".";
-        // console.log(text)
 
         share(valueInput, text, "todo")
 
@@ -852,17 +844,19 @@ function createTask(
 
     let hour,date_act;
 
+    const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
+
     if (keypress === "input" || keypress === "button" || keypress === "submit") {
-        compteurTodoBanMain++;
         hour = getDate("h");
         date_act = getDateDay("/", "FR");
         numberOfElement.innerText = "0 sous-tâche(s) restante(s)";
         if (inputValue !== '') {
+
+            todoBanMain.setAttribute("data-num", localStorageTodos.v)
             todoBanMain.setAttribute("data-hour", hour)
             todoBanMain.setAttribute("data-date", date_act);
             todoBanMain.setAttribute("data-reminder", reminderQ);
-
-            todoBanMain.setAttribute("data-hierarchy", compteurTodoBanMain.toString());
+            todoBanMain.setAttribute("data-hierarchy", localStorageTodos.v);
 
             myUL.appendChild(todoBanMain);
             input.value = "";
@@ -1235,15 +1229,7 @@ function reloadTasks(){
     }
 }
 
-const config = {
-    strokeWidth: 10,
-    easing: 'easeInOut',
-    duration: 1400,
-    color: '#9122b6',
-    trailColor: '#cbbcbc',
-    trailWidth: 1,
-    svgStyle: null
-}
+const color_a = ["#40c800","#dbff00","#ff0000"]
 
 let array_li_sub = [];
 let new_array_li_sub = [];
@@ -1265,6 +1251,28 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
     if(todos_nbLS_subChild === 0 || hw_li_dis === 0){value = 0}
     else{value = hw_li_dis/todos_nbLS_subChild;}
 
+    let color;
+    if(value > .33 && value <= .5){
+        color = color_a[1];
+    }else if(value > 5 && value <= .66){
+        color = color_a[1];
+    }else if(value > .66 && value <= 1){
+        color = color_a[0];
+    }else{
+        color = color_a[2];
+    }
+    // console.log(value, color)
+
+    const config = {
+        strokeWidth: 10,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: color,
+        trailColor: '#cbbcbc',
+        trailWidth: 1,
+        svgStyle: null
+    }
+
     new ProgressBar.Circle(re,config).animate(value);
 }
 
@@ -1285,7 +1293,6 @@ function changeChart(parent, valueNum, index){
 
     setTimeout(function (){
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-        console.log(localStorageTodos.e[index][6]);
         createChart(element, localStorageTodos.e[index][6], hw_li_dis_change);
     },100);
 }
@@ -1861,8 +1868,6 @@ function saveNote(){
         child_title : childTitle,
         child_content : childContent,
         childDataSet : childDataSet,
-        // lastSave : hourSave,
-        // counterTasks : compteurTodoBanMain
     }
     localStorage.setItem("Node_note", JSON.stringify(cNote));
 }
