@@ -11,6 +11,8 @@ let compteurTodoBanMain = 0;
 const colorNotes = ["rgb(181, 222, 255)","rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
 
 const list = document.querySelector('ul');
+const content_div = document.querySelector('.content');
+const addTask_bar = document.querySelector('.addTask_bar');
 const date = document.querySelector('.date');
 const lastSaveTime = document.querySelector('.lastSaveTime');
 const input = document.getElementById("myInput");
@@ -50,6 +52,13 @@ const tutoTodo = document.querySelector(".tutoTodo");
 let main_height = 0;
 
 window.onload = function () {
+
+    //&& window.matchMedia("(max-width: 1200px)").matches
+    if(getComputedStyle(content_div).flexDirection === "row"){
+        addTask_bar.style.flexDirection = "column";
+    }else{
+        addTask_bar.style.flexDirection = "row";
+    }
 
     if (!localStorage.getItem("todo_first_co") === true || !localStorage.getItem("todo_first_co") === "true") {
         introJs().start();
@@ -108,6 +117,12 @@ window.onresize = function (){
     // }else{
     //     switchDirectionC.classList.add('disabledOptionsRC');
     // }
+
+    if(getComputedStyle(content_div).flexDirection === "row"){
+        addTask_bar.style.flexDirection = "column";
+    }else{
+        addTask_bar.style.flexDirection = "row";
+    }
 }
 //----------------------------------------------------------------------
 function filterTasks(check_id){
