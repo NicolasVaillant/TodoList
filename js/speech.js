@@ -34,10 +34,28 @@ function speechF(){
         recognition.abort();
         speech.classList.remove('speechOn');
         click = 0;
-        // M.toast({html: "Fin de l'enregistrement"})
+        notifyMe("Fin de l'enregistrement.")
     }else{
         recognition.start();
         speech.classList.add('speechOn');
-        // M.toast({html: 'Enregistrement'})
+        notifyMe("Enregistrement en cours...")
+    }
+}
+
+function notifyMe(value) {
+    const options = {
+        body: "Utilisation du micro sur todo.nicolasvaillant.net",
+        badge: "/ressources/favicon/check_64.png"
+    };
+    if (!('Notification' in window)) {
+        alert('Ce navigateur ne prend pas en charge la notification de bureau')
+    }else if (Notification.permission === 'granted') {
+        const notification = new Notification(value, options);
+    }else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                const notification = new Notification(value, options);
+            }
+        })
     }
 }
