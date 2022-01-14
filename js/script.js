@@ -246,21 +246,19 @@ function updateNBSubChild(element, index){
 
         changeChart(todoBanMain, localStorageTodos.e[index][6], index);
 
-    }, 100);
+    }, 200);
 
 }
-
 
 
 function removeOne(element){
     const todoBanMain = element.closest('.todoBanMain');
     const div = todoBanMain.querySelector('.collapsible_div_bodyContent');
     element.parentElement.classList.add('slideOut');
-
     setTimeout(function (){
         element.parentElement.remove();
         saveTasks(getDate("h"));
-    }, 500)
+    }, 200)
 
     console.log(todoBanMain.dataset.num)
 
@@ -379,6 +377,7 @@ function addChild(element, localstorage, valueLS, classLS){
 
 function changeStateLiSub(element){
     const parent = element.parentElement;
+    const todoBanMain = element.closest('.todoBanMain');
     const fst_child = element.parentElement.children[0];
 
     if(element.checked){
@@ -390,6 +389,8 @@ function changeStateLiSub(element){
         fst_child.classList.remove('disabled_li_sub_obj_ACTIVE');
         parent.querySelector('.input_sub').disabled = false;
     }
+
+    updateNBSubChild(element, todoBanMain.dataset.num);
 }
 
 list.addEventListener('click', function(ev) {
@@ -847,9 +848,9 @@ function createTask(
     i_clock.onclick = function(){showTime(this);};
     const time_p = document.createElement("p");
     const time_span = document.createElement("span");
-    // time_span.classList.add("textTask_span");
 
     let hour,date_act;
+
     if (keypress === "input" || keypress === "button" || keypress === "submit") {
         compteurTodoBanMain++;
         hour = getDate("h");
@@ -1059,7 +1060,8 @@ function createTask(
         div_text.appendChild(containerChart);
         myUL.appendChild(todoBanMain);
     }
-    createChart(todoBanMain,ctr_todos_chart);
+
+    createChart(todoBanMain, todos_nbLS_subChild);
     return true;
 }
 
@@ -1199,7 +1201,6 @@ function test(){
     console.log(test);
 }
 
-
 function reloadTasks(){
     const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
     let nb_child = localStorageTodos.v;
@@ -1232,6 +1233,7 @@ function reloadTasks(){
         );
     }
 }
+
 const config = {
     strokeWidth: 10,
     easing: 'easeInOut',
@@ -1242,28 +1244,49 @@ const config = {
     svgStyle: null
 }
 
-// function createChart(element, i){
-function createChart(element, value = 0.5){
+let array_li_sub = [];
+let new_array_li_sub = [];
+
+function createChart(element, todos_nbLS_subChild, value_onchange){
+
+    let hw_li_dis = 0;
+
     const div = element.closest('.todoBanMain');
+    const li_subs = div.querySelectorAll('.li_sub');
+
     const allChart_containers = div.querySelector('.containerChart')
-    // const a = ["0.9", "0.75", "0.9", "0.5"]
     const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
-    // new ProgressBar.Circle(re,config).animate(a[i - 1]);
+
+    li_subs.forEach(function (e){
+        if(e.classList.contains('li_sub_disabled')){hw_li_dis++}
+    })
+
+    if(todos_nbLS_subChild === 0 || hw_li_dis === 0){value = 0}
+    else{value = hw_li_dis/todos_nbLS_subChild;}
+
     new ProgressBar.Circle(re,config).animate(value);
 }
 
-function changeChart(div, valueNum, index){
-    const element = div.querySelector('.containerChart')
-    console.log(element, valueNum, index)
+function changeChart(parent, valueNum, index){
+    let hw_li_dis_change = 0;
 
+    const div = parent.closest('.todoBanMain');
+    const element = parent.querySelector('.containerChart');
+
+    const li_subs = div.querySelectorAll('.li_sub');
+
+    li_subs.forEach(function (e){
+        if(e.classList.contains('li_sub_disabled')){hw_li_dis_change++}
+    })
+
+    // console.log(hw_li_dis_change);
     element.querySelector('.canvasChart').children[1].remove();
 
-    div.querySelectorAll('.li_sub').forEach( function (child) {
-        console.log(child.className)
-    });
-
-
-    createChart(element, .4);
+    setTimeout(function (){
+        const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
+        console.log(localStorageTodos.e[index][6]);
+        createChart(element, localStorageTodos.e[index][6], hw_li_dis_change);
+    },100);
 }
 
 
