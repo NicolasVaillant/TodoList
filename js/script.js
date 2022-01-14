@@ -473,24 +473,9 @@ function getDateDay(separator, sens){
 
 function setFinish(e){
     const parent = e.target.closest('.todoBanMain');
-
-    if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
-        //logical not
-        e.target.classList.remove('fas');
-        e.target.classList.remove('fa-check-circle');
-        e.target.classList.add('circle');
-    }else{
-        parent.children[0].children[0].children[0].classList.remove('specialTasks')
-        parent.children[0].children[0].children[0].classList.remove('importantTasks')
-        e.target.classList.remove('circle');
-        e.target.classList.add('fas');
-        e.target.classList.add('fa-check-circle');
-    }
-
-    parent.children[0].children[0].children[0].classList.toggle('endTasks');
-    parent.children[1].children[0].classList.toggle('endTasks_text');
-    parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
-    // parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
+    parent.querySelector('.collapsible-header').classList.toggle('endTasks');
+    // parent.querySelector('.fa-check-circle').classList.toggle('endTasks_text');
+    parent.querySelector('.textTask').classList.toggle('endTasks_text');
     saveTasks(getDate("h"));
 }
 
@@ -499,6 +484,8 @@ function rightClick(e){
     document.getElementById(
         "contextMenuNote").style.display = "none";
     const parent = e.target.closest('.todoBanMain');
+
+    console.log(parent)
 
     parent.classList.add('bumpOnRClick');
     setTimeout(function (){
@@ -513,7 +500,7 @@ function rightClick(e){
 
     const menu = document.getElementById("contextMenu")
 
-    menu.children[0].children[6].children[1].children[0].innerHTML =  "Créée le " + `${parent.dataset.date}` +
+    menu.querySelector('#info_to_show').innerHTML =  "Créée le " + `${parent.dataset.date}` +
         " à " + `${parent.dataset.hour}`;
 
     txt_zone_2.innerHTML = "Ajouter le filtre important";
@@ -523,47 +510,26 @@ function rightClick(e){
     i_zone_1.classList.add('fas');
     i_zone_1.classList.add('fa-check-circle');
 
-    if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
+    if(parent.querySelector('.checkbox_todo_end').checked === true){
         txt_zone_1.innerHTML = "Marquer comme non terminée";
-
         parent.children[1].children[0].classList.add('endTasks_text');
         parent.children[1].children[1].children[0].classList.add('endTasks_text');
-        // parent.children[1].children[2].children[0].classList.add('endTasks_container');
-
-        i_zone_1.classList.remove('fas');
-        i_zone_1.classList.remove('fa-check-circle');
-        i_zone_1.classList.add('circle');
-
         menu.children[0].children[1].classList.add('disabledOptionsRC');
         menu.children[0].children[2].classList.add('disabledOptionsRC');
-
     }else if(parent.children[0].children[0].children[0].classList.contains('importantTasks')){
-
         txt_zone_2.innerHTML = "Enlever le filtre important";
-        // parent.querySelector('.div_option_container').classList.remove('importantTasks_cross');
-        //importantTasks_cross
-        //specialTasks_cross
         menu.children[0].children[1].classList.remove('disabledOptionsRC');
-
     }else if(parent.children[0].children[0].children[0].classList.contains('specialTasks')){
-
         txt_zone_3.innerHTML = "Enlever le filtre special";
-        // parent.querySelector('.div_option_container').classList.remove('specialTasks_cross');
         menu.children[0].children[2].classList.remove('disabledOptionsRC');
-
     }
     else{
         txt_zone_1.innerHTML = "Marquer comme terminée";
         txt_zone_2.innerHTML = "Ajouter le filtre important";
         txt_zone_3.innerHTML = "Ajouter le filtre special";
 
-        i_zone_1.classList.remove('circle');
-        i_zone_1.classList.add('fas');
-        i_zone_1.classList.add('fa-check-circle');
-
         parent.children[1].children[0].classList.remove('endTasks_text');
         parent.children[1].children[1].children[0].classList.remove('endTasks_text');
-        // parent.children[1].children[2].children[0].classList.remove('endTasks_container');
 
         menu.children[0].children[1].classList.remove('disabledOptionsRC');
         menu.children[0].children[2].classList.remove('disabledOptionsRC');
@@ -578,14 +544,10 @@ function rightClick(e){
         parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
         // parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
 
-        if(parent.children[0].children[0].children[0].classList.contains('endTasks')){
-            parent.children[1].children[0].classList.remove('circle');
-            parent.children[1].children[0].classList.add('fas');
-            parent.children[1].children[0].classList.add('fa-check-circle');
+        if(parent.querySelector('.checkbox_todo_end').checked === true){
+            parent.querySelector('.checkbox_todo_end').checked = false;
         }else{
-            parent.children[1].children[0].classList.add('circle');
-            parent.children[1].children[0].classList.remove('fas');
-            parent.children[1].children[0].classList.remove('fa-check-circle');
+            parent.querySelector('.checkbox_todo_end').checked = true;
         }
 
         parent.children[0].children[0].children[0].classList.remove('importantTasks');
@@ -719,8 +681,11 @@ function createTask(
     const text = document.createElement("p");
     text.classList.add("textTask");
     const inputValue = input.value;
-    const itag_end = document.createElement("i");
-    itag_end.classList.add('circle');
+    // const itag_end = document.createElement("i");
+
+    const itag_end = document.createElement('input')
+    itag_end.classList.add('checkbox_todo_end');
+    itag_end.setAttribute("type", "checkbox");
 
     itag_end.onclick = setFinish;
 
@@ -854,7 +819,7 @@ function createTask(
         date_act = getDateDay("/", "FR");
         numberOfElement.innerText = "0 sous-tâche(s) restante(s)";
         if (inputValue !== '') {
-            
+
             if(localStorageTodos === null){
                 todoBanMain.setAttribute("data-num", ctr_card++)
                 todoBanMain.setAttribute("data-hierarchy", ctr_card++);
@@ -1039,10 +1004,8 @@ function createTask(
             for (let i = 0; i < Object.keys(stateLS).length; i++) {
                 collapsible_div_header.classList.add(stateLS[i]);
                 if (stateLS[i] === "endTasks") {
+                    todoBanMain.children[1].children[0].checked = true;
                     todoBanMain.children[1].children[0].classList.toggle('endTasks_text');
-                    todoBanMain.children[1].children[0].classList.add('fas');
-                    todoBanMain.children[1].children[0].classList.add('fa-check-circle');
-                    todoBanMain.children[1].children[0].classList.remove('circle');
                     todoBanMain.children[1].children[1].children[0].classList.toggle('endTasks_text');
                     // todoBanMain.children[1].children[2].children[0].classList.toggle('endTasks_container');
                 } else if (stateLS[i] === "specialTasks") {
@@ -1052,7 +1015,7 @@ function createTask(
                 } else {
                     // todoBanMain.children[1].children[0].classList.remove('fas');
                     // todoBanMain.children[1].children[0].classList.remove('fa-check-circle');
-                    todoBanMain.children[1].children[0].classList.add('circle');
+                    // todoBanMain.children[1].children[0].classList.add('circle');
                 }
             }
 

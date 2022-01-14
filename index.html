@@ -299,14 +299,19 @@
     
         <div class="noteContainer">
             <div class="header">
-                <h2 class="date">Note list</h2>
+                <div class="headerOne">
+                    <h2 class="date">Note List</h2>
+                    <div class="shareAllContainer" data-state="disabled">
+                        <p class="shareAll">Tout partager <i class="fas fa-share-square"></i></p>
+                    </div>
+                </div>
                 <div class="addItems">
                     <label for="filterNote" id="filterNote_label">
                         <input type="text"
                                id="filterNote"
                                onkeyup="filterNotes()"
                                placeholder="Rechercher">
-                        <span class="speechNote">
+                        <span class="speechNote" data-state="disabled_">
                             <i class="fas fa-microphone"></i>
                         </span>
                     </label>
@@ -367,7 +372,7 @@
         <hr>
         <li id="infoTask">
             <div class="i_div"><i class="fas fa-info-circle"></i></div>
-            <div><p class="txt_zone_6"></p></div>
+            <div><p class="txt_zone_6" id="info_to_show"></p></div>
         </li>
     </ul>
 </div>

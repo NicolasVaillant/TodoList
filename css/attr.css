@@ -1,10 +1,14 @@
 @charset "utf-8";
 
-[data-state="disabled"]{
+[data-state="disabled"],
+[data-state="disabled_"]{
     color: var(--td_color_grey) !important;
     opacity: .5!important;
     cursor: not-allowed!important;
 }
 [data-state="disabled"]:hover{
     transform: scale(1)!important;
+}
+[data-state="disabled_"]:hover{
+    transform: translate(-50%, -50%) scale(1)!important;
 }

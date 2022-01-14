@@ -60,6 +60,7 @@
 }
 .endTasks_text{
     color: var(--b_sec) !important;
+    accent-color: #008000;
     transition: var(--transition1);
 }
 .endTasks_container{

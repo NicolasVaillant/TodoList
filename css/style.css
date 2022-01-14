@@ -40,7 +40,8 @@
     align-items: center;
     font-size: .8em;
     gap: 1em;
-    padding: 0 2em;
+    /*padding: 0 2em;*/
+    justify-content: flex-end;
 }
 .color-mode i{
     color: var(--td_color_title);
@@ -240,6 +241,7 @@ ul {
     transform: scale(1.4);
     opacity: .5;
     transition: var(--transition2);
+    accent-color: #74dfdf;
 }
 .end{
     margin: auto;
@@ -486,7 +488,7 @@ input::selection{
     transform: translate(-50%, -50%);
 }
 
-#myInput_label{position: relative}
+#myInput_label{position: relative;width: 100%;}
 .speechTodo,
 .speechNote{
     position: absolute;
