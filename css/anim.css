@@ -39,11 +39,11 @@
     background: #d7d748!important;
 }
 .specialTasks{
-    border: 1px dashed var(--green);
-    background: #FCFFA6 !important;
+    border: 1px dashed var(--yellow_b);
+    background: var(--yellow) !important;
 }
 .specialTasks_color{
-    color: var(--green)!important;
+    color: var(--yellow)!important;
 }
 .clkTasks_color{
     color: #89e9ff!important;

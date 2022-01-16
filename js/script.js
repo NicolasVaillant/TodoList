@@ -427,24 +427,49 @@ function developChild(element){
 }
 
 function setTodo(element){
-    const div = element.closest(".todoBanMain").children[0].children[0].children[0];
-    if(element.dataset.name === "star"){
-        if(div.classList.contains("importantTasks")){
-            div.classList.remove("importantTasks");
-            element.parentElement.children[0].classList.remove("importantTasks_color");
+    const div = element.closest(".todoBanMain");
+
+    const header = div.querySelector('.collapsible-header');
+    const i_imp = div.querySelector('.fa-exclamation-circle');
+    const i_star = div.querySelector('.fa-star');
+
+    if(header.classList.contains("endTasks")){}else{
+        if(element.dataset.name === "star"){
+            if(header.classList.contains("importantTasks")){}else{
+                if(header.classList.contains("specialTasks")){
+                    i_star.classList.remove("specialTasks_color");
+                    i_imp.classList.remove("disabledOptionsRC");
+                    header.classList.remove("specialTasks");
+                }else{
+                    i_star.classList.add("specialTasks_color");
+                    header.classList.add("specialTasks");
+
+                    i_imp.classList.remove("importantTasks_color");
+                    i_imp.classList.add("disabledOptionsRC");
+                    header.classList.remove("importantTasks");
+                }
+            }
+        }else{
+            if(header.classList.contains("specialTasks")){}else{
+                if(header.classList.contains("importantTasks")){
+                    i_imp.classList.remove("importantTasks_color");
+                    i_star.classList.remove("disabledOptionsRC");
+                    header.classList.remove("importantTasks");
+                }else{
+                    i_imp.classList.add("importantTasks_color");
+                    header.classList.add("importantTasks");
+
+                    i_star.classList.add("disabledOptionsRC");
+                    i_star.classList.remove("specialTasks_color");
+                    header.classList.remove("specialTasks");
+                }
+            }
+
         }
-        element.classList.toggle("specialTasks_color");
-        div.classList.toggle("specialTasks");
-    }else{
-        if(div.classList.contains("specialTasks")){
-            div.classList.remove("specialTasks");
-            element.parentElement.children[1].classList.remove("specialTasks_color");
-        }
-        element.classList.toggle("importantTasks_color");
-        div.classList.toggle("importantTasks");
     }
-    return div.classList;
+    return header.classList;
 }
+
 function getDate(separator = "h"){
     const date_reminder = new Date();
     let h = date_reminder.getHours();
@@ -473,9 +498,29 @@ function getDateDay(separator, sens){
 
 function setFinish(e){
     const parent = e.target.closest('.todoBanMain');
-    parent.querySelector('.collapsible-header').classList.toggle('endTasks');
-    // parent.querySelector('.fa-check-circle').classList.toggle('endTasks_text');
-    parent.querySelector('.textTask').classList.toggle('endTasks_text');
+
+    const header = parent.querySelector('.collapsible-header');
+    const i_imp = parent.querySelector('.fa-exclamation-circle');
+    const i_star = parent.querySelector('.fa-star');
+
+    if(header.classList.contains("endTasks")){
+        header.classList.remove('endTasks');
+        i_imp.classList.remove('disabledOptionsRC');
+        i_star.classList.remove('disabledOptionsRC');
+        parent.querySelector('.textTask').classList.remove('endTasks_text');
+    }else{
+        header.classList.add('endTasks');
+        i_imp.classList.add('disabledOptionsRC');
+        i_star.classList.add('disabledOptionsRC');
+        parent.querySelector('.textTask').classList.add('endTasks_text');
+
+        header.classList.remove('importantTasks');
+        header.classList.remove('specialTasks');
+
+        i_imp.classList.remove('importantTasks_color');
+        i_star.classList.remove('specialTasks_color');
+    }
+
     saveTasks(getDate("h"));
 }
 
@@ -484,8 +529,9 @@ function rightClick(e){
     document.getElementById(
         "contextMenuNote").style.display = "none";
     const parent = e.target.closest('.todoBanMain');
-
-    console.log(parent)
+    const header = parent.querySelector('.collapsible-header');
+    const i_imp = parent.querySelector('.fa-exclamation-circle');
+    const i_star = parent.querySelector('.fa-star');
 
     parent.classList.add('bumpOnRClick');
     setTimeout(function (){
@@ -510,61 +556,118 @@ function rightClick(e){
     i_zone_1.classList.add('fas');
     i_zone_1.classList.add('fa-check-circle');
 
+
     if(parent.querySelector('.checkbox_todo_end').checked === true){
         txt_zone_1.innerHTML = "Marquer comme non terminée";
         parent.children[1].children[0].classList.add('endTasks_text');
         parent.children[1].children[1].children[0].classList.add('endTasks_text');
-        menu.children[0].children[1].classList.add('disabledOptionsRC');
-        menu.children[0].children[2].classList.add('disabledOptionsRC');
-    }else if(parent.children[0].children[0].children[0].classList.contains('importantTasks')){
+
+        menu.querySelector('#impTask').classList.add('disabledOptionsRC');
+        menu.querySelector('#speTask').classList.add('disabledOptionsRC');
+
+    }else if(header.classList.contains('importantTasks')){
         txt_zone_2.innerHTML = "Enlever le filtre important";
-        menu.children[0].children[1].classList.remove('disabledOptionsRC');
-    }else if(parent.children[0].children[0].children[0].classList.contains('specialTasks')){
+        menu.querySelector('#impTask').classList.remove('disabledOptionsRC');
+        menu.querySelector('#speTask').classList.add('disabledOptionsRC');
+
+        i_star.classList.add('disabledOptionsRC');
+        i_imp.classList.remove('disabledOptionsRC');
+
+    }else if(header.classList.contains('specialTasks')){
         txt_zone_3.innerHTML = "Enlever le filtre special";
-        menu.children[0].children[2].classList.remove('disabledOptionsRC');
+        menu.querySelector('#speTask').classList.remove('disabledOptionsRC');
+        menu.querySelector('#impTask').classList.add('disabledOptionsRC');
+
+        i_imp.classList.add('disabledOptionsRC');
+        i_star.classList.remove('disabledOptionsRC');
     }
     else{
         txt_zone_1.innerHTML = "Marquer comme terminée";
         txt_zone_2.innerHTML = "Ajouter le filtre important";
         txt_zone_3.innerHTML = "Ajouter le filtre special";
 
-        parent.children[1].children[0].classList.remove('endTasks_text');
-        parent.children[1].children[1].children[0].classList.remove('endTasks_text');
+        parent.querySelector('.checkbox_todo_end').classList.remove('endTasks_text');
+        parent.querySelector('.textTask').classList.remove('endTasks_text');
 
-        menu.children[0].children[1].classList.remove('disabledOptionsRC');
-        menu.children[0].children[2].classList.remove('disabledOptionsRC');
+        menu.querySelector('#speTask').classList.remove('disabledOptionsRC');
+        menu.querySelector('#impTask').classList.remove('disabledOptionsRC');
 
     }
     txt_zone_4.innerHTML = "Supprimer la tâche";
 
     function zone1(parent){
-        //TODO: cant right click end tasks then click on check and save it
-        parent.children[0].children[0].children[0].classList.toggle('endTasks');
-        parent.children[1].children[0].classList.toggle('endTasks_text');
-        parent.children[1].children[1].children[0].classList.toggle('endTasks_text');
-        // parent.children[1].children[2].children[0].classList.toggle('endTasks_container');
+
+        const header = parent.querySelector('.collapsible-header');
+        const i_imp = parent.querySelector('.fa-exclamation-circle');
+        const i_star = parent.querySelector('.fa-star');
 
         if(parent.querySelector('.checkbox_todo_end').checked === true){
             parent.querySelector('.checkbox_todo_end').checked = false;
+            header.classList.remove('endTasks');
+            parent.querySelector('.checkbox_todo_end').classList.remove('endTasks_text');
+            parent.querySelector('.textTask').classList.remove('endTasks_text');
+
+            i_imp.classList.remove('disabledOptionsRC');
+            i_star.classList.remove('disabledOptionsRC');
+
         }else{
             parent.querySelector('.checkbox_todo_end').checked = true;
-        }
+            header.classList.add('endTasks');
+            parent.querySelector('.checkbox_todo_end').classList.add('endTasks_text');
+            parent.querySelector('.textTask').classList.add('endTasks_text');
 
-        parent.children[0].children[0].children[0].classList.remove('importantTasks');
-        parent.children[0].children[0].children[0].classList.remove('specialTasks');
+            header.classList.remove('importantTasks');
+            header.classList.remove('specialTasks');
+            i_imp.classList.remove('importantTasks_color');
+            i_star.classList.remove('specialTasks_color');
+
+            i_imp.classList.add('disabledOptionsRC');
+            i_star.classList.add('disabledOptionsRC');
+        }
     }
     function zone2(parent,element){
         if(element.classList.contains('disabledOptionsRC')){}else{
-            parent.children[0].children[0].children[0].classList.toggle('importantTasks');
-            // parent.children[1].children[2].children[0].classList.toggle('importantTasks_cross');
-            parent.children[0].children[0].children[0].classList.remove('specialTasks');
+
+            const header = parent.querySelector('.collapsible-header');
+            const i_imp = parent.querySelector('.fa-exclamation-circle');
+            const i_star = parent.querySelector('.fa-star');
+
+            if(header.classList.contains("importantTasks")){
+                header.classList.remove('importantTasks');
+                i_imp.classList.remove('importantTasks_color');
+
+                i_imp.classList.remove('disabledOptionsRC');
+                i_star.classList.remove('disabledOptionsRC');
+            }else{
+                header.classList.add('importantTasks');
+                i_imp.classList.add('importantTasks_color');
+                header.classList.remove('specialTasks');
+
+                i_imp.classList.remove('disabledOptionsRC');
+                i_star.classList.add('disabledOptionsRC');
+            }
         }
     }
     function zone3(parent,element){
         if(element.classList.contains('disabledOptionsRC')){}else{
-            parent.children[0].children[0].children[0].classList.toggle('specialTasks');
-            // parent.children[1].children[2].children[0].classList.toggle('specialTasks_cross');
-            parent.children[0].children[0].children[0].classList.remove('importantTasks');
+            const header = parent.querySelector('.collapsible-header');
+            const i_imp = parent.querySelector('.fa-exclamation-circle');
+            const i_star = parent.querySelector('.fa-star');
+
+            if(header.classList.contains("specialTasks")){
+                header.classList.remove('specialTasks');
+                i_star.classList.remove('specialTasks_color');
+
+                i_imp.classList.remove('disabledOptionsRC');
+                i_star.classList.remove('disabledOptionsRC');
+            }else{
+                header.classList.add('specialTasks');
+                i_star.classList.add('specialTasks_color');
+                header.classList.remove('importantTasks');
+
+                i_imp.classList.add('disabledOptionsRC');
+                i_star.classList.remove('disabledOptionsRC');
+            }
         }
     }
     function zone4(parent){
@@ -1003,20 +1106,29 @@ function createTask(
 
             for (let i = 0; i < Object.keys(stateLS).length; i++) {
                 collapsible_div_header.classList.add(stateLS[i]);
+
+                const checkbox = todoBanMain.querySelector('.checkbox_todo_end');
+                const textTask  = todoBanMain.querySelector('.textTask');
+                const i_imp = todoBanMain.querySelector('.fa-exclamation-circle');
+                const i_star = todoBanMain.querySelector('.fa-star');
+
+
                 if (stateLS[i] === "endTasks") {
-                    todoBanMain.children[1].children[0].checked = true;
-                    todoBanMain.children[1].children[0].classList.toggle('endTasks_text');
-                    todoBanMain.children[1].children[1].children[0].classList.toggle('endTasks_text');
-                    // todoBanMain.children[1].children[2].children[0].classList.toggle('endTasks_container');
+
+                    checkbox.checked = true;
+                    checkbox.classList.add('endTasks_text');
+                    textTask .classList.add('endTasks_text');
+
+                    i_imp.classList.add('disabledOptionsRC');
+                    i_star.classList.add('disabledOptionsRC');
+
                 } else if (stateLS[i] === "specialTasks") {
-                    // todoBanMain.children[1].children[2].children[0].classList.toggle('specialTasks_cross');
+                    i_star.classList.add('specialTasks_color');
+                    i_imp.classList.add('disabledOptionsRC');
                 } else if (stateLS[i] === "importantTasks") {
-                    // todoBanMain.children[1].children[2].children[0].classList.toggle('importantTasks_cross');
-                } else {
-                    // todoBanMain.children[1].children[0].classList.remove('fas');
-                    // todoBanMain.children[1].children[0].classList.remove('fa-check-circle');
-                    // todoBanMain.children[1].children[0].classList.add('circle');
-                }
+                    i_imp.classList.add('importantTasks_color');
+                    i_star.classList.add('disabledOptionsRC');
+                } else {}
             }
 
         }
@@ -1257,7 +1369,7 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
         svgStyle: null
     }
 
-    new ProgressBar.Circle(re,config).animate(value);
+    try{new ProgressBar.Circle(re,config).animate(value)}catch (e){console.error(e)}
 }
 
 function changeChart(parent, valueNum, index){
