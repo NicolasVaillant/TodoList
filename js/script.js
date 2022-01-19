@@ -757,6 +757,7 @@ function hideMenu() {
 
 let ctr_todos_chart = 0;
 let ctr_card = 0;
+let array_id = [];
 
 function createTask(
     keypress,
@@ -1025,7 +1026,24 @@ function createTask(
                 pickerHour.value = "";
             }
 
-            canvasChart.setAttribute("id", inputValue.replace(/\s/g, ""))
+            array_id.push(inputValue.replace(/\s/g, ""))
+
+            const set = new Set(array_id);
+            const duplicates = array_id.filter(item => {
+                if (set.has(item)) {
+                    set.delete(item);
+                } else {
+                    return item;
+                }
+            });
+
+            if(duplicates.length !== 0){
+                canvasChart.setAttribute("id", inputValue.replace(/\s/g, "")
+                    + Math.floor(Math.random() * 10000));
+            }else{
+                canvasChart.setAttribute("id", inputValue.replace(/\s/g, ""))
+            }
+
             canvasChart_p.innerHTML = "0";
             canvasChart.appendChild(canvasChart_p);
             containerChart.appendChild(canvasChart);
@@ -1136,7 +1154,25 @@ function createTask(
 
         }
 
-        canvasChart.setAttribute("id", valueLS.replace(/\s/g, ""))
+        array_id.push(valueLS.replace(/\s/g, ""))
+
+        const set = new Set(array_id);
+        const duplicates = array_id.filter(item => {
+            if (set.has(item)) {
+                set.delete(item);
+            } else {
+                return item;
+            }
+        });
+
+        if(duplicates.length !== 0){
+            canvasChart.setAttribute("id", valueLS.replace(/\s/g, "")
+                + Math.floor(Math.random() * 10000));
+        }else{
+            canvasChart.setAttribute("id", valueLS.replace(/\s/g, ""))
+        }
+
+
         canvasChart.appendChild(canvasChart_p);
         containerChart.appendChild(canvasChart);
         div_text.appendChild(containerChart);
@@ -1328,7 +1364,7 @@ const color_a = [
 let array_li_sub = [];
 let new_array_li_sub = [];
 
-function createChart(element, todos_nbLS_subChild, value_onchange){
+function createChart(element, todos_nbLS_subChild, value_onchange, flag_change){
 
     let hw_li_dis = 0;
 
@@ -1336,7 +1372,6 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
     const li_subs = div.querySelectorAll('.li_sub');
 
     const allChart_containers = div.querySelector('.containerChart')
-    const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
 
     li_subs.forEach(function (e){
         if(e.classList.contains('li_sub_disabled')){hw_li_dis++}
@@ -1360,7 +1395,6 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
     }else{
         color = color_a[5];
     }
-    // console.log(value, color)
 
     const config = {
         strokeWidth: 10,
@@ -1372,7 +1406,8 @@ function createChart(element, todos_nbLS_subChild, value_onchange){
         svgStyle: null
     }
 
-    try{new ProgressBar.Circle(re,config).animate(value)}catch (e){console.error(e)}
+    const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
+    try{new ProgressBar.Circle(re.toString(),config).animate(value)}catch (e){console.warn(e)}
 }
 
 function changeChart(parent, valueNum, index){
@@ -1392,7 +1427,7 @@ function changeChart(parent, valueNum, index){
 
     setTimeout(function (){
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-        createChart(element, localStorageTodos.e[index][6], hw_li_dis_change);
+        createChart(element, localStorageTodos.e[index][6], hw_li_dis_change, true);
     },100);
 }
 
