@@ -239,8 +239,6 @@ function updateNBSubChild(element, index){
 
     setTimeout(function(){
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-        console.log(localStorageTodos.e[index])
-        console.log(localStorageTodos.e[index][6])
         // numberOfElement.innerText = `${localStorageTodos.e[index][6]}` + " sous-tâche(s) restante(s)";
         canvasChart_p.innerText = localStorageTodos.e[index][6];
 
@@ -941,8 +939,12 @@ function createTask(
 
             if (filter !== false) {
                 if (filter === "important") {
-                    collapsible_div_header.classList.add('importantTasks')
+                    collapsible_div_header.classList.add('importantTasks');
+                    itag_imp.classList.add('importantTasks_color');
+                    itag_star.classList.add('disabledOptionsRC');
                 } else if (filter === "special") {
+                    itag_star.classList.add('specialTasks_color');
+                    itag_imp.classList.add('disabledOptionsRC');
                     collapsible_div_header.classList.add('specialTasks')
                 }
                 myUL.appendChild(todoBanMain)
@@ -1022,6 +1024,7 @@ function createTask(
                 div_text.appendChild(time_p);
                 pickerHour.value = "";
             }
+
             canvasChart.setAttribute("id", inputValue.replace(/\s/g, ""))
             canvasChart_p.innerHTML = "0";
             canvasChart.appendChild(canvasChart_p);
@@ -1475,7 +1478,6 @@ function createTaskButton(id){
             impTask_start.classList.toggle('importantTasks_color');
             speTask_start.classList.remove('specialTasks_color');
             clockChoice.classList.remove('clkTasks_color');
-            // console.log(toggleIMP, toggleSPE)
             pickerHour.classList.remove('showPicker');
             break;
         case "speTask_start":
