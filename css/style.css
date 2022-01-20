@@ -217,13 +217,15 @@ ul {
     transform: scale(1);
     transition: var(--transition2);
 }
-.header_popup{
+.header_popup,
+.header_l{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-content: center;
 }
+.lbl_popup{padding: 1em}
 #myUL_overlay{
     position: absolute;
     max-height: 60%;

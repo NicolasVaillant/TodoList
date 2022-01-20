@@ -1201,12 +1201,15 @@ function showAllHas(element){
     const container = myUL.querySelectorAll('.todoBanMain');
     const content_overlay = document.createElement('div');
     const header = document.createElement('div');
+    const header_l = document.createElement('div');
     const close_popup = document.createElement('i');
     const txt_popup = document.createElement('p');
+    const lbl_popup = document.createElement('p');
     content_overlay.classList.add('content_overlay');
     header.classList.add('header_popup');
+    header_l.classList.add('header_l');
     txt_popup.classList.add('txt_popup');
-    txt_popup.innerHTML = "Todos en lecture seule"
+    lbl_popup.classList.add('lbl_popup');
     close_popup.classList.add('fas');
     close_popup.classList.add('fa-times');
     close_popup.classList.add('close_popup');
@@ -1237,12 +1240,16 @@ function showAllHas(element){
         content_overlay.appendChild(new_c)
     }
 
+    txt_popup.innerHTML = "Todos en lecture seule"
+    lbl_popup.innerHTML = `${indices.length} Todos sélectionnés`
     close_popup.onclick = function (){remAllHas(this)}
-    header.appendChild(close_popup);
-    header.appendChild(txt_popup);
+    header_l.appendChild(close_popup);
+    header_l.appendChild(txt_popup);
+    header.appendChild(header_l);
+    header.appendChild(lbl_popup);
     myUL_overlay.appendChild(header);
     myUL_overlay.appendChild(content_overlay);
-    myUL_overlay.scrollIntoView(false);
+    // myUL_overlay.scrollIntoView(false);
 }
 
 function remAllHas(element){
