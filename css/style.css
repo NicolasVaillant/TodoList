@@ -221,10 +221,13 @@ ul {
     position: sticky;
     top: 0;
     left: 0;
-    margin-bottom: .5em;
+    padding-bottom: .5em;
     background: var(--td_bg_body);
     z-index: 1000000;
     width: 100%;
+}
+.content_overlay{
+    overflow: auto;
 }
 .header_l{
     cursor: pointer;
