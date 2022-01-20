@@ -217,6 +217,14 @@ ul {
     transform: scale(1);
     transition: var(--transition2);
 }
+.header_popup{
+    position: sticky;
+    top: 0;
+    left: 0;
+    background: var(--td_bg_body);
+    z-index: 1000000;
+    width: 100%;
+}
 .header_popup,
 .header_l{
     display: flex;
@@ -949,6 +957,8 @@ hr{background: var(--w);}
 .todoBanMain.readOnly{
     background: none;
     position: relative;
+    width: 99%;
+    margin: auto;
 }
 .content_overlay_todo{
     position: absolute;
@@ -958,8 +968,8 @@ hr{background: var(--w);}
     height: 100%;
     z-index: 100000;
     border-radius: var(--border1);
-    background: red;
-    opacity: .2;
+    background: linear-gradient(45deg, #545454, #66666663);
+    opacity: .4;
     cursor: not-allowed!important;
 }
 
