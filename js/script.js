@@ -1233,10 +1233,24 @@ function showAllHas(element){
     }
     for(let i = 0 ; i < indices.length ; i++){
         const content_overlay_todo = document.createElement('div')
+        const cont_ov_but = document.createElement('i')
+        const cont_ov_but_lbl = document.createElement('p')
+        const con_ov_container = document.createElement('div')
+        con_ov_container.classList.add('con_ov_container');
         content_overlay_todo.classList.add('content_overlay_todo');
+        cont_ov_but_lbl.classList.add('cont_ov_but_lbl');
+        cont_ov_but.classList.add('fas');
+        cont_ov_but.classList.add('fa-chevron-down');
+        cont_ov_but.classList.add('cont_ov_but');
+        cont_ov_but_lbl.innerHTML = "Découvrir la tâche concernée";
         var new_c = container[indices[i]].cloneNode(true);
         new_c.classList.add('readOnly')
+        con_ov_container.appendChild(cont_ov_but_lbl)
+        con_ov_container.appendChild(cont_ov_but)
+        content_overlay_todo.appendChild(con_ov_container)
         new_c.appendChild(content_overlay_todo)
+
+        content_overlay_todo.onclick = function (){hasToTasks(this)}
         content_overlay.appendChild(new_c)
     }
 
@@ -1252,6 +1266,20 @@ function showAllHas(element){
     myUL_overlay.appendChild(header);
     myUL_overlay.appendChild(content_overlay);
     // myUL_overlay.scrollIntoView(false);
+}
+
+function hasToTasks(element) {
+    const todo = element.closest('.todoBanMain');
+    const parent = element.closest('#myUL_overlay');
+    const allTodo = document.querySelectorAll('.todoBanMain:not(.readOnly):not(#todoBanMainID)');
+    const index = todo.dataset.num;
+    remAllHas(parent);
+
+    allTodo[index].classList.add('highlightTodo');
+    setTimeout(function (){
+        allTodo[index].classList.remove('highlightTodo')
+    },1000)
+
 }
 
 function remAllHas(element){

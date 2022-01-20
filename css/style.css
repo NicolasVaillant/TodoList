@@ -978,6 +978,20 @@ hr{background: var(--w);}
 .todoBanMain.readOnly .pickerHour{
     display: none;
 }
+
+.con_ov_container{
+    background: var(--td_bg_body);
+    padding: 0.5em;
+    border-radius: var(--border1);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin-right: 1em;
+    gap: 1em;
+    color: var(--b_sec_o_hover);
+}
+
 .content_overlay_todo{
     position: absolute;
     top: 0;
@@ -986,10 +1000,29 @@ hr{background: var(--w);}
     height: 100%;
     z-index: 100000;
     border-radius: var(--border1);
-    background: linear-gradient(45deg, #545454, #66666663);
-    opacity: .4;
-    cursor: not-allowed!important;
+    background: linear-gradient(45deg, rgba(84, 84, 84, 0.56), #66666663);
+    cursor: pointer!important;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    transition: var(--transition3);
 }
+.cont_ov_but{
+    transform: rotate(-90deg);
+    font-size: 1.2em;
+    opacity: 1;
+}
+.content_overlay_todo:hover{
+    background: linear-gradient(45deg, #a1a1a1, rgba(199, 199, 199, 0.39));
+    transition: var(--transition3);
+}
+.content_overlay_todo:hover .con_ov_container{
+    color: var(--b_sec);
+}
+.content_overlay_todo:hover >.con_ov_container >i{color: var(--b_sec)}
+
 
 .todoBanMain:not(.readOnly):hover .div_option{
     opacity: 1;

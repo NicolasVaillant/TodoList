@@ -206,3 +206,10 @@
     }
 }
 .speech_not_supported{display: none!important}
+
+.highlightTodo{
+    border-radius: var(--border1);
+    /*transform: scale(1.05) !important;*/
+    transition: var(--transition3);
+    animation: 2s pulse;
+}
