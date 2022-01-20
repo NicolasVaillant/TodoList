@@ -201,12 +201,12 @@ ul {
     top: 0;
     left: 0;
     margin: 0;
-    padding: 1em;
-    background: var(--td_bg_body);
+    padding: 1em .5em;
+    /*background: var(--td_bg_body);*/
     z-index: 1000;
     border-radius: var(--border3);
-    width: 3em;
-    height: 3em;
+    /*width: 3em;*/
+    /*height: 3em;*/
     display: flex!important;
     justify-content: center;
     align-items: center;
@@ -221,9 +221,21 @@ ul {
     position: sticky;
     top: 0;
     left: 0;
+    margin-bottom: .5em;
     background: var(--td_bg_body);
     z-index: 1000000;
     width: 100%;
+}
+.header_l{
+    cursor: pointer;
+    padding: 0 .5em;
+    border-radius: var(--border1);
+    background: var(--td_bg_body);
+    transition: var(--transition2);
+}
+.header_l:hover{
+    background: var(--td_bg_container);
+    transition: var(--transition2);
 }
 .header_popup,
 .header_l{
@@ -959,6 +971,9 @@ hr{background: var(--w);}
     position: relative;
     width: 99%;
     margin: auto;
+}
+.todoBanMain.readOnly .pickerHour{
+    display: none;
 }
 .content_overlay_todo{
     position: absolute;

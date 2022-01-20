@@ -1242,11 +1242,13 @@ function showAllHas(element){
 
     txt_popup.innerHTML = "Todos en lecture seule"
     lbl_popup.innerHTML = `${indices.length} Todos sélectionnés`
-    close_popup.onclick = function (){remAllHas(this)}
+    header_l.onclick = function (){remAllHas(this)}
+
     header_l.appendChild(close_popup);
     header_l.appendChild(txt_popup);
     header.appendChild(header_l);
     header.appendChild(lbl_popup);
+
     myUL_overlay.appendChild(header);
     myUL_overlay.appendChild(content_overlay);
     // myUL_overlay.scrollIntoView(false);
