@@ -1228,16 +1228,14 @@ function showAllHas(element){
         indices.push(idx);
         idx = array_has.indexOf(e, idx + 1);
     }
-    if(indices.length !== 1){
-        for(let i = 0 ; i < indices.length ; i++){
-            const content_overlay_todo = document.createElement('div')
-            content_overlay_todo.classList.add('content_overlay_todo');
-            var new_c = container[indices[i]].cloneNode(true);
-            new_c.classList.add('readOnly')
-            new_c.appendChild(content_overlay_todo)
-            content_overlay.appendChild(new_c)
-        }
-    }else{console.log("only one occ")}
+    for(let i = 0 ; i < indices.length ; i++){
+        const content_overlay_todo = document.createElement('div')
+        content_overlay_todo.classList.add('content_overlay_todo');
+        var new_c = container[indices[i]].cloneNode(true);
+        new_c.classList.add('readOnly')
+        new_c.appendChild(content_overlay_todo)
+        content_overlay.appendChild(new_c)
+    }
 
     close_popup.onclick = function (){remAllHas(this)}
     header.appendChild(close_popup);
