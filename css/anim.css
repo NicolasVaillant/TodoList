@@ -101,6 +101,17 @@
     transition: all 1s!important;
 }
 
+.apparition{
+    transform: translate(-50%, 0) scale(1.1)!important;
+    opacity: 1!important;
+    display: flex!important;
+    transition: var(--transition2);
+}
+.zoom_out{
+    transform: scale(.9)!important;
+    transition: var(--transition2);
+}
+
 .disabledOptionsRC{
     opacity: .2!important;
     cursor: not-allowed!important;
@@ -194,3 +205,4 @@
         background: var(--td_bg_body);
     }
 }
+.speech_not_supported{display: none!important}

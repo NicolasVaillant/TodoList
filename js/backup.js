@@ -7,14 +7,16 @@ const array_stocked_child_all = [];
 //saveTasks(hourSaveClick)
 function saveTasks(hourSaveClick){
 
-    // print("stored", true, "red")
+    print("stored", true, "red")
 
     const array_stocked_all = [];
     const container = document.querySelector('#myUL');
+    const container_not = document.querySelector('#myUL:not(#myUL_overlay)');
     const todos = container.children;
 
-    if(container.childElementCount !== 0){
-        for(let i = 0 ; i <= container.childElementCount - 1; i++) {
+
+    if(container_not.childElementCount !== 0){
+        for(let i = 1 ; i <= container_not.childElementCount - 1; i++) {
             todos[i].querySelectorAll('.input_sub').forEach( function (child) {
                 array_stocked_child.push(child.value);
             });
@@ -42,5 +44,5 @@ function saveTasks(hourSaveClick){
     try{
         const stocked = {e : array_stocked_all, s : hourSaveClick, v : todos.length}
         localStorage.setItem("todos_test", JSON.stringify(stocked));
-    }catch (e) {console.log(e)}
+    }catch (e) {console.warn(e)}
 }

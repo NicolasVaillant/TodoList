@@ -86,7 +86,19 @@ todoBanMainID.oncontextmenu= function (e){
         e.target.closest('#todoBanMainID').classList.remove('bumpOnRClick')
     },200)
 };
-window.onclick = function (){hideMenu()}
+window.onclick = function (){
+    hideMenu();
+
+    // if(myUL.classList.contains('zoom_out')){
+    //     // myUL_overlay.classList.remove('apparition')
+    //     // myUL.classList.remove('zoom_out');
+    // }else{
+    //     // myUL_overlay.classList.add('apparition')
+    //     // myUL.classList.add('zoom_out');
+    // }
+
+
+}
 window.oncontextmenu = function (e){e.preventDefault()}
 window.onscroll = function (){
     // console.log("scrollY : " +window.scrollY)
@@ -859,7 +871,7 @@ function createTask(
     // itac.onclick = function(){reminder(this)};
     itac.setAttribute("name", "reminder");
     //---------------------------------------------------RIGHT CLICK
-    todoBanMain.oncontextmenu= rightClick;
+    todoBanMain.oncontextmenu = rightClick;
     //---------------------------------------------------AppendChild
     collapsible_div_header.appendChild(expand);
     div_option_container_static.appendChild(ital);
@@ -887,7 +899,7 @@ function createTask(
     //---------------------------------------------------VALIDATION
     const spanhas = document.createElement("span");
     spanhas.classList.add('colorhastags');
-
+    spanhas.onclick = function(){showAllHas(this)};
     //---------------------------------------------------CHART
 
     const containerChart = document.createElement("div");
@@ -908,7 +920,7 @@ function createTask(
     i_clock.classList.add("fas");
     i_clock.classList.add("fa-clock");
     i_clock.classList.add("td-transform-none");
-    i_clock.onclick = function(){showTime(this);};
+    i_clock.onclick = function(){showTime(this)};
     const time_p = document.createElement("p");
     const time_span = document.createElement("span");
 
@@ -952,8 +964,6 @@ function createTask(
                 input.value = "";
                 text.innerHTML = inputValue;
             }
-            const spanhas = document.createElement("span");
-            spanhas.classList.add('colorhastags')
             let txt = "";
 
             if (inputValue.includes("#")) {
@@ -1038,10 +1048,10 @@ function createTask(
             });
 
             if(duplicates.length !== 0){
-                canvasChart.setAttribute("id", inputValue.replace(/\s/g, "")
+                canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, "")
                     + Math.floor(Math.random() * 10000));
             }else{
-                canvasChart.setAttribute("id", inputValue.replace(/\s/g, ""))
+                canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, ""))
             }
 
             canvasChart_p.innerHTML = "0";
@@ -1172,7 +1182,6 @@ function createTask(
             canvasChart.setAttribute("id", valueLS.replace(/\s/g, ""))
         }
 
-
         canvasChart.appendChild(canvasChart_p);
         containerChart.appendChild(canvasChart);
         div_text.appendChild(containerChart);
@@ -1185,6 +1194,71 @@ function createTask(
 
 let storeElementOverDated = [];
 let uniqueChars = [];
+const myUL_overlay = document.querySelector('#myUL_overlay')
+
+function showAllHas(element){
+    const parent = element.closest('.todoBanMain');
+    const container = myUL.querySelectorAll('.todoBanMain');
+    const content_overlay = document.createElement('div');
+    const header = document.createElement('div');
+    const close_popup = document.createElement('i');
+    const txt_popup = document.createElement('p');
+    content_overlay.classList.add('content_overlay');
+    header.classList.add('header_popup');
+    txt_popup.classList.add('txt_popup');
+    txt_popup.innerHTML = "Todos en lecture seule"
+    close_popup.classList.add('fas');
+    close_popup.classList.add('fa-times');
+    close_popup.classList.add('close_popup');
+
+    myUL_overlay.classList.add('apparition')
+    myUL.classList.add('zoom_out');
+
+    let array_has = [];
+
+    container.forEach(function (todo){
+        const has = todo.querySelector('.colorhastags');
+            array_has.push(has.innerHTML)
+    })
+
+    var indices = [];
+    var e = element.innerHTML;
+    var idx = array_has.indexOf(e);
+    while (idx != -1) {
+        indices.push(idx);
+        idx = array_has.indexOf(e, idx + 1);
+    }
+    if(indices.length !== 1){
+        for(let i = 0 ; i < indices.length ; i++){
+            const content_overlay_todo = document.createElement('div')
+            content_overlay_todo.classList.add('content_overlay_todo');
+            var new_c = container[indices[i]].cloneNode(true);
+            new_c.classList.add('readOnly')
+            new_c.appendChild(content_overlay_todo)
+            content_overlay.appendChild(new_c)
+        }
+    }else{console.log("only one occ")}
+
+    close_popup.onclick = function (){remAllHas(this)}
+    header.appendChild(close_popup);
+    header.appendChild(txt_popup);
+    myUL_overlay.appendChild(header);
+    myUL_overlay.appendChild(content_overlay);
+    myUL_overlay.scrollIntoView(false);
+}
+
+function remAllHas(element){
+
+    myUL_overlay.classList.remove('apparition');
+    myUL.classList.remove('zoom_out');
+
+    const parent = element.closest('#myUL_overlay')
+    setTimeout(function (){
+        parent.querySelector('.content_overlay').remove();
+        parent.querySelector('.header_popup').remove();
+    }, 500)
+
+}
 
 function reminderCheck(element){
     // console.log(element)
@@ -1324,7 +1398,8 @@ function reloadTasks(){
     let nb_child = localStorageTodos.v;
     lastSaveTime.innerHTML =  localStorageTodos.s;
 
-    for(let i = 0 ; i < nb_child ; i++){
+    for(let i = 0 ; i < nb_child - 1 ; i++){
+
         let todos_dataset_child = localStorageTodos.e[i][0];
         let todos_class = localStorageTodos.e[i][1];
         let todos_value_child_has = localStorageTodos.e[i][2];

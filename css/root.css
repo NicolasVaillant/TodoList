@@ -144,6 +144,25 @@ textarea::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
+#myUL_overlay::-webkit-scrollbar {
+    width: 2em;
+    background: transparent;
+    border-radius: 500px;
+    cursor: pointer;
+}
+
+#myUL_overlay::-webkit-scrollbar-thumb {
+    border: 14px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: var(--border3);
+    border-radius: var(--border3);
+    -webkit-box-shadow: inset var(--insetb) var(--insetb) 0 var(--td_color_grey), inset var(--inseta) var(--inseta) 0 var(--b_sec);
+    box-shadow: inset var(--insetb) var(--insetb) 0 var(--td_color_grey), inset var(--inseta) var(--inseta) 0 var(--b_sec);
+    height: 20px;
+    cursor: pointer;
+}
+
+
 textarea::-webkit-resizer {
     /*width: 1em;*/
     /*background-image: url('/ressources/img/resize.png');*/
