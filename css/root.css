@@ -145,7 +145,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .content_overlay::-webkit-scrollbar {
-    width: 2em;
+    width: 0;
     background: transparent;
     border-radius: 500px;
     cursor: pointer;

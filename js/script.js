@@ -1602,6 +1602,10 @@ clockChoice.addEventListener('click', function() {
 
 input.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
+
+        // myUL_overlay.classList.add('apparition');
+        // myUL.classList.add('zoom_out');
+
         createTask("input",false, pickerHour.value);
         saveTasks(getDate("h"));
         pickerHour.classList.remove('showPicker');
