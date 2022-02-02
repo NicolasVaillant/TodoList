@@ -1,9 +1,6 @@
 //JS FILE
-// 14/01/2022/12h
+// 02/02/2022/19h
 
-// $(document).ready(function(){
-//     $('.collapsible').collapsible();
-// });
 
 let compteurCard, compteurLiSub = 0;
 
