@@ -46,7 +46,7 @@ function saveTasks(hourSaveClick){
     try{
         const stocked = {e : array_stocked_all, s : hourSaveClick, v : todos.length}
 
-        console.log(stocked)
+        // console.log(stocked)
 
         localStorage.setItem("todos_test", JSON.stringify(stocked));
 

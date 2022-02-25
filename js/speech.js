@@ -3,6 +3,7 @@
 const speech = document.querySelector('.speechTodo');
 const speechTodo = document.querySelector('.speechTodo');
 const speechNote = document.querySelector('.speechNote');
+const searchBar__todo = document.querySelector('#searchBar--todo');
 
 const speechRecognition = window.webkitSpeechRecognition || SpeechRecognition;
 
@@ -25,7 +26,7 @@ if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
         //     console.log("ok")
         // }
 
-        input.value = content_speech;
+        searchBar__todo.value = content_speech;
     }
 
     let click = 0;

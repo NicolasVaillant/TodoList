@@ -120,48 +120,13 @@
                     </div>
                 </div>
                 <div class="addTask_bar">
-                    <label for="myInput" id="myInput_label">
-                        <input type="text" id="myInput" placeholder="Ajouter une tâche"
-                               data-title="Ajouter une tâche"
-                               data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
-                               data-step="1">
+                    <label for="searchBar--todo" id="searchBar">
+                        <input type="text" id="searchBar--todo" placeholder="Rechercher une tâche">
                         <span class="speechTodo">
                             <i class="fas fa-microphone"></i>
                         </span>
                     </label>
                     <div class="subSearch">
-                        <div class="filterTop">
-                            <label for="pickerHour">
-                                <input type="datetime-local" id="pickerHour">
-                            </label>
-                            <div class="filterTop_selector"
-                                 data-title="Paramètres"
-                                 data-intro='Sélectionner un paramètre à associer à votre tâche.'
-                                 data-step="2">
-                                <!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
-                                <div class="tooltip">
-                                    <button class="button_tooltip" id="tooltip_3"><i id="clockChoice" class="fas fa-clock"  onclick="createTaskButton(this.id)"></i></button>
-                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_3"><p>Ajouter un rappel dans le temps</p></div>-->
-                                </div>
-                                <div class="tooltip">
-                                    <button class="button_tooltip" id="tooltip_4"><i id="impTask_start" class="fas fa-exclamation-circle" onclick="createTaskButton(this.id)"></i></button>
-                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_4"><p>Créer une tâche importante</p></div>-->
-                                </div>
-                                <div class="tooltip">
-                                    <button class="button_tooltip" id="tooltip_5"><i id="speTask_start" class="fas fa-star" onclick="createTaskButton(this.id)"></i></button>
-                                    <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_5"><p>Créer une tâche spéciale</p></div>-->
-                                </div>
-                            </div>
-                        </div>
-                        <button id="button_start"
-                                class="sendRequest"
-                                type="button"
-                                onclick="createTaskButton(this.id)"
-                                data-title="Créer une tâche"
-                                data-intro='Cliquer sur "Créer" pour ajouter un tâche paramétrée.'
-                                data-step="3">
-                            Créer <i class="fas fa-arrow-alt-circle-right"></i>
-                        </button>
                         <div class="separator" data-display="none"></div>
                         <div class="filter_selector" data-display="none">
                             <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
@@ -205,10 +170,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
-<!--                <hr>-->
             </div>
             <div class="nothingToShow">
                 <div class="card">
@@ -310,7 +271,55 @@
                     <li class="label--frame label--creator">Créateur</li>
                 </ul>
             </div>
+            
+            <!-- CONTAINER TODOS -->
             <ul id="myUL"></ul>
+            
+            <div class="newTodo">
+                <div class="container--nt">
+                    <div class="new_todo">
+                        <i class="fas fa-plus"></i>
+                        <label for="myInput" id="myInput_label">
+                            <input type="text" id="myInput" placeholder="Ajouter une tâche"
+                                   data-title="Ajouter une tâche"
+                                   data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
+                                   data-step="1">
+                        </label>
+                    </div>
+                    <div class="filterTop" data-display="hidden">
+                        <label for="pickerHour">
+                            <input type="datetime-local" id="pickerHour">
+                        </label>
+                        <div class="filterTop_selector"
+                             data-title="Paramètres"
+                             data-intro='Sélectionner un paramètre à associer à votre tâche.'
+                             data-step="2">
+                            <!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
+                            <div class="tooltip">
+                                <button class="button_tooltip" id="tooltip_3"><i id="clockChoice" class="fas fa-clock"  onclick="createTaskButton(this.id)"></i></button>
+                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_3"><p>Ajouter un rappel dans le temps</p></div>-->
+                            </div>
+                            <div class="tooltip">
+                                <button class="button_tooltip" id="tooltip_4"><i id="impTask_start" class="fas fa-exclamation-circle" onclick="createTaskButton(this.id)"></i></button>
+                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_4"><p>Créer une tâche importante</p></div>-->
+                            </div>
+                            <div class="tooltip">
+                                <button class="button_tooltip" id="tooltip_5"><i id="speTask_start" class="fas fa-star" onclick="createTaskButton(this.id)"></i></button>
+                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_5"><p>Créer une tâche spéciale</p></div>-->
+                            </div>
+                        </div>
+                    </div>
+<!--                    <button id="button_start"-->
+<!--                            class="sendRequest"-->
+<!--                            type="button"-->
+<!--                            onclick="createTaskButton(this.id)"-->
+<!--                            data-title="Créer une tâche"-->
+<!--                            data-intro='Cliquer sur "Créer" pour ajouter un tâche paramétrée.'-->
+<!--                            data-step="3">-->
+<!--                        Créer <i class="fas fa-arrow-alt-circle-right"></i>-->
+<!--                    </button>-->
+                </div>
+            </div>
         </div>
         <div class="noteContainer" data-display="none">
             <div class="header">

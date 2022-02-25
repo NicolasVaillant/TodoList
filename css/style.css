@@ -83,7 +83,7 @@
 #myUL{
     margin: 0;
     /*overflow: hidden;*/
-    padding: 0 2em 3em 2em;
+    padding: 0 2em;
 }
 
 .todoContainer ul li:not(.li_sub),
@@ -439,7 +439,7 @@
 }
 
 .header {
-    padding: 2em 3em 0;
+    padding: 2em 2em 0;
     color: white;
     text-align: center;
 }
@@ -547,7 +547,7 @@ input::selection{
 
 .addTask_bar{
     display: flex;
-    gap: 1em;
+    /*gap: 1em;*/
     flex-direction: row;
     position: relative;
     overflow: visible!important;
@@ -619,7 +619,13 @@ input::selection{
     transform: translate(-50%, -50%);
 }
 
-#myInput_label{position: relative;width: 100%;}
+#searchBar{
+    position: relative;
+    width: 100%;
+    transition: var(--transition1);
+    border-radius: var(--border1);
+    background: var(--td_bg_body)
+}
 .speechTodo,
 .speechNote{
     position: absolute;
@@ -633,7 +639,7 @@ input::selection{
     justify-content: center;
     color: var(--td_color_grey);
     cursor: pointer;
-    background: var(--w);
+    background: var(--td_bg_body);
     border-radius: 100px;
     transform: translate(-50%, -50%) scale(1);
     box-shadow: 0 0 0 0 var(--td_color_grey_op);
@@ -647,21 +653,19 @@ input::selection{
     transition: var(--transition3);
 
 }
-#myInput,
 #filterNote{border: 2px solid var(--td_bg_body);}
 
-#myInput:hover,
 .addItems input:hover{
     background: var(--td_bg_body);
 }
 .addTask_bar:hover .filterTop,
-#myInput:focus ~.filterTop{
+#searchBar:focus ~.filterTop{
     opacity: 1;
     transform: scaleX(1);
     transition: var(--transition3);
 }
 
-#myInput:focus,
+#searchBar:focus,
 #filterNote:focus{
     /*border: 2px solid var(--grey2);*/
 }
@@ -760,6 +764,26 @@ button i:hover{
     color: var(--td_color_grey) !important;
 }
 
+.newTodo{
+    padding: 0 2em;
+    width: 100%;
+    height: auto;
+}
+.container--nt,
+.new_todo{
+    padding: 0 0 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+    flex-direction: row;
+}
+.new_todo i{color: var(--td_color_grey)}
+.new_todo{
+    padding: 0!important;
+    width: 100%;
+}
+#myInput_label{width: 100%;}
 
 .div_option,
 .div_optionstatic{
