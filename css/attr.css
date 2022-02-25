@@ -6,12 +6,9 @@
     opacity: .5!important;
     cursor: not-allowed!important;
 }
-[data-state="disabled"]:hover{
-    transform: scale(1)!important;
-}
-[data-state="disabled_"]:hover{
-    transform: translate(-50%, -50%) scale(1)!important;
-}
+[data-state="disabled"]:hover{transform: scale(1)!important}
+[data-state="disabled_"]:hover{transform: translate(-50%, -50%) scale(1)!important}
+[data-state="no-interaction"]{cursor: default!important}
 
 [data-display="none"]{display: none!important;}
 [data-display="hidden"]{opacity: 0!important;}

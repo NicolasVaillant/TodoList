@@ -41,7 +41,6 @@ function saveTasks(hourSaveClick){
                 // array_stocked_element.push(array_stocked_element.length)
             )
 
-            // setNbSubChild(todos[i],  todos[i].querySelectorAll('.li_sub').length)
         }
     }
     try{

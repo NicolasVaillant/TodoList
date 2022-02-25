@@ -205,9 +205,10 @@
 }
 .colorhastags{
     color: #2196f3!important;
-    /*padding: 0.5em;*/
+    padding: 0.5em;
     border-radius: var(--border1);
     transition: var(--transition3);
+    width: fit-content;
 }
 .colorhastags:hover{
     background: var(--td_bg_body) !important;
@@ -763,11 +764,15 @@ button i:hover{
 .div_option,
 .div_optionstatic{
     border: 2px solid transparent;
+    /*background: var(--grey1o);*/
+    background: var(--w);
+    border-radius: var(--border1);
     position: absolute;
-    top: 0;
-    right: 0;
+    right: .5em;
+    top: 50%;
+    transform: translateY(-50%);
     z-index:2000!important;
-    height: 100%;
+    /*height: 100%;*/
     display: flex!important;
     padding: .2em;
     align-items: center;
@@ -793,7 +798,7 @@ button i:hover{
     justify-content: center;
     /*background: var(--td_bg_container_on);*/
     background: none;
-    padding: .8em;
+    padding: .4em;
     /*width: 80px;*/
     /*box-shadow: var(--td_bx_shadow_container);*/
 }
@@ -972,7 +977,7 @@ hr{background: var(--w);}
 .nd--collapsible-header{
     border: 0;
     border-bottom: 1px solid var(--green_bg) !important;
-    margin: 0.2em 0!important;
+    margin: 0!important;
     border-radius: 0!important;
 }
 
@@ -1160,14 +1165,14 @@ hr{background: var(--w);}
 
 @media all and (max-width: 1000px) {
     .nd--option--container p,
-    .nd--option--container .colorhastags,
-    .label--has,
-    .label--txt,
-    .label--time{
+    .topBar--label ul li,
+    .colorhastags,
+    .containerCreator{
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
     }
+    .colorhastags{width: auto}
 }
 @media all and (max-width: 1200px) {
     .todoContainer, .noteContainer{width: 100%}
@@ -1454,7 +1459,10 @@ hr{background: var(--w);}
 }
 
 @media screen and (max-width:700px){
-    .canvasChart{display: none!important;}
+    .containerChart,
+    .label--time,
+    .date--deadline,
+    .label--chart{display: none!important}
 }
 
 .containerChart{

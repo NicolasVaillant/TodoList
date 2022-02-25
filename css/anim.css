@@ -26,7 +26,7 @@
 }
 
 .importantTasks{
-    border: 1px dashed var(--red);
+    /*border: 1px dashed var(--red);*/
     background: var(--red_bg)!important;
 }
 .importantTasks_color{
@@ -39,7 +39,7 @@
     background: #d7d748!important;
 }
 .specialTasks{
-    border: 1px dashed var(--yellow_b);
+    /*border: 1px dashed var(--yellow_b);*/
     background: var(--yellow) !important;
 }
 .specialTasks_color{

@@ -882,10 +882,6 @@ function createTask(
         saveTasks(false)
     };
     itag.setAttribute("name", "morebut");
-    // itac.classList.add("fas");
-    // itac.classList.add("fa-clock");
-    // itac.onclick = function(){reminder(this)};
-    // itac.setAttribute("name", "reminder");
     //---------------------------------------------------RIGHT CLICK
     todoBanMain.oncontextmenu = rightClick;
     //---------------------------------------------------AppendChild
@@ -902,11 +898,9 @@ function createTask(
     collapsible_li.appendChild(collapsible_div_header);
     collapsible_li.appendChild(collapsible_div_body);
     collapsible_ul.appendChild(collapsible_li);
-    // todoBanMainContainer.appendChild(itag_end);
     div_text.appendChild(itag_end);
     div_text.appendChild(text);
     todoBanMainContainer.appendChild(div_text);
-    // todoBanMainContainer.appendChild(itac);
     div_option_container.appendChild(itag);
     div_option_container.appendChild(itage);
     div_option.appendChild(div_option_container);
@@ -1009,7 +1003,6 @@ function createTask(
                 txt = document.createTextNode("");
                 spanhas.appendChild(txt);
                 div_text.appendChild(spanhas);
-                // i_clock.classList.add("td-without-padding");
             }
 
 
@@ -1062,6 +1055,8 @@ function createTask(
                 div_text.appendChild(time_p);
                 pickerHour.value = "";
             }else{
+                i_clock.setAttribute('data-display', 'hidden')
+                i_clock.setAttribute('data-state', 'no-interaction');
                 div_text.appendChild(i_clock);
                 time_p.appendChild(time_span);
                 div_text.appendChild(time_p);
@@ -1113,6 +1108,11 @@ function createTask(
         }
 
         if (hashtag !== "undefined") {
+            if(hashtag === ''){
+                spanhas.setAttribute('data-state', 'no-interaction');
+                spanhas.setAttribute('data-display', 'hidden');
+            }
+
             spanhas.appendChild(document.createTextNode(hashtag));
             div_text.appendChild(spanhas);
         }
@@ -1122,16 +1122,15 @@ function createTask(
         todoBanMain.setAttribute("data-hierarchy", data_set.hierarchy)
 
         if (data_set.reminder === "none" || data_set.reminder === "") {
-            todoBanMain.setAttribute("data-reminder", "none")
-        } else {
+            todoBanMain.setAttribute("data-reminder", "none");
+            i_clock.setAttribute('data-display', 'hidden');
+            i_clock.setAttribute('data-state', 'no-interaction');
+            time_p.classList.add("date--deadline");
+        }
+        else {
             todoBanMain.setAttribute("data-reminder", data_set.reminder)
 
-            // if (hashtag === "undefined" || hashtag === "") {
-            //     i_clock.classList.add("td-without-padding");
-            // } else {
-            // }
             i_clock.classList.add("td-padding");
-
             time_p.classList.add("date--deadline");
 
             res = Math.round(( new Date(data_set.reminder).getTime() -
@@ -1172,6 +1171,7 @@ function createTask(
             time_p.innerHTML = u + " à " + y;
 
         }
+
         i_clock.onclick = function(){showTime(this)};
         div_text.appendChild(i_clock);
         time_p.appendChild(time_span);
