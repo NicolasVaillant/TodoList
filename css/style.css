@@ -70,19 +70,20 @@
 
 .todoContainer,
 .noteContainer{
-    width: 50%;
+    width: 100%;
     /*background: var(--b_sec);*/
     background: var(--td_bg_container);
     box-shadow: var(--td_bx_shadow_container);
     border-radius: var(--border1);
     height: fit-content;
-    overflow-y: hidden;
+    overflow: hidden;
     transition: var(--transition1);
 }
-ul {
+
+#myUL{
     margin: 0;
     /*overflow: hidden;*/
-    padding: 2em 3em 2em;
+    padding: 0 2em 3em 2em;
 }
 
 .todoContainer ul li:not(.li_sub),
@@ -151,14 +152,15 @@ ul {
     padding: 1em;
     color: var(--td_color_grey);
 }
-.pickerHour{
+.date--deadline{
     opacity: 0;
     /*width: 100%;*/
+    white-space: nowrap;
     cursor: pointer;
     position: relative;
     transition: var(--transition3);
 }
-.pickerHour span{
+.date--deadline span{
     position: absolute;
     top: 5px;
     left: 50%;
@@ -173,19 +175,27 @@ ul {
     transform: translate(-50%, 50%);
     color: var(--td_color_grey)!important;
 }
-.pickerHour:hover span{
+.date--deadline:hover span{
     opacity: 1!important;
     transition: var(--transition3);
 }
-.todoBanMainContainer div{
+.option--container{
     width: 100%;
     /*overflow: hidden;*/
+    flex-direction: row;
     display: flex;
     align-items: center;
     justify-content: space-between;
     align-content: center;
-    flex-direction: row;
 }
+.nd--option--container{
+    width: 100% !important;
+    display: grid;
+    grid-template-columns: auto 30% 10% auto 20% auto 1fr;
+    grid-template-rows: 1fr;
+}
+
+/*.nd--option--container *{min-width: 20%}*/
 
 .noteContainer ul li{
     display: flex;
@@ -195,7 +205,7 @@ ul {
 }
 .colorhastags{
     color: #2196f3!important;
-    padding: 0.5em;
+    /*padding: 0.5em;*/
     border-radius: var(--border1);
     transition: var(--transition3);
 }
@@ -219,6 +229,33 @@ ul {
     align-items: center;
     cursor: pointer!important;
 }
+.topBar--label{
+    padding: 0 2em;
+    width: 100% !important;
+    border-bottom: 1px solid var(--td_color_grey);
+}
+.topBar--label ul{
+    width: 95%;
+    margin: auto 0 auto auto;
+    display: grid;
+    grid-template-columns: auto 30% 10% auto 20% auto 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    align-content: center;
+}
+.topBar--label *,
+.nd--option--container *{
+    /*border: 1px solid red;*/
+}
+.label--txt{grid-column: 2; padding: 0 1em}
+/*.label--has{grid-column: 4}*/
+.label--time{grid-column: span 1}
+.label--chart{grid-column: 6}
+.label--clock{padding: 1em}
+.label--creator,.containerCreator p{padding: 0 0 0 1em;}
+
+.containerCreator p{color: var(--grey2)}
+
 #myUL{
     position:relative;
     transform: scale(1);
@@ -256,23 +293,38 @@ ul {
     align-content: center;
 }
 .lbl_popup{padding: 1em}
-#myUL_overlay{
+#modal__has{
     position: absolute;
     max-height: 60%;
+    min-height: 50vh;
     height: auto;
-    width: 95%;
+    width: 85%;
     padding: 1em;
-    bottom: 0;
-    left: 50%;
     display: flex!important;
     flex-direction: column;
     overflow-y: auto;
     z-index: 100000;
-    transform: translate(-50%, 50vh);
     border-radius: var(--border2);
     background: var(--td_bg_body);
-    /*box-shadow: var(--td_bx_shadow_container);*/
+    box-shadow: var(--td_bx_shadow_container);
     cursor: default!important;
+    transition: var(--transition2);
+}
+
+.modal__container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    opacity: 1;
+    transform: translateY(-100vh);
+    transform-origin: center;
     transition: var(--transition2);
 }
 
@@ -322,7 +374,7 @@ ul {
     accent-color: #74dfdf;
 }
 .end{
-    margin: auto;
+    margin: auto!important;
     transform: scale(1.2);
 }
 
@@ -392,14 +444,14 @@ ul {
 }
 .headerOne{
     display: flex;
-    align-items: flex-end;
+    align-items: center; /*align header FS*/
     justify-content: space-between;
     flex-direction: row;
-    margin: 0 0 1em 0;
+    margin: 1em 0; /*better margin header FS*/
 }
 input[type=checkbox]{
     width: auto;
-    margin: auto 0;
+    margin: 0 1em;  /*checkbox now in the container "option--container"*/
     transform: scale(1.5);
 }
 
@@ -628,6 +680,7 @@ h2{
     font-size: var(--font3);
     transition: var(--transition1);
 }
+.title--header{margin: 0!important;}
 
 
 
@@ -916,6 +969,13 @@ hr{background: var(--w);}
     z-index: 5;
 }
 
+.nd--collapsible-header{
+    border: 0;
+    border-bottom: 1px solid var(--green_bg) !important;
+    margin: 0.2em 0!important;
+    border-radius: 0!important;
+}
+
 
 .collapsible li:not(.li_sub){margin: 0!important;}
 
@@ -927,10 +987,11 @@ hr{background: var(--w);}
     text-align: justify;
     margin: 0;
     padding: 0 0 1em 0;
-    border-radius:var(--border1);
-    -webkit-border-radius:var(--border1);
-    -moz-border-radius:var(--border1);
+    border-radius:0;
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
 
+    border-bottom: 1px solid var(--green_bg) !important;
 }
 .collapsible_div_bodyContent{
     gap: .5em;
@@ -938,9 +999,9 @@ hr{background: var(--w);}
     display: flex;
     flex-direction: column;
     /*border: 2px dashed var(--grey2)!important;*/
-    border: 1px solid var(--grey2)!important;
-    box-shadow: 0 4px 0 0 grey;
-    border-radius: var(--border1);
+    /*border: 1px solid var(--grey2)!important;*/
+    /*box-shadow: 0 4px 0 0 grey;*/
+    /*border-radius: var(--border1);*/
 }
 .collapsible-body span:hover::before {
     transform: scaleX(0);
@@ -1041,7 +1102,7 @@ hr{background: var(--w);}
     right: 0;
     /*border: 2px solid transparent;*/
     z-index: 100;
-    width: 90%;
+    width: 95%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1097,6 +1158,17 @@ hr{background: var(--w);}
 #myUL > div:last-child .collapsible-body{padding: 0}
 #myUL_note > li:first-child{margin: 0}
 
+@media all and (max-width: 1000px) {
+    .nd--option--container p,
+    .nd--option--container .colorhastags,
+    .label--has,
+    .label--txt,
+    .label--time{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
 @media all and (max-width: 1200px) {
     .todoContainer, .noteContainer{width: 100%}
     .content{
@@ -1143,11 +1215,7 @@ hr{background: var(--w);}
     }
 
 }
-@media all and (max-width: 600px) {
-    .categories{flex-direction: column}
-    .header,ul,.save{padding: 2em}
-    #myUL_note,#myUL{padding: 0 2em 2em 2em}
-}
+
 .tutoTodo{
     padding: 1em 3em 0;
 }
@@ -1391,14 +1459,15 @@ hr{background: var(--w);}
 
 .containerChart{
     width: auto!important;
-    margin: 0 20% 0 auto;
+    grid-column: 6;
+    margin: 0 auto 0 0;
 }
 .canvasChart{
     background: none;
     width: 45px !important;
     margin: 0;
     height: 45px;
-    padding: 20%;
+    padding: 10%;
     position: relative;
 }
 .canvasChart_p{

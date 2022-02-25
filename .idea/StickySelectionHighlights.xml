@@ -48,37 +48,7 @@
             </PaintGroupHighlightMap>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/css/anim.css">
-          <value>
-            <PaintGroupHighlightMap>
-              <option name="paintGroups">
-                <map>
-                  <entry key="0">
-                    <value>
-                      <EditorHighlightsForPaintGroup />
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PaintGroupHighlightMap>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/css/root.css">
-          <value>
-            <PaintGroupHighlightMap>
-              <option name="paintGroups">
-                <map>
-                  <entry key="0">
-                    <value>
-                      <EditorHighlightsForPaintGroup />
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PaintGroupHighlightMap>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/css/style.css">
           <value>
             <PaintGroupHighlightMap>
               <option name="paintGroups">
@@ -109,36 +79,6 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/fontawesome/css/tooltip.css">
-          <value>
-            <PaintGroupHighlightMap>
-              <option name="paintGroups">
-                <map>
-                  <entry key="0">
-                    <value>
-                      <EditorHighlightsForPaintGroup />
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PaintGroupHighlightMap>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/index.html">
-          <value>
-            <PaintGroupHighlightMap>
-              <option name="paintGroups">
-                <map>
-                  <entry key="0">
-                    <value>
-                      <EditorHighlightsForPaintGroup />
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PaintGroupHighlightMap>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/js/script.js">
           <value>
             <PaintGroupHighlightMap>
               <option name="paintGroups">

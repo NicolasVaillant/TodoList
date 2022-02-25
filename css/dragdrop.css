@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.animationDragEnd{
+    animation: .5s shakeTask infinite;
+}
+@keyframes shakeTask {
+    0%{transform: rotate(0)}
+    40%{transform: rotate(1deg)}
+    80%{transform: rotate(-1deg)}
+    100%{transform: rotate(0deg)}
+}

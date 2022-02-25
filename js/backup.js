@@ -14,9 +14,8 @@ function saveTasks(hourSaveClick){
     const container_not = document.querySelector('#myUL:not(#myUL_overlay)');
     const todos = container.children;
 
-
     if(container_not.childElementCount !== 0){
-        for(let i = 1 ; i <= container_not.childElementCount - 1; i++) {
+        for(let i = 0 ; i <= container_not.childElementCount - 1; i++) {
             todos[i].querySelectorAll('.input_sub').forEach( function (child) {
                 array_stocked_child.push(child.value);
             });
@@ -32,10 +31,14 @@ function saveTasks(hourSaveClick){
                 array_stocked_child.splice(0, array_stocked_child.length).filter(value => Object.keys(value).length !== 0),
                 todos[i].querySelector('.textTask').innerHTML,
                 todos[i].querySelectorAll('.li_sub').length,
-                array_stocked_class_child.splice(0, array_stocked_class_child.length).filter(value => Object.keys(value).length !== 0)
+                array_stocked_class_child.splice(0, array_stocked_class_child.length).filter(value => Object.keys(value).length !== 0),
+                todos[i].querySelector('.creator').innerHTML
             )
+            // if(array_stocked_all.length !==)
+            // console.log(array_stocked_all)
             array_stocked_all.push(
                 array_stocked_element.splice(0, array_stocked_element.length)
+                // array_stocked_element.push(array_stocked_element.length)
             )
 
             // setNbSubChild(todos[i],  todos[i].querySelectorAll('.li_sub').length)
@@ -43,6 +46,33 @@ function saveTasks(hourSaveClick){
     }
     try{
         const stocked = {e : array_stocked_all, s : hourSaveClick, v : todos.length}
+
+        console.log(stocked)
+
         localStorage.setItem("todos_test", JSON.stringify(stocked));
+
+        // const xml = new XMLHttpRequest();
+        // xml.onreadystatechange = function() {
+        //     if( xml.readyState === 4 && xml.status === 200 ){
+        //         console.log(xml.responseText);
+        //     }
+        // };
+        //
+        // xml.open("POST", "https://todo.nicolasvaillant.net/php/data.php", false);
+        // xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // // xml.send("format=json");
+        // let data = JSON.stringify(stocked);
+        // xml.send(data);
+
     }catch (e) {console.warn(e)}
+}
+
+
+
+function send(){
+
+
+    fetch('https://todo.nicolasvaillant.net/php/test.json')
+        .then(response => response.text())
+        .then(data => console.log(data));
 }

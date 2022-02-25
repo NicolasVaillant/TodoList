@@ -12,3 +12,6 @@
 [data-state="disabled_"]:hover{
     transform: translate(-50%, -50%) scale(1)!important;
 }
+
+[data-display="none"]{display: none!important;}
+[data-display="hidden"]{opacity: 0!important;}

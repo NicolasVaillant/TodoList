@@ -101,14 +101,17 @@
     transition: all 1s!important;
 }
 
-.apparition{
-    transform: translate(-50%, 0) scale(1.1)!important;
+.modal__show{
+    transform: translateY(0)!important;
     opacity: 1!important;
     display: flex!important;
-    transition: var(--transition2);
+    transition: var(--transition1);
 }
+.modal__show__bg{background: rgba(0,0,0,0.6) !important}
+.modal__content_d{transform: translateY(-100vh)!important;}
+
 .zoom_out{
-    transform: scale(.9)!important;
+    transform: scale(.95)!important;
     transition: var(--transition2);
 }
 

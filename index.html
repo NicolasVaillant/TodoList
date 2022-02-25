@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/root.css">
     <link rel="stylesheet" href="css/tooltip.css">
     <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/dragdrop.css">
 
     <link rel="stylesheet" href="css/mediaqueries/style_media_web.css">
     <link rel="stylesheet" href="css/mediaqueries/style_media_alt.css">
@@ -113,7 +114,7 @@
         <div class="todoContainer">
             <div id="myDIV" class="header">
                 <div class="headerOne">
-                    <h2 class="date">Todo List</h2>
+                    <h2 class="title--header">Todo List</h2>
                     <div class="shareAllContainer">
                         <p class="shareAll">Tout partager <i class="fas fa-share-square"></i></p>
                     </div>
@@ -161,8 +162,8 @@
                                 data-step="3">
                             Créer <i class="fas fa-arrow-alt-circle-right"></i>
                         </button>
-                        <div class="separator"></div>
-                        <div class="filter_selector">
+                        <div class="separator" data-display="none"></div>
+                        <div class="filter_selector" data-display="none">
                             <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
                             <div class="categories">
                                 <input id="all"
@@ -294,12 +295,24 @@
                     </div>
                 </div>
             </div>
-            <ul id="myUL">
-                <li id="myUL_overlay"></li>
-            </ul>
+            <div class="topBar--label">
+                <ul class="topBar--ul">
+                    <li class="label--frame">
+                        <label>
+                            <input type="checkbox" data-display="hidden">
+                        </label>
+                    </li>
+                    <li class="label--frame label--txt">Nom de la tâche</li>
+                    <li class="label--frame label--has">Hashtag</li>
+                    <li class="label--frame label--clock"><i class="fas fa-clock"></i></li>
+                    <li class="label--frame label--time">DeadLine</li>
+                    <li class="label--frame label--chart">Chart</li>
+                    <li class="label--frame label--creator">Créateur</li>
+                </ul>
+            </div>
+            <ul id="myUL"></ul>
         </div>
-    
-        <div class="noteContainer">
+        <div class="noteContainer" data-display="none">
             <div class="header">
                 <div class="headerOne">
                     <h2 class="date">Note List</h2>
@@ -317,7 +330,7 @@
                             <i class="fas fa-microphone"></i>
                         </span>
                     </label>
-                   <div class="tooltip" id="tooltip_2"> <!-- butNote-->
+                    <div class="tooltip" id="tooltip_2"> <!-- butNote-->
                         <button class="button_tooltip"> <i class="fas fa-plus-circle"></i></button>
                         <div class="label_tooltip" id="for_tooltip_2"><p>Créer une note</p></div>
                     </div>
@@ -335,6 +348,9 @@
             </div>
             <ul id="myUL_note"></ul>
         </div>
+    </div>
+    <div class="modal__container">
+        <div id="modal__has"></div>
     </div>
 </div>
 <div id="contextMenu" class="context-menu"
