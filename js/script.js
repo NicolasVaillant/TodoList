@@ -62,6 +62,8 @@ let main_height = 0;
 //Chargement des fonctions de base au rafraichissement du navigateur
 window.onload = function () {
 
+    // MicroModal.init();
+
     //Vérification de la première connexion
     if (!localStorage.getItem("todo_first_co") === true ||
         !localStorage.getItem("todo_first_co") === "true") {
@@ -1778,7 +1780,7 @@ more__todo__but.addEventListener('click', function (e) {
     // },200)
 
     more__todo__content.classList.toggle('more--todo--show');
-    more__todo__but.classList.toggle('more--todo--show--but');
+    // more__todo__but.classList.toggle('more--todo--show--but');
 });
 
 //Création d'une tâche lors de l'appuie sur la touche "entrer"
@@ -1851,7 +1853,8 @@ function createTaskButton(id) {
             //On vérifie que l'input n'est pas vide
             if (input.value === "") {
                 //TODO : DESIGN de l'alerte à modifier [1]
-                alert("La tâche ne peut pas être vide !")
+                // alert("La tâche ne peut pas être vide !")
+                sweetAlert();
                 break;
             } else {
                 //On enlève chacune des class de style au tooltip
@@ -2442,4 +2445,20 @@ function handleDrop(e) {
         this.innerHTML = e.dataTransfer.getData('text/html');
     }
     return false;
+}
+
+
+function sweetAlert() {
+    Swal.fire({
+        title: 'La tâche ne peut pas être vide',
+        text: 'Ajouter un texte pour la tâche',
+        icon: 'error',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Corriger',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector('#myInput').focus();
+        }
+    })
 }
