@@ -1,10 +1,9 @@
 //JS FILE
-// 02/02/2022/19h
-
+// 27/02/2022/19h
 
 let compteurCard, compteurLiSub = 0;
 
-const colorNotes = ["rgb(181, 222, 255)","rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
+const colorNotes = ["rgb(181, 222, 255)", "rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
 
 const list = document.querySelector('ul');
 const content_div = document.querySelector('.content');
@@ -17,8 +16,7 @@ const myUL_note = document.getElementById("myUL_note");
 const dm = document.querySelector("#dm");
 const refresh_but = document.querySelector("#rb");
 const refresh_but_icon = document.querySelector("#rb_icon");
-const switchDirectionC = document.querySelector("#switchDirection");
-const flexDirectionMode = document.querySelector(".flexDirectionMode");
+
 const iconDirection = document.querySelector(".iconDirection");
 
 const todoContainer = document.querySelector(".todoContainer");
@@ -39,24 +37,34 @@ const nothingToShow_more = document.querySelector(".nothingToShow_more");
 const impTask_start = document.querySelector("#impTask_start");
 const speTask_start = document.querySelector("#speTask_start");
 
-
 const main = document.querySelector(".main");
 const todoBanMainID = document.querySelector("#todoBanMainID");
 const tutoTodo = document.querySelector(".tutoTodo");
 
-//----------------------------------------------------------------------
+const more__todo = document.querySelector('.more--todo');
+const more__todo__but = document.querySelector('.more--todo--but');
+const more__todo__content = document.querySelector('.more--todo--content');
+
+
+const menu = document.querySelector('#menu');
+const menu_der = document.querySelector('.menu_der');
+const content = document.querySelector('.content');
+
+const pickerHour = document.querySelector('#pickerHour');
+const hashtag_button = document.querySelector('#hashtag_button');
+const clockChoice = document.querySelector('#clockChoice');
+const datetime__container = document.querySelector('.datetime--container');
+const hashtag__container = document.querySelector('.hashtag--container');
+const hashtag__creation = document.querySelector('#hashtag--creation');
+
 let main_height = 0;
 
+//Chargement des fonctions de base au rafraichissement du navigateur
 window.onload = function () {
 
-    //&& window.matchMedia("(max-width: 1200px)").matches
-    if(getComputedStyle(content_div).flexDirection === "row"){
-        addTask_bar.style.flexDirection = "column";
-    }else{
-        addTask_bar.style.flexDirection = "row";
-    }
-
-    if (!localStorage.getItem("todo_first_co") === true || !localStorage.getItem("todo_first_co") === "true") {
+    //Vérification de la première connexion
+    if (!localStorage.getItem("todo_first_co") === true ||
+        !localStorage.getItem("todo_first_co") === "true") {
         introJs().start();
         introJs().addHints();
         todoBanMainID.style.display = "block";
@@ -64,92 +72,74 @@ window.onload = function () {
         localStorage.setItem("todo_first_co", "true");
     }
 
+    //On cherche à télécharger les éléments s'ils existent dans le localStorage
     // if(JSON.parse(localStorage.getItem("Node_note")) !== null){reloadNote()}
-    if(JSON.parse(JSON.parse(localStorage.getItem("todos_test")).e.length !== 0)){
+    if (JSON.parse(JSON.parse(localStorage.getItem("todos_test")).e.length !== 0)) {
         reloadTasks()
-    }else{
-        console.warn("No todo to show")
+    } else {
+        console.warn("Reload unavailable")
     }
+
+    //Affichage du nombre d'éléments dans la zone de filtre
     nb_label.innerHTML = "(" + myUL.childElementCount + "/" + myUL.childElementCount + ")";
     main_height = Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight);
-    // if (window.matchMedia("(min-width: 1200px)").matches) {
-    //     switchDirectionC.classList.remove('disabledOptionsRC');
-    // }else{
-    //     switchDirectionC.classList.add('disabledOptionsRC');
-    // }
-}//reloadNote(); -- getShareTask()
-todoBanMainID.oncontextmenu= function (e){
-    rightClick;
-
-    e.target.closest('#todoBanMainID').classList.add('bumpOnRClick');
-    setTimeout(function (){
-        e.target.closest('#todoBanMainID').classList.remove('bumpOnRClick')
-    },200)
-};
-window.onclick = function (){
-    hideMenu();
-
-    // if(myUL.classList.contains('zoom_out')){
-    //     // modal__has.classList.remove('apparition')
-    //     // myUL.classList.remove('zoom_out');
-    // }else{
-    //     // modal__has.classList.add('apparition')
-    //     // myUL.classList.add('zoom_out');
-    // }
-
 
 }
-window.oncontextmenu = function (e){e.preventDefault()}
-window.onscroll = function (){
-    // console.log("scrollY : " +window.scrollY)
+
+//Modification du clique droit sur une tâche
+todoBanMainID.oncontextmenu = function (e) {
+    rightClick;
+    //Animation
+    e.target.closest('#todoBanMainID').classList.add('bumpOnRClick');
+    setTimeout(function () {
+        e.target.closest('#todoBanMainID').classList.remove('bumpOnRClick')
+    }, 200)
+};
+
+//Supprime éléments du clique droit lors d'un clique hors de la fenètre
+window.onclick = function () {
+    hideMenu()
+}
+
+//Masquage de l'affichage du clique droit du navigateur
+window.oncontextmenu = function (e) {
+    e.preventDefault()
+}
+
+//Gestion de l'affichage de l'élément au clique droit lors du scroll
+window.onscroll = function () {
     const menu = document.getElementById("contextMenu");
-    if (menu.style.display === "flex"){
-
+    if (menu.style.display === "flex") {
         let out_height = window.innerHeight + window.scrollY - (menu.offsetTop + menu.offsetHeight);
-
-        if(menu.offsetTop + menu.offsetHeight > window.innerHeight + window.scrollY){
+        if (menu.offsetTop + menu.offsetHeight > window.innerHeight + window.scrollY) {
             menu.style.top = menu.offsetTop + out_height + "px";
-        }else{
+        } else {
             menu.style.top = menu.offsetTop + "px";
         }
-
         let out_width = window.innerWidth + window.scrollX - (menu.offsetLeft + menu.offsetWidth);
-
-        if(menu.offsetLeft + menu.offsetWidth > window.innerWidth + window.scrollX){
+        if (menu.offsetLeft + menu.offsetWidth > window.innerWidth + window.scrollX) {
             menu.style.left = menu.offsetLeft + out_width + "px";
-        }else{
+        } else {
             menu.style.left = menu.offsetLeft + "px";
         }
     }
 }
-window.onresize = function (){
-    // if (window.matchMedia("(min-width: 1200px)").matches) {
-    //     switchDirectionC.classList.remove('disabledOptionsRC');
-    // }else{
-    //     switchDirectionC.classList.add('disabledOptionsRC');
-    // }
 
-    if(getComputedStyle(content_div).flexDirection === "row"){
-        addTask_bar.style.flexDirection = "column";
-    }else{
-        addTask_bar.style.flexDirection = "row";
-    }
-}
-//----------------------------------------------------------------------
-function filterTasks(check_id){
+//Fonction de filtrage des tâches [NOT USED]
+function filterTasks(check_id) {
     const nbElem = [];
     const items = [];
-    for(let i = 0 ; i < myUL.childElementCount ; i++){
-        if(myUL.childElementCount !== 0){
+    for (let i = 0; i < myUL.childElementCount; i++) {
+        if (myUL.childElementCount !== 0) {
 
-            if(check_id === "all"){
+            if (check_id === "all") {
                 myUL.children[i].style.display = "";
                 nbElem.push(true)
-            }else{
-                if(myUL.children[i].children[0].children[0].children[0].classList.contains(check_id)) {
+            } else {
+                if (myUL.children[i].children[0].children[0].children[0].classList.contains(check_id)) {
                     myUL.children[i].style.display = "";
                     nbElem.push(true)
-                }else{
+                } else {
                     myUL.children[i].style.display = "none";
                     nbElem.push(false)
                 }
@@ -159,37 +149,37 @@ function filterTasks(check_id){
                 counts[num] = counts[num] ? counts[num] + 1 : 1;
             }
 
-            if(counts[false] === myUL.childElementCount){
+            if (counts[false] === myUL.childElementCount) {
                 nothingToShow.style.display = "flex";
-                if(check_id === "importantTasks"){
+                if (check_id === "importantTasks") {
                     nothingToShow_more.innerHTML = "Cliquer sur \"<i class='fas fa-exclamation-circle'></i>\" pour ajouter " +
                         "une tâche importante."
                     items.push(counts)
-                }else if(check_id === "specialTasks"){
+                } else if (check_id === "specialTasks") {
                     nothingToShow_more.innerHTML = "Cliquer sur \"<i class='fas fa-star'></i>\" pour ajouter " +
                         "une tâche spéciale."
                     items.push(counts)
                 }
-            }else{
+            } else {
                 items.push(counts)
                 nothingToShow.style.display = "none";
             }
-        }else{
+        } else {
             // console.log("ok")
         }
     }
-    if(check_id === "reminder"){
+    if (check_id === "reminder") {
         nb_label.innerHTML = "(" + uniqueChars.length + "/" + myUL.childElementCount + ")"
         console.log(uniqueChars.length)
-        for(let i = 0 ; i < uniqueChars.length ; i++){
+        for (let i = 0; i < uniqueChars.length; i++) {
             // myUL.appendChild(uniqueChars[i])
             // console.log(uniqueChars[i])
         }
 
-    }else{
-        if(isNaN(items[myUL.childElementCount - 1].true)){
+    } else {
+        if (isNaN(items[myUL.childElementCount - 1].true)) {
             nb_label.innerHTML = "(" + 0 + "/" + (myUL.childElementCount) + ")"
-        }else{
+        } else {
             // console.log(items[myUL.childElementCount - 1].true)
             nb_label.innerHTML = "(" + items[myUL.childElementCount - 1].true + "/" +
                 (myUL.childElementCount) + ")"
@@ -204,53 +194,37 @@ function filterTasks(check_id){
 //    nothingToShow.classList.add('show');
 }
 
-const menu = document.querySelector('#menu');
-const menu_der = document.querySelector('.menu_der');
-const content = document.querySelector('.content');
-
-menu.addEventListener('click', function (){
+//Affichage du menu "..." pour afficher les paramètres supplémentaires
+menu.addEventListener('click', function () {
     menu_der.classList.toggle('showMenu');
     menu.parentElement.classList.toggle('clickMenu');
-},false);
+}, false);
 
-let computeTog = 0;
-
-function switchDirection(){
-    computeTog++;
-    if(computeTog%2 === 0){
-        flexDirectionMode.innerHTML = "View Ligne";
-        iconDirection.style.flexDirection = "column";
-    }else{
-        flexDirectionMode.innerHTML = "View Colonne";
-        iconDirection.style.flexDirection = "row";
-    }
-    if (window.matchMedia("(min-width: 1200px)").matches) {
-        content.classList.toggle('gridV');
-        todoContainer.style.width = "100%";
-        noteContainer.style.width = "100%";
+//Raccourci pour créer une nouvelle tâche fille
+function inputSubEnter(key, element) {
+    if (key === 'Enter') {
+        addChild(element)
     }
 }
 
-function inputSubEnter(key,element){
-    if (key === 'Enter') {addChild(element)}
-}
-
-function removeAll(element){
+//Suppression de la tâche sélectionnée
+function removeAll(element) {
     element.closest('.todoBanMain').classList.add('slideOut')
     // nb_label.innerHTML = "(" + myUL.childElementCount + "/" + myUL.childElementCount+ ")";
-    setTimeout(function (){
+    setTimeout(function () {
         element.closest('.todoBanMain').remove();
         saveTasks(getDate());
     }, 500)
 }
 
-function updateNBSubChild(element, index){
+//MAJ du nombre de tâche fille dans l'affichage rapide des graphiques
+function updateNBSubChild(element, index) {
     const todoBanMain = element.closest('.todoBanMain');
     const div = todoBanMain.querySelector('.collapsible_div_bodyContent');
     const numberOfElement = div.querySelector('.numberOfElement');
     const canvasChart_p = todoBanMain.querySelector('.canvasChart_p');
 
-    setTimeout(function(){
+    setTimeout(function () {
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
         // numberOfElement.innerText = `${localStorageTodos.e[index][6]}` + " sous-tâche(s) restante(s)";
         canvasChart_p.innerText = localStorageTodos.e[index][6];
@@ -261,12 +235,12 @@ function updateNBSubChild(element, index){
 
 }
 
-
-function removeOne(element){
+//Suppression d'une tâche fille
+function removeOne(element) {
     const todoBanMain = element.closest('.todoBanMain');
     const div = todoBanMain.querySelector('.collapsible_div_bodyContent');
     element.parentElement.classList.add('slideOut');
-    setTimeout(function (){
+    setTimeout(function () {
         element.parentElement.remove();
         saveTasks(getDate("h"));
     }, 200)
@@ -274,25 +248,26 @@ function removeOne(element){
     updateNBSubChild(div, todoBanMain.dataset.num)
 }
 
-function addChild(element, localstorage, valueLS, classLS){
+//Ajout d'une tâche fille
+function addChild(element, localstorage, valueLS, classLS) {
     compteurLiSub++;
 
     const div = element.closest('.todoBanMain').querySelector('.collapsible_div_bodyContent')
     const staticContent = div.children[0];
 
-    if(localstorage === true){
+    if (localstorage === true) {
         // print("valueLS", allValues, "red")
 
 
         let allValues = valueLS.filter(value => Object.keys(value).length !== 0);
 
-        for(let i = 0 ; i < allValues.length ; i++){
+        for (let i = 0; i < allValues.length; i++) {
             const li_sub = document.createElement("li");
             const disabled_li_sub_obj = document.createElement("span");
             const end_subTasks = document.createElement("input");
             let arr = classLS[i].split(" ");
 
-            if(arr.length === 2){
+            if (arr.length === 2) {
                 li_sub.classList.add(arr[0]);
                 li_sub.classList.add(arr[1]);
 
@@ -301,7 +276,7 @@ function addChild(element, localstorage, valueLS, classLS){
 
                 end_subTasks.checked = true;
 
-            }else{
+            } else {
                 disabled_li_sub_obj.classList.add("disabled_li_sub_obj");
                 li_sub.classList.add(arr[0]);
             }
@@ -312,13 +287,19 @@ function addChild(element, localstorage, valueLS, classLS){
             input_set.setAttribute("type", "text");
             // input_set.setAttribute("autofocus", "");
             input_set.classList.add('input_sub');
-            input_set.onkeyup = function(e){inputSubEnter(e.key,this); saveTasks(getDate("h"));};
+            input_set.onkeyup = function (e) {
+                inputSubEnter(e.key, this);
+                saveTasks(getDate("h"));
+            };
 
             input_set.value = allValues[i];
 
             end_subTasks.setAttribute("type", "checkbox");
             end_subTasks.classList.add("end");
-            end_subTasks.onclick = function (){changeStateLiSub(end_subTasks);saveTasks(getDate("h"));}
+            end_subTasks.onclick = function () {
+                changeStateLiSub(end_subTasks);
+                saveTasks(getDate("h"));
+            }
 
             li_sub.appendChild(disabled_li_sub_obj);
 
@@ -332,13 +313,16 @@ function addChild(element, localstorage, valueLS, classLS){
             span.classList.add("fas");
             span.classList.add("fa-times");
 
-            span.onclick = function(){removeOne(this);saveTasks(getDate("h"));};
+            span.onclick = function () {
+                removeOne(this);
+                saveTasks(getDate("h"));
+            };
             li_sub.appendChild(span);
 
             // div.appendChild(li_sub);
             div.insertBefore(li_sub, staticContent);
         }
-    }else{
+    } else {
 
         const li_sub = document.createElement("li");
         li_sub.classList.add('li_sub');
@@ -347,7 +331,10 @@ function addChild(element, localstorage, valueLS, classLS){
         const input_set = document.createElement("input");
         input_set.setAttribute("type", "text");
         input_set.classList.add('input_sub');
-        input_set.onkeyup = function(e){inputSubEnter(e.key,this); saveTasks(getDate("h"));};
+        input_set.onkeyup = function (e) {
+            inputSubEnter(e.key, this);
+            saveTasks(getDate("h"));
+        };
 
         const disabled_li_sub_obj = document.createElement("span");
         disabled_li_sub_obj.classList.add("disabled_li_sub_obj");
@@ -355,7 +342,10 @@ function addChild(element, localstorage, valueLS, classLS){
         const end_subTasks = document.createElement("input");
         end_subTasks.setAttribute("type", "checkbox");
         end_subTasks.classList.add("end");
-        end_subTasks.onclick = function (){changeStateLiSub(end_subTasks);saveTasks(getDate("h"));}
+        end_subTasks.onclick = function () {
+            changeStateLiSub(end_subTasks);
+            saveTasks(getDate("h"));
+        }
 
         li_sub.appendChild(disabled_li_sub_obj);
 
@@ -368,7 +358,10 @@ function addChild(element, localstorage, valueLS, classLS){
         span.classList.add("fas");
         span.classList.add("fa-times");
 
-        span.onclick = function(){removeOne(this);saveTasks(getDate("h"));};
+        span.onclick = function () {
+            removeOne(this);
+            saveTasks(getDate("h"));
+        };
         li_sub.appendChild(span);
 
         div.insertBefore(li_sub, staticContent);
@@ -381,16 +374,17 @@ function addChild(element, localstorage, valueLS, classLS){
     }
 }
 
-function changeStateLiSub(element){
+//Modification de l'état de la tâche fille lors du clique sur la checkbox
+function changeStateLiSub(element) {
     const parent = element.parentElement;
     const todoBanMain = element.closest('.todoBanMain');
     const fst_child = element.parentElement.children[0];
 
-    if(element.checked){
+    if (element.checked) {
         parent.classList.add('li_sub_disabled');
         fst_child.classList.add('disabled_li_sub_obj_ACTIVE');
         parent.querySelector('.input_sub').disabled = true;
-    }else{
+    } else {
         parent.classList.remove('li_sub_disabled');
         fst_child.classList.remove('disabled_li_sub_obj_ACTIVE');
         parent.querySelector('.input_sub').disabled = false;
@@ -399,59 +393,46 @@ function changeStateLiSub(element){
     updateNBSubChild(element, todoBanMain.dataset.num);
 }
 
-list.addEventListener('click', function(ev) {
-    let li = ev.target;
-    if (li.tagName === 'DIV') {}
-}, false);
-
-function linkToNote(element){
+//Lien d'une tâche vers une note [NOT USED]
+function linkToNote(element) {
     const dup = element.parentElement.parentElement;
     const clone = dup.cloneNode(true);
     clone.classList.add('noteCard');
     // dup.parentNode.appendChild(clone);
 }
 
-function checkBox(element){
-    const parent = element.parentElement;
-    if(element.checked){
-        parent.style.border = "2px dashed red";
-        // parent.classList.add('liChecked');
-    }else{
-        parent.style.border = "";
-        // parent.classList.remove('liChecked');
-    }
-}
-
-
-
-function developChild(element){
+//Affichage des informations supplémentaires pour chaque tâche
+function developChild(element) {
     const overlay = document.querySelector('.overlay');
     const el = element.closest('.todoBanMain').querySelector('.collapsible')
 
-    if(el.classList.contains("active")){
+    if (el.classList.contains("active")) {
         displayLink(false, overlay);
-    }else{
+    } else {
         displayLink(true, overlay);
     }
 
     $('.collapsible').collapsible()
 }
 
-function setTodo(element){
+//Modification de l'état de la tâche lors du clique sur les boutons concernés
+function setTodo(element) {
     const div = element.closest(".todoBanMain");
 
     const header = div.querySelector('.collapsible-header');
     const i_imp = div.querySelector('.fa-exclamation-circle');
     const i_star = div.querySelector('.fa-star');
 
-    if(header.classList.contains("endTasks")){}else{
-        if(element.dataset.name === "star"){
-            if(header.classList.contains("importantTasks")){}else{
-                if(header.classList.contains("specialTasks")){
+    if (header.classList.contains("endTasks")) {
+    } else {
+        if (element.dataset.name === "star") {
+            if (header.classList.contains("importantTasks")) {
+            } else {
+                if (header.classList.contains("specialTasks")) {
                     i_star.classList.remove("specialTasks_color");
                     i_imp.classList.remove("disabledOptionsRC");
                     header.classList.remove("specialTasks");
-                }else{
+                } else {
                     i_star.classList.add("specialTasks_color");
                     header.classList.add("specialTasks");
 
@@ -460,13 +441,14 @@ function setTodo(element){
                     header.classList.remove("importantTasks");
                 }
             }
-        }else{
-            if(header.classList.contains("specialTasks")){}else{
-                if(header.classList.contains("importantTasks")){
+        } else {
+            if (header.classList.contains("specialTasks")) {
+            } else {
+                if (header.classList.contains("importantTasks")) {
                     i_imp.classList.remove("importantTasks_color");
                     i_star.classList.remove("disabledOptionsRC");
                     header.classList.remove("importantTasks");
-                }else{
+                } else {
                     i_imp.classList.add("importantTasks_color");
                     header.classList.add("importantTasks");
 
@@ -481,7 +463,8 @@ function setTodo(element){
     return header.classList;
 }
 
-function getDate(separator = "h"){
+//Récupération de l'heure
+function getDate(separator = "h") {
     const date_reminder = new Date();
     let h = date_reminder.getHours();
     if (h < 10) {
@@ -493,33 +476,36 @@ function getDate(separator = "h"){
     }
     return h + separator + m;
 }
-function getDateDay(separator, sens){
+
+//Récupération de la date du jour
+function getDateDay(separator, sens) {
     const date = new Date();
     let day = date.getDate("h");
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     let output = "";
-    if(sens === "EN"){
+    if (sens === "EN") {
         output = year + separator + month + separator + day;
-    }else if(sens === "FR"){
+    } else if (sens === "FR") {
         output = day + separator + month + separator + year;
     }
     return output;
 }
 
-function setFinish(e){
+//Modification de l'état de la tâche, fin de tâche
+function setFinish(e) {
     const parent = e.target.closest('.todoBanMain');
 
     const header = parent.querySelector('.collapsible-header');
     const i_imp = parent.querySelector('.fa-exclamation-circle');
     const i_star = parent.querySelector('.fa-star');
 
-    if(header.classList.contains("endTasks")){
+    if (header.classList.contains("endTasks")) {
         header.classList.remove('endTasks');
         i_imp.classList.remove('disabledOptionsRC');
         i_star.classList.remove('disabledOptionsRC');
         parent.querySelector('.textTask').classList.remove('endTasks_text');
-    }else{
+    } else {
         header.classList.add('endTasks');
         i_imp.classList.add('disabledOptionsRC');
         i_star.classList.add('disabledOptionsRC');
@@ -535,19 +521,20 @@ function setFinish(e){
     saveTasks(getDate("h"));
 }
 
-function rightClick(e){
+//Fonction du clicque droit
+function rightClick(e) {
     e.preventDefault();
-    document.getElementById(
-        "contextMenuNote").style.display = "none";
+    document.getElementById("contextMenuNote").style.display = "none";
+
     const parent = e.target.closest('.todoBanMain');
     const header = parent.querySelector('.collapsible-header');
     const i_imp = parent.querySelector('.fa-exclamation-circle');
     const i_star = parent.querySelector('.fa-star');
 
     parent.classList.add('bumpOnRClick');
-    setTimeout(function (){
+    setTimeout(function () {
         parent.classList.remove('bumpOnRClick')
-    },200)
+    }, 200)
 
     const i_zone_1 = document.querySelector('#i_zone_1');
     const txt_zone_1 = document.querySelector('.txt_zone_1');
@@ -557,7 +544,7 @@ function rightClick(e){
 
     const menu = document.getElementById("contextMenu")
 
-    menu.querySelector('#info_to_show').innerHTML =  "Créée le " + `${parent.dataset.date}` +
+    menu.querySelector('#info_to_show').innerHTML = "Créée le " + `${parent.dataset.date}` +
         " à " + `${parent.dataset.hour}`;
 
     txt_zone_2.innerHTML = "Ajouter le filtre important";
@@ -568,15 +555,16 @@ function rightClick(e){
     i_zone_1.classList.add('fa-check-circle');
 
 
-    if(parent.querySelector('.checkbox_todo_end').checked === true){
+    if (parent.querySelector('.checkbox_todo_end').checked === true) {
         txt_zone_1.innerHTML = "Marquer comme non terminée";
-        parent.children[1].children[0].classList.add('endTasks_text');
-        parent.children[1].children[1].children[0].classList.add('endTasks_text');
+
+        parent.querySelector('.option--container').classList.add('endTasks_text');
+        parent.querySelector('.div_option_container').classList.add('endTasks_text');
 
         menu.querySelector('#impTask').classList.add('disabledOptionsRC');
         menu.querySelector('#speTask').classList.add('disabledOptionsRC');
 
-    }else if(header.classList.contains('importantTasks')){
+    } else if (header.classList.contains('importantTasks')) {
         txt_zone_2.innerHTML = "Enlever le filtre important";
         menu.querySelector('#impTask').classList.remove('disabledOptionsRC');
         menu.querySelector('#speTask').classList.add('disabledOptionsRC');
@@ -584,15 +572,14 @@ function rightClick(e){
         i_star.classList.add('disabledOptionsRC');
         i_imp.classList.remove('disabledOptionsRC');
 
-    }else if(header.classList.contains('specialTasks')){
+    } else if (header.classList.contains('specialTasks')) {
         txt_zone_3.innerHTML = "Enlever le filtre special";
         menu.querySelector('#speTask').classList.remove('disabledOptionsRC');
         menu.querySelector('#impTask').classList.add('disabledOptionsRC');
 
         i_imp.classList.add('disabledOptionsRC');
         i_star.classList.remove('disabledOptionsRC');
-    }
-    else{
+    } else {
         txt_zone_1.innerHTML = "Marquer comme terminée";
         txt_zone_2.innerHTML = "Ajouter le filtre important";
         txt_zone_3.innerHTML = "Ajouter le filtre special";
@@ -606,13 +593,13 @@ function rightClick(e){
     }
     txt_zone_4.innerHTML = "Supprimer la tâche";
 
-    function zone1(parent){
+    function zone1(parent) {
 
         const header = parent.querySelector('.collapsible-header');
         const i_imp = parent.querySelector('.fa-exclamation-circle');
         const i_star = parent.querySelector('.fa-star');
 
-        if(parent.querySelector('.checkbox_todo_end').checked === true){
+        if (parent.querySelector('.checkbox_todo_end').checked === true) {
             parent.querySelector('.checkbox_todo_end').checked = false;
             header.classList.remove('endTasks');
             parent.querySelector('.checkbox_todo_end').classList.remove('endTasks_text');
@@ -621,7 +608,7 @@ function rightClick(e){
             i_imp.classList.remove('disabledOptionsRC');
             i_star.classList.remove('disabledOptionsRC');
 
-        }else{
+        } else {
             parent.querySelector('.checkbox_todo_end').checked = true;
             header.classList.add('endTasks');
             parent.querySelector('.checkbox_todo_end').classList.add('endTasks_text');
@@ -636,20 +623,22 @@ function rightClick(e){
             i_star.classList.add('disabledOptionsRC');
         }
     }
-    function zone2(parent,element){
-        if(element.classList.contains('disabledOptionsRC')){}else{
+
+    function zone2(parent, element) {
+        if (element.classList.contains('disabledOptionsRC')) {
+        } else {
 
             const header = parent.querySelector('.collapsible-header');
             const i_imp = parent.querySelector('.fa-exclamation-circle');
             const i_star = parent.querySelector('.fa-star');
 
-            if(header.classList.contains("importantTasks")){
+            if (header.classList.contains("importantTasks")) {
                 header.classList.remove('importantTasks');
                 i_imp.classList.remove('importantTasks_color');
 
                 i_imp.classList.remove('disabledOptionsRC');
                 i_star.classList.remove('disabledOptionsRC');
-            }else{
+            } else {
                 header.classList.add('importantTasks');
                 i_imp.classList.add('importantTasks_color');
                 header.classList.remove('specialTasks');
@@ -659,19 +648,21 @@ function rightClick(e){
             }
         }
     }
-    function zone3(parent,element){
-        if(element.classList.contains('disabledOptionsRC')){}else{
+
+    function zone3(parent, element) {
+        if (element.classList.contains('disabledOptionsRC')) {
+        } else {
             const header = parent.querySelector('.collapsible-header');
             const i_imp = parent.querySelector('.fa-exclamation-circle');
             const i_star = parent.querySelector('.fa-star');
 
-            if(header.classList.contains("specialTasks")){
+            if (header.classList.contains("specialTasks")) {
                 header.classList.remove('specialTasks');
                 i_star.classList.remove('specialTasks_color');
 
                 i_imp.classList.remove('disabledOptionsRC');
                 i_star.classList.remove('disabledOptionsRC');
-            }else{
+            } else {
                 header.classList.add('specialTasks');
                 i_star.classList.add('specialTasks_color');
                 header.classList.remove('importantTasks');
@@ -681,17 +672,24 @@ function rightClick(e){
             }
         }
     }
-    function zone4(parent){
+
+    function zone4(parent) {
         parent.classList.add('slideOut');
-        setTimeout(function (){
+        setTimeout(function () {
             parent.remove()
         }, 500)
     }
-    function zone5(parent){
-        const check_user_1 = document.querySelector('#check_user_1')
-        const valueInput = parent.children[1].children[1].children[0].innerHTML;
+
+    function zone5(parent) {
+        const check_user_1 = document.querySelector('#check_user_1');
+        const valueInput = parent.querySelector('.textTask').innerHTML;
+
         let user;
-        if (check_user_1.checked) {user = "Nicolas"}else{user= "Thérence"}
+        if (check_user_1.checked) {
+            user = "Nicolas"
+        } else {
+            user = "Thérence"
+        }
         const text = `${user}` + " a partagé le contenu d'une note avec vous. " +
             `\"${valueInput}\"` + " est le titre de la note." + " La note a été créée le " + `${parent.dataset.date}` +
             " à " + `${parent.dataset.hour}` + ".";
@@ -699,68 +697,104 @@ function rightClick(e){
         share(valueInput, text, "todo")
 
     }
-    function zone5b(parent){
+
+    let arrayShare__child = [];
+    let arrayShare__child__class = [];
+
+    let arrayShare = [];
+
+    function zone5b(parent) {
 
         let hour = getDate("h");
         let date_act = getDateDay("/", "FR");
 
-        const container = parent.children[0].children[0].children[0];
+        const container = parent.querySelector('.collapsible-header');
         container.classList.toggle('shareTask');
 
-        let share_class = parent.className;
-        let share_state = parent.children[0].children[0].children[0].className;
-        let share_value = parent.children[1].children[1].children[0].innerHTML;
-        let share_has = parent.children[1].children[1].children[1].innerHTML;
+        let share_state = parent.querySelector('.collapsible-header').className;
+        let share_value = parent.querySelector('.textTask').innerHTML;
+        let share_has = parent.querySelector('.colorhastags').innerHTML;
         let share_dataset = parent.dataset;
 
+        parent.querySelectorAll('.input_sub').forEach(function (child) {
+            arrayShare__child.push(child.value);
+        });
 
-        const cTodo_share = {
-            child_className : share_class,
-            child_classNameState : share_state,
-            child_value : share_value,
-            childValue_has : share_has,
-            childDataSet : share_dataset,
-            lastSave : hour + "-" + date_act
-        }
-        //TODO : SEND cTodo_share TO SERVER
-        console.log(cTodo_share);
+        parent.querySelectorAll('.li_sub').forEach(function (child) {
+            arrayShare__child__class.push(child.className);
+        });
+
+        arrayShare.push(
+            parent.dataset,
+            parent.classList,
+            parent.querySelector('.colorhastags').innerHTML,
+            parent.querySelector('.collapsible-header').classList,
+            arrayShare__child.splice(0, arrayShare__child.length).filter(value => Object.keys(value).length !== 0),
+            parent.querySelector('.textTask').innerHTML,
+            parent.querySelectorAll('.li_sub').length,
+            arrayShare__child__class.splice(0, arrayShare__child__class.length).filter(value => Object.keys(value).length !== 0),
+            parent.querySelector('.creator').innerHTML
+        )
+
+        const task__share = {e: arrayShare}
+
+        //TODO : send data to server
+        console.log(task__share);
     }
 
     if (document.getElementById("contextMenu").style.display === "flex")
         hideMenu();
-    else{
+    else {
         menu.style.display = 'flex';
         let out_height = window.innerHeight + window.scrollY - (e.pageY + menu.offsetHeight);
 
-        if(e.pageY + menu.offsetHeight > window.innerHeight + window.scrollY){
+        if (e.pageY + menu.offsetHeight > window.innerHeight + window.scrollY) {
             menu.style.top = e.pageY + out_height + "px";
-        }else{
+        } else {
             menu.style.top = e.pageY + "px";
         }
 
-        let out_width = window.innerWidth + window.scrollX - (e.pageX + 2*menu.offsetWidth);
+        let out_width = window.innerWidth + window.scrollX - (e.pageX + 2 * menu.offsetWidth);
 
-        if(e.pageX + 2*menu.offsetWidth > window.innerWidth + window.scrollX){
+        if (e.pageX + 2 * menu.offsetWidth > window.innerWidth + window.scrollX) {
             menu.style.left = e.pageX + out_width + "px";
-        }else{
+        } else {
             menu.style.left = e.pageX + "px";
         }
 
-
         //END
-        menu.children[0].children[0].onclick = function(){zone1(parent);saveTasks(getDate("h"));};
+        menu.querySelector('#endTask').onclick = function () {
+            zone1(parent);
+            saveTasks(getDate("h"));
+        };
         //IMPORTANT
-        menu.children[0].children[1].onclick = function(){zone2(parent,this);saveTasks(getDate("h"));};
+        menu.querySelector('#impTask').onclick = function () {
+            zone2(parent, this);
+            saveTasks(getDate("h"));
+        };
         //SPECIAL
-        menu.children[0].children[2].onclick = function(){zone3(parent,this);saveTasks(getDate("h"));};
+        menu.querySelector('#speTask').onclick = function () {
+            zone3(parent, this);
+            saveTasks(getDate("h"));
+        };
         //DELETE
-        menu.children[0].children[3].onclick = function(){zone4(parent);saveTasks(getDate("h"));};
+        menu.querySelector('#deleteTask').onclick = function () {
+            zone4(parent);
+            saveTasks(getDate("h"));
+        };
         //SHARE
-        menu.children[0].children[4].children[2].children[0].children[0].onclick = function(){zone5(parent);saveTasks(getDate("h"));};
-        menu.children[0].children[4].children[2].children[0].children[1].onclick = function(){zone5b(parent);saveTasks(getDate("h"));};
+        menu.querySelector('#share--text').onclick = function () {
+            zone5(parent);
+            saveTasks(getDate("h"));
+        };
+        menu.querySelector('#share--task').onclick = function () {
+            zone5b(parent);
+            saveTasks(getDate("h"));
+        };
     }
 }
 
+//Cacher l'élément au clique droit
 function hideMenu() {
     document.getElementById(
         "contextMenu").style.display = "none";
@@ -772,6 +806,8 @@ let ctr_todos_chart = 0;
 let ctr_card = 0;
 let array_id = [];
 
+
+//Création d'une tâche [MAIN]
 function createTask(
     keypress,
     filter,
@@ -788,27 +824,29 @@ function createTask(
     creator_user,
     index) {
 
+    //Expand task : fa-chevron-right
     const expand = document.createElement("i");
-    expand.onclick = function(){developChild(this)};
+    expand.onclick = function () {
+        developChild(this)
+    };
     expand.classList.add("fas");
     expand.classList.add("fa-chevron-down");
     expand.classList.add("expandChevron");
     expand.classList.add("checkBox");
+    //texte principal
     const text = document.createElement("p");
     text.classList.add("textTask");
+    //Valeur rentrée par l'utilisateur
     const inputValue = input.value;
-    // const itag_end = document.createElement("i");
-
+    //checkBox toggle end task
     const itag_end = document.createElement('input')
     itag_end.classList.add('checkbox_todo_end');
     itag_end.setAttribute("type", "checkbox");
-
     itag_end.onclick = setFinish;
 
     //---------------------------------------------------COLLAPSIBLE
     const todoBanMain = document.createElement("div");
     todoBanMain.classList.add('todoBanMain');
-    // todoBanMain.setAttribute("data-", "important");
 
     // todoBanMain.setAttribute('draggable', true)
 
@@ -857,12 +895,18 @@ function createTask(
     itag_imp.classList.add("fas");
     itag_imp.classList.add("fa-exclamation-circle");
     itag_imp.setAttribute("data-name", "important");
-    itag_imp.onclick = function(){setTodo(this);saveTasks(getDate("h"));};
+    itag_imp.onclick = function () {
+        setTodo(this);
+        saveTasks(getDate("h"));
+    };
     const itag_star = document.createElement("i");
     itag_star.classList.add("fas");
     itag_star.classList.add("fa-star");
     itag_star.setAttribute("data-name", "star");
-    itag_star.onclick = function(){setTodo(this);saveTasks(getDate("h"));};
+    itag_star.onclick = function () {
+        setTodo(this);
+        saveTasks(getDate("h"));
+    };
     //---------------------------------------------------COLLAPSIBLE
     const div_text = document.createElement("div");
     div_text.classList.add("option--container");
@@ -873,10 +917,13 @@ function createTask(
     // const itac = document.createElement("i");
     itage.classList.add("fas");
     itage.classList.add("fa-times");
-    itage.onclick = function(){removeAll(this);saveTasks(getDate("h"));};
+    itage.onclick = function () {
+        removeAll(this);
+        saveTasks(getDate("h"));
+    };
     itag.classList.add("fas");
     itag.classList.add("fa-plus-circle");
-    itag.onclick = function(){
+    itag.onclick = function () {
         addChild(this, false, false, todos_nbLS_subChild, index);
         developChild(this);
         saveTasks(false)
@@ -910,7 +957,9 @@ function createTask(
     //---------------------------------------------------VALIDATION
     const spanhas = document.createElement("span");
     spanhas.classList.add('colorhastags');
-    spanhas.onclick = function(){showAllHas(this)};
+    spanhas.onclick = function (e) {
+        showAllHas(this)
+    };
     //---------------------------------------------------CHART
 
     const containerChart = document.createElement("div");
@@ -942,7 +991,7 @@ function createTask(
     const time_p = document.createElement("p");
     const time_span = document.createElement("span");
     time_span.classList.add('date--span')
-    let hour,date_act;
+    let hour, date_act;
 
     const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
 
@@ -952,10 +1001,10 @@ function createTask(
         numberOfElement.innerText = "0 sous-tâche(s) restante(s)";
         if (inputValue !== '') {
 
-            if(localStorageTodos === null){
+            if (localStorageTodos === null) {
                 todoBanMain.setAttribute("data-num", ctr_card++)
                 todoBanMain.setAttribute("data-hierarchy", ctr_card++);
-            }else{
+            } else {
                 todoBanMain.setAttribute("data-num", localStorageTodos.v)
                 todoBanMain.setAttribute("data-hierarchy", localStorageTodos.v);
             }
@@ -1006,7 +1055,6 @@ function createTask(
             }
 
 
-
             if (reminderQ !== "") { //from input
                 let res, hour;
                 let dated = new Date();
@@ -1016,8 +1064,8 @@ function createTask(
                 const y = (pickerHour.value.split("T")[1]);
                 time_p.innerHTML = u + " à " + y;
 
-                res = Math.round(( new Date(pickerHour.value).getTime() -
-                        dated.getTime())/
+                res = Math.round((new Date(pickerHour.value).getTime() -
+                        dated.getTime()) /
                     (1000 * 3600 * 24));
 
 
@@ -1026,22 +1074,28 @@ function createTask(
                     time_p.classList.add("td-color-red");
                     i_clock.classList.add("td-color-red");
 
-                    setInterval(function(){reminderCheck(todoBanMain)},1000); //60000 : 1
+                    setInterval(function () {
+                        reminderCheck(todoBanMain)
+                    }, 1000); //60000 : 1
                 } else {
-                    if(res < 1){
+                    if (res < 1) {
                         time_p.classList.add("td-color-orange");
                         i_clock.classList.add("td-color-orange");
 
-                        hour = Math.round(( new Date(reminderQ).getTime() -
-                                dated.getTime())/
+                        hour = Math.round((new Date(reminderQ).getTime() -
+                                dated.getTime()) /
                             (1000 * 3600));
-                        if (hour < 0) {time_span.innerHTML = Math.abs(hour) + " " + "heures(s) de retard"}else{
+                        if (hour < 0) {
+                            time_span.innerHTML = Math.abs(hour) + " " + "heures(s) de retard"
+                        } else {
                             time_span.innerHTML = hour + " " + "heures(s) restante(s)"
                         }
 
-                        setInterval(function(){reminderCheck(todoBanMain)},1000); //60000 : 1
+                        setInterval(function () {
+                            reminderCheck(todoBanMain)
+                        }, 1000); //60000 : 1
 
-                    }else{
+                    } else {
                         time_p.classList.add("td-color-green");
                         i_clock.classList.add("td-color-green");
 
@@ -1049,12 +1103,14 @@ function createTask(
                     }
                 }
 
-                i_clock.onclick = function(){showTime(this)};
+                i_clock.onclick = function () {
+                    showTime(this)
+                };
                 div_text.appendChild(i_clock);
                 time_p.appendChild(time_span);
                 div_text.appendChild(time_p);
                 pickerHour.value = "";
-            }else{
+            } else {
                 i_clock.setAttribute('data-display', 'hidden')
                 i_clock.setAttribute('data-state', 'no-interaction');
                 div_text.appendChild(i_clock);
@@ -1073,17 +1129,17 @@ function createTask(
                 }
             });
 
-            if(duplicates.length !== 0){
+            if (duplicates.length !== 0) {
                 canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, "")
                     + Math.floor(Math.random() * 10000));
-            }else{
+            } else {
                 canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, ""))
             }
 
-            if(duplicates.length !== 0){
+            if (duplicates.length !== 0) {
                 canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, "")
                     + Math.floor(Math.random() * 10000));
-            }else{
+            } else {
                 canvasChart.setAttribute("id", inputValue.split(" ")[0].replace(/\s/g, ""))
             }
 
@@ -1108,7 +1164,7 @@ function createTask(
         }
 
         if (hashtag !== "undefined") {
-            if(hashtag === ''){
+            if (hashtag === '') {
                 spanhas.setAttribute('data-state', 'no-interaction');
                 spanhas.setAttribute('data-display', 'hidden');
             }
@@ -1126,38 +1182,43 @@ function createTask(
             i_clock.setAttribute('data-display', 'hidden');
             i_clock.setAttribute('data-state', 'no-interaction');
             time_p.classList.add("date--deadline");
-        }
-        else {
+        } else {
             todoBanMain.setAttribute("data-reminder", data_set.reminder)
 
             i_clock.classList.add("td-padding");
             time_p.classList.add("date--deadline");
 
-            res = Math.round(( new Date(data_set.reminder).getTime() -
-                    dated.getTime())/
+            res = Math.round((new Date(data_set.reminder).getTime() -
+                    dated.getTime()) /
                 (1000 * 3600 * 24));
 
             if (res < 0) {
                 time_span.innerHTML = Math.abs(res) + " " + "jour(s) de retard";
                 time_p.classList.add("td-color-red");
                 i_clock.classList.add("td-color-red");
-                setInterval(function(){reminderCheck(todoBanMain)},1000); //60000 : 1
+                setInterval(function () {
+                    reminderCheck(todoBanMain)
+                }, 1000); //60000 : 1
             } else {
-                if(res < 1){
+                if (res < 1) {
                     time_p.classList.add("td-color-orange");
                     i_clock.classList.add("td-color-orange");
 
-                    hour = Math.round(( new Date(data_set.reminder).getTime() -
-                            dated.getTime())/
+                    hour = Math.round((new Date(data_set.reminder).getTime() -
+                            dated.getTime()) /
                         (1000 * 3600));
 
-                    if (hour < 0) {time_span.innerHTML = Math.abs(hour) + " " + "heures(s) de retard"}else{
+                    if (hour < 0) {
+                        time_span.innerHTML = Math.abs(hour) + " " + "heures(s) de retard"
+                    } else {
                         time_span.innerHTML = hour + " " + "heures(s) restante(s)"
                     }
 
-                    setInterval(function(){reminderCheck(todoBanMain)},1000); //60000 : 1
+                    setInterval(function () {
+                        reminderCheck(todoBanMain)
+                    }, 1000); //60000 : 1
 
-                }else{
+                } else {
                     time_p.classList.add("td-color-green");
                     i_clock.classList.add("td-color-green");
 
@@ -1172,7 +1233,9 @@ function createTask(
 
         }
 
-        i_clock.onclick = function(){showTime(this)};
+        i_clock.onclick = function () {
+            showTime(this)
+        };
         div_text.appendChild(i_clock);
         time_p.appendChild(time_span);
         div_text.appendChild(time_p);
@@ -1183,7 +1246,7 @@ function createTask(
                 collapsible_div_header.classList.add(stateLS[i]);
 
                 const checkbox = todoBanMain.querySelector('.checkbox_todo_end');
-                const textTask  = todoBanMain.querySelector('.textTask');
+                const textTask = todoBanMain.querySelector('.textTask');
                 const i_imp = todoBanMain.querySelector('.fa-exclamation-circle');
                 const i_star = todoBanMain.querySelector('.fa-star');
 
@@ -1192,7 +1255,7 @@ function createTask(
 
                     checkbox.checked = true;
                     checkbox.classList.add('endTasks_text');
-                    textTask .classList.add('endTasks_text');
+                    textTask.classList.add('endTasks_text');
 
                     i_imp.classList.add('disabledOptionsRC');
                     i_star.classList.add('disabledOptionsRC');
@@ -1203,7 +1266,8 @@ function createTask(
                 } else if (stateLS[i] === "importantTasks") {
                     i_imp.classList.add('importantTasks_color');
                     i_star.classList.add('disabledOptionsRC');
-                } else {}
+                } else {
+                }
             }
 
         }
@@ -1219,10 +1283,10 @@ function createTask(
             }
         });
 
-        if(duplicates.length !== 0){
+        if (duplicates.length !== 0) {
             canvasChart.setAttribute("id", valueLS.replace(/\s/g, "")
                 + Math.floor(Math.random() * 10000));
-        }else{
+        } else {
             canvasChart.setAttribute("id", valueLS.replace(/\s/g, ""))
         }
 
@@ -1247,7 +1311,8 @@ let uniqueChars = [];
 const modal__has = document.querySelector('#modal__has')
 const modal__container = document.querySelector('.modal__container')
 
-function showAllHas(element){
+//Montre tous les hashtags groupés
+function showAllHas(element) {
     const parent = element.closest('.todoBanMain');
     const container = myUL.querySelectorAll('.todoBanMain');
     const content_overlay = document.createElement('div');
@@ -1266,17 +1331,17 @@ function showAllHas(element){
     close_popup.classList.add('close_popup');
 
 
-    if(content_overlay.childElementCount === 0){
+    if (content_overlay.childElementCount === 0) {
         modal__container.classList.add('modal__show');
-        setTimeout(function (){
+        setTimeout(function () {
             modal__container.classList.add('modal__show__bg');
         }, 800)
 
-        myUL.classList.add('zoom_out');
+        // myUL.classList.add('zoom_out');
 
         let array_has = [];
 
-        container.forEach(function (todo){
+        container.forEach(function (todo) {
             const has = todo.querySelector('.colorhastags');
             array_has.push(has.innerHTML)
         })
@@ -1288,7 +1353,7 @@ function showAllHas(element){
             indices.push(idx);
             idx = array_has.indexOf(e, idx + 1);
         }
-        for(let i = 0 ; i < indices.length ; i++){
+        for (let i = 0; i < indices.length; i++) {
             const content_overlay_todo = document.createElement('div')
             const cont_ov_but = document.createElement('i')
             const cont_ov_but_lbl = document.createElement('p')
@@ -1307,13 +1372,17 @@ function showAllHas(element){
             content_overlay_todo.appendChild(con_ov_container)
             new_c.appendChild(content_overlay_todo)
 
-            content_overlay_todo.onclick = function (){hasToTasks(this)}
+            content_overlay_todo.onclick = function () {
+                hasToTasks(this)
+            }
             content_overlay.appendChild(new_c)
         }
 
         txt_popup.innerHTML = "Tâches en lecture seule"
         lbl_popup.innerHTML = `${indices.length} tâches sélectionnées`
-        header_l.onclick = function (){remAllHas(this)}
+        header_l.onclick = function () {
+            remAllHas(this)
+        }
 
         header_l.appendChild(close_popup);
         header_l.appendChild(txt_popup);
@@ -1325,6 +1394,7 @@ function showAllHas(element){
     }
 }
 
+//Relie les tâches affichés dans la fonctions showAllHas avec les toutes les tâches
 function hasToTasks(element) {
     const todo = element.closest('.todoBanMain');
     const parent = element.closest('#modal__has');
@@ -1333,52 +1403,51 @@ function hasToTasks(element) {
     remAllHas(parent);
 
     allTodo[index].classList.add('highlightTodo');
-    setTimeout(function (){
+    setTimeout(function () {
         allTodo[index].classList.remove('highlightTodo')
-    },1000)
-
+    }, 1000)
 }
 
-function remAllHas(element){
+//Suppression de tous les éléments du modal après sa fermeture
+function remAllHas(element) {
 
     modal__container.classList.remove('modal__show__bg');
     modal__has.classList.add('modal__content_d');
 
-    setTimeout(function (){
+    setTimeout(function () {
         modal__container.classList.remove('modal__show');
         modal__has.classList.remove('modal__content_d');
     }, 700)
 
-    myUL.classList.remove('zoom_out');
+    // myUL.classList.remove('zoom_out');
 
     const parent = element.closest('#modal__has')
-    setTimeout(function (){
+    setTimeout(function () {
         parent.querySelector('.content_overlay').remove();
         parent.querySelector('.header_popup').remove();
     }, 1500)
 
 }
 
-function reminderCheck(element){
-    // console.log(element)
+//Fonction de calcul des deadLines
+function reminderCheck(element) {
 
     let day, hour, min;
     let dated = new Date();
 
-    day = Math.round(( new Date(element.dataset.reminder).getTime() -
-            dated.getTime())/
+    day = Math.round((new Date(element.dataset.reminder).getTime() -
+            dated.getTime()) /
         (1000 * 3600 * 24));
 
-    hour = Math.round(( new Date(element.dataset.reminder).getTime() -
-            dated.getTime())/
+    hour = Math.round((new Date(element.dataset.reminder).getTime() -
+            dated.getTime()) /
         (1000 * 3600));
 
     min = (new Date(element.dataset.reminder).getMinutes() - dated.getMinutes());
 
-    if(day === 0 || day < 0){
-        if(hour === 0 || hour < 0){
-            if(min === 0 || min < 0){
-                // console.log(element)
+    if (day === 0 || day < 0) {
+        if (hour === 0 || hour < 0) {
+            if (min === 0 || min < 0) {
 
                 element.querySelector('.fa-clock').classList.remove('td-color-orange')
                 element.querySelector('.date--deadline').classList.remove('td-color-orange')
@@ -1389,30 +1458,33 @@ function reminderCheck(element){
 
                 uniqueChars = [...new Set(storeElementOverDated)];
                 return true;
-            }else{return false}
-        }else{return false}
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
-
-
 }
 
-
-function showTime(element){
-    const clock =  element.closest('.option--container').querySelector('.fa-clock');
-    const deadline =  element.closest('.option--container').querySelector('.date--deadline');
+//Affichage de la deadLine
+function showTime(element) {
+    const clock = element.closest('.option--container').querySelector('.fa-clock');
+    const deadline = element.closest('.option--container').querySelector('.date--deadline');
     clock.classList.add('bumpOnClick2');
-    setTimeout(function (){
+    setTimeout(function () {
         clock.classList.remove('bumpOnClick2')
-    },200)
-
+    }, 200)
     deadline.classList.toggle('showHour')
 }
 
-function reverseString(str) {return str.split("").reverse().join("")}
+//Fonction expérimentale
+function reverseString(str) {
+    return str.split("").reverse().join("")
+}
 
-function createVisibleLink(parent, child){
-    console.log(parent);
-    console.log(child);
+//Fonction de création des liens entre les tâches et les notes [NOT USED]
+function createVisibleLink(parent, child) {
 
     const overlay = document.createElement("div");
     overlay.classList.add('overlay');
@@ -1421,8 +1493,8 @@ function createVisibleLink(parent, child){
 
     const segment = document.createElement("div");
     segment.classList.add('segment');
-    const fromTop = parent.offsetTop + parent.offsetHeight/2; //+ todoContainer.offsetTop
-    const heightDiv = (child.offsetTop - fromTop) + child.offsetHeight/2;
+    const fromTop = parent.offsetTop + parent.offsetHeight / 2; //+ todoContainer.offsetTop
+    const heightDiv = (child.offsetTop - fromTop) + child.offsetHeight / 2;
 
     segment.style.marginTop = fromTop + "px";
     segment.style.height = heightDiv + "px";
@@ -1432,74 +1504,82 @@ function createVisibleLink(parent, child){
 
     noVisibility.style.height = main_height + "px";
 
-    // overlay.appendChild(segment)
-    // overlay.appendChild(noVisibility)
     noVisibility.appendChild(segment)
     overlay.appendChild(noVisibility)
 
     document.body.appendChild(overlay)
 }
 
-function displayLink(state, element){
-    if(state){
-        if(element){element.classList.add('show')}
-    }else{element.classList.remove('show')}
+//Fonction d'affichage des liens entre les tâches et les notes [NOT USED]
+function displayLink(state, element) {
+    if (state) {
+        if (element) {
+            element.classList.add('show')
+        }
+    } else {
+        element.classList.remove('show')
+    }
 }
 
-function linkToNoteC(element){
+//Fonction principale des liens entre les tâches et les notes [NOT USED]
+function linkToNoteC(element) {
     let comp_select = 0;
 
     const div = element.closest(".todoBanMain");
     descriptionLink.classList.add('show');
 
-    for(let i = 0 ; i < myUL_note.childElementCount ; i++){
+    for (let i = 0; i < myUL_note.childElementCount; i++) {
         myUL_note.children[i].classList.add('choosingNote');
 
-        myUL_note.children[i].onclick = function (e){
-            if(comp_select++ === 0){
+        myUL_note.children[i].onclick = function (e) {
+            if (comp_select++ === 0) {
                 const res = e.target.closest('.noteCard');
                 res.classList.add("noteChoose");
                 myUL_note.children[i].querySelector('.txt_link_todo').innerText = "Todo " +
                     `\"${div.children[1].children[1].children[0].innerText}\"` + " sélectionnée";
-                for(let i = 0 ; i < myUL_note.childElementCount ; i++){
+                for (let i = 0; i < myUL_note.childElementCount; i++) {
                     myUL_note.children[i].classList.remove('choosingNote');
                 }
                 descriptionLink.classList.remove('show');
-                createVisibleLink(div,myUL_note.children[i]);
+                createVisibleLink(div, myUL_note.children[i]);
             }
         }
     }
 }
 
-function print(title, value, color="green"){
-    console.log("%c Print " + `${title}` + " : " + value, "color : " +`${color}`+ ";font-size:1.2em");
+//Fonction d'écriture stylisée dans la console de debug
+function print(title, value, color = "green") {
+    console.log("%c Print " + `${title}` + " : " + value, "color : " + `${color}` + ";font-size:1.2em");
 }
 
 const arr_child_val = [];
 const arr_child_class = [];
 
-function storage(a,b){
+//Fonction expérimentale
+function storage(a, b) {
     arr_child_val.push(a);
     arr_child_class.push(b);
-    return {arr_child_val,arr_child_class};
+    return {arr_child_val, arr_child_class};
 }
 
-function test(){
+//Fonction expérimentale
+function test() {
     const test = [];
-    for(let i = 0 ; i <= 2; i++){
-        for(let a = 0 ; a <= 4; a++){
+    for (let i = 0; i <= 2; i++) {
+        for (let a = 0; a <= 4; a++) {
             test.push([a, i]);
         }
     }
     console.log(test);
 }
 
-function reloadTasks(){
+//Fonction de chargement des tâches depuis le localStorage
+function reloadTasks() {
     const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
     let nb_child = localStorageTodos.v;
-    lastSaveTime.innerHTML =  localStorageTodos.s;
+    lastSaveTime.innerHTML = localStorageTodos.s;
 
-    for(let i = 0 ; i < nb_child; i++){
+    for (let i = 0; i < nb_child; i++) {
 
         let todos_dataset_child = localStorageTodos.e[i][0];
         let todos_class = localStorageTodos.e[i][1];
@@ -1542,7 +1622,8 @@ const color_a = [
 let array_li_sub = [];
 let new_array_li_sub = [];
 
-function createChart(element, todos_nbLS_subChild, value_onchange, flag_change){
+//Fonction de création des graphiques
+function createChart(element, todos_nbLS_subChild, value_onchange, flag_change) {
 
     let hw_li_dis = 0;
 
@@ -1551,26 +1632,31 @@ function createChart(element, todos_nbLS_subChild, value_onchange, flag_change){
 
     const allChart_containers = div.querySelector('.containerChart')
 
-    li_subs.forEach(function (e){
-        if(e.classList.contains('li_sub_disabled')){hw_li_dis++}
+    li_subs.forEach(function (e) {
+        if (e.classList.contains('li_sub_disabled')) {
+            hw_li_dis++
+        }
     })
 
-    if(todos_nbLS_subChild === 0 || hw_li_dis === 0){value = 0}
-    else{value = hw_li_dis/todos_nbLS_subChild;}
+    if (todos_nbLS_subChild === 0 || hw_li_dis === 0) {
+        value = 0
+    } else {
+        value = hw_li_dis / todos_nbLS_subChild
+    }
 
     let color;
 
-    if(value > 0 && value <= .2){
+    if (value > 0 && value <= .2) {
         color = color_a[4];
-    }else if(value > .2 && value <= .4){
+    } else if (value > .2 && value <= .4) {
         color = color_a[3];
-    }else if(value > .4 && value <= .6){
+    } else if (value > .4 && value <= .6) {
         color = color_a[2];
-    }else if(value > .6 && value <= .8){
+    } else if (value > .6 && value <= .8) {
         color = color_a[1];
-    }else if(value > .8 && value <= 1){
+    } else if (value > .8 && value <= 1) {
         color = color_a[0];
-    }else{
+    } else {
         color = color_a[5];
     }
 
@@ -1585,10 +1671,15 @@ function createChart(element, todos_nbLS_subChild, value_onchange, flag_change){
     }
 
     const re = "#" + allChart_containers.children[0].id.replace(/\s/g, "");
-    try{new ProgressBar.Circle(re.toString(),config).animate(value)}catch (e){console.warn(e)}
+    try {
+        new ProgressBar.Circle(re.toString(), config).animate(value)
+    } catch (e) {
+        console.warn(e)
+    }
 }
 
-function changeChart(parent, valueNum, index){
+//Fonction de modification des graphiques
+function changeChart(parent, valueNum, index) {
     let hw_li_dis_change = 0;
 
     const div = parent.closest('.todoBanMain');
@@ -1596,26 +1687,27 @@ function changeChart(parent, valueNum, index){
 
     const li_subs = div.querySelectorAll('.li_sub');
 
-    li_subs.forEach(function (e){
-        if(e.classList.contains('li_sub_disabled')){hw_li_dis_change++}
+    li_subs.forEach(function (e) {
+        if (e.classList.contains('li_sub_disabled')) {
+            hw_li_dis_change++
+        }
     })
 
     // console.log(hw_li_dis_change);
     element.querySelector('.canvasChart').children[1].remove();
 
-    setTimeout(function (){
+    setTimeout(function () {
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
         createChart(element, localStorageTodos.e[index][6], hw_li_dis_change, true);
-    },100);
+    }, 100);
 }
 
-
-
-function getShareTask(){
-    const elem = 0 ;
+//Fonction expérimentale [NOT USED]
+function getShareTask() {
+    const elem = 0;
     let nb_child = elem.child_nb;
 
-    for(let i = 0 ; i < nb_child ; i++){
+    for (let i = 0; i < nb_child; i++) {
         let class_child = elem.child_className[i];
         let state_child = elem.child_classNameState[i];
         let value_child = elem.child_value[i];
@@ -1636,13 +1728,12 @@ function getShareTask(){
     }
 }
 
-function reloadNote(){
+//Fonction de chargement des notes depuis le localStorage
+function reloadNote() {
     const parse_Note = JSON.parse(localStorage.getItem("Node_note"));
-    // console.log(parse_Note)
     let nb_child = parse_Note.child_nb;
-    // lastSaveTime.innerHTML =  parse.lastSave;
 
-    for(let i = 0 ; i < nb_child ; i++){
+    for (let i = 0; i < nb_child; i++) {
         let class_child = parse_Note.child_className[i];
         let value_content = parse_Note.child_content[i];
         let value_title = parse_Note.child_title[i];
@@ -1661,204 +1752,286 @@ function reloadNote(){
     }
 }
 
-const pickerHour = document.querySelector('#pickerHour');
-const clockChoice = document.querySelector('#clockChoice');
-
-clockChoice.addEventListener('click', function() {
+//Affichage de l'input du choix de la date/heure
+clockChoice.addEventListener('click', function () {
     pickerHour.classList.toggle('showPicker');
+    hashtag_button.classList.toggle('hashtag_button__on');
+
+    datetime__container.classList.toggle('showPicker--container');
 });
 
-input.addEventListener('keypress', function(e) {
+//Affichage de l'input pour l'hashtag
+hashtag_button.addEventListener('click', function () {
+    hashtag__creation.classList.toggle('showPicker');
+    hashtag__container.classList.toggle('showPicker--container');
+
+});
+
+//Affichage des options suplémentaires pour la création d'une tâche
+more__todo__but.addEventListener('click', function (e) {
+
+    //TODO : Animation d'apparition à tester
+    //
+    // more__todo.classList.add('bumpOnClick_reverse');
+    // setTimeout(function (){
+    //     more__todo.classList.remove('bumpOnClick_reverse')
+    // },200)
+
+    more__todo__content.classList.toggle('more--todo--show');
+    more__todo__but.classList.toggle('more--todo--show--but');
+});
+
+//Création d'une tâche lors de l'appuie sur la touche "entrer"
+input.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
 
-        // modal__has.classList.add('apparition');
-        // myUL.classList.add('zoom_out');
-
-        createTask("input",false, pickerHour.value);
+        createTask("input", false, pickerHour.value);
         saveTasks(getDate("h"));
         pickerHour.classList.remove('showPicker');
+        datetime__container.classList.remove('showPicker--container');
+        more__todo__content.classList.remove('more--todo--show');
+        more__todo__but.classList.remove('more--todo--show--but');
 
         todoBanMainID.classList.add('todoBanMainID_remove')
-        setTimeout(function (){
+        setTimeout(function () {
             todoBanMainID.remove();
         }, 1000);
     }
 }, false);
+
 let toggleIMP = false;
 let toggleSPE = false;
+let change__state__imp = 0;
+let change__state__spe = 0;
 
-function createTaskButton(id){
+//Fonction d'ajout d'état avancé lors de la création de tâche
+function createTaskButton(id) {
     switch (id) {
         case "impTask_start":
-            toggleIMP = true;
+            //Si le bouton tâche important est cliqué
+            if (change__state__imp === 0) {
+                change__state__imp++;
+                toggleIMP = true;
+                impTask_start.classList.add('importantTasks_color');
+                stateNextTask('Le statut de la tâche est défini sur important', true)
+            } else if (change__state__imp >= 1) {
+                change__state__imp = 0;
+                toggleIMP = false;
+                impTask_start.classList.remove('importantTasks_color');
+                stateNextTask('', false)
+            }
+            change__state__spe = 0;
             toggleSPE = false;
-            impTask_start.classList.toggle('importantTasks_color');
             speTask_start.classList.remove('specialTasks_color');
-            clockChoice.classList.remove('clkTasks_color');
-            pickerHour.classList.remove('showPicker');
             break;
         case "speTask_start":
+            //Si le bouton tâche spécial est cliqué
+            if (change__state__spe === 0) {
+                change__state__spe++;
+                toggleSPE = true;
+                speTask_start.classList.add('specialTasks_color');
+                stateNextTask('Le statut de la tâche est défini sur spécial', true)
+            } else if (change__state__spe >= 1) {
+                change__state__spe = 0;
+                toggleSPE = false;
+                speTask_start.classList.remove('specialTasks_color');
+                stateNextTask('', false)
+            }
+            change__state__imp = 0;
             toggleIMP = false;
-            toggleSPE = true;
-            speTask_start.classList.toggle('specialTasks_color');
             impTask_start.classList.remove('importantTasks_color');
-            clockChoice.classList.remove('clkTasks_color');
-            // console.log(toggleIMP, toggleSPE)
-            pickerHour.classList.remove('showPicker');
             break;
         case "clockChoice":
+            //Si le bouton d'ajout de deadline est cliqué
             impTask_start.classList.remove('importantTasks_color');
             speTask_start.classList.remove('specialTasks_color');
             clockChoice.classList.toggle('clkTasks_color');
             break;
         case "button_start":
-            // console.log(toggleIMP, toggleSPE)
-            if(toggleIMP === true){
-                if(createTask("submit","important", pickerHour.value) === true){
-                    impTask_start.classList.remove('importantTasks_color');
-                    speTask_start.classList.remove('specialTasks_color');
-                    clockChoice.classList.remove('clkTasks_color');
+            //On vérifie que l'input n'est pas vide
+            if (input.value === "") {
+                //TODO : DESIGN de l'alerte à modifier [1]
+                alert("La tâche ne peut pas être vide !")
+                break;
+            } else {
+                //On enlève chacune des class de style au tooltip
+                more__todo__content.classList.remove('more--todo--show');
+                more__todo__but.classList.remove('more--todo--show--but');
+                datetime__container.classList.remove('showPicker--container');
+                clockChoice.classList.remove('clkTasks_color');
+                clockChoice.classList.remove('clkTasks_color');
+                pickerHour.classList.remove('showPicker');
+                stateNextTask('', false)
+                change__state__spe = 0;
+                change__state__imp = 0;
+
+                //Vérification de l'état des flags lors de la création de la tâche
+                if (toggleIMP === true) {
+                    if (createTask("submit", "important", pickerHour.value) === true) {
+                        impTask_start.classList.remove('importantTasks_color');
+                        speTask_start.classList.remove('specialTasks_color');
+                    }
+                    toggleIMP = false;
+                    toggleSPE = false;
+                } else if (toggleSPE === true) {
+                    if (createTask("submit", "special", pickerHour.value) === true) {
+                        speTask_start.classList.remove('specialTasks_color');
+                        impTask_start.classList.remove('importantTasks_color');
+                    }
+                    toggleIMP = false;
+                    toggleSPE = false;
+                } else {
+                    createTask("submit", false, pickerHour.value);
+                    toggleIMP = false;
+                    toggleSPE = false;
                 }
-                toggleIMP = false;
-                toggleSPE = false;
-            }else if(toggleSPE === true){
-                if(createTask("submit","special", pickerHour.value) === true){
-                    speTask_start.classList.remove('specialTasks_color');
-                    impTask_start.classList.remove('importantTasks_color');
-                    clockChoice.classList.remove('clkTasks_color');
-                }
-                toggleIMP = false;
-                toggleSPE = false;
-            }else{
-                createTask("submit",false, pickerHour.value);
-                // console.log("ok")
-                toggleIMP = false;
-                toggleSPE = false;
+
+                //Sauvegarde de la création de la tâche
+                saveTasks(getDate("h"));
+                break;
             }
-            // createTask("submit",false, pickerHour.value);
-            saveTasks(getDate("h"));
-            pickerHour.classList.remove('showPicker');
-            break;
         default:
+            //Etat par défaut de la machine d'état
             impTask_start.classList.remove('importantTasks_color');
             speTask_start.classList.remove('specialTasks_color');
             clockChoice.classList.remove('clkTasks_color');
+            stateNextTask('', false)
+            toggleIMP = false;
+            toggleSPE = false;
     }
 }
 
-butNote.addEventListener('click', function() {
+//Fonction décrivant l'état prit par la tâche en cours de création
+function stateNextTask(text, state) {
+    const filterTop__state = document.querySelector('.filterTop--state');
+    filterTop__state.innerHTML = text;
+    state === true ? filterTop__state.classList.add('filterTop--state--on') :
+        filterTop__state.classList.remove('filterTop--state--on')
+}
+
+//Création d'une note lors au clique sur le bouton concerné
+butNote.addEventListener('click', function () {
     createNote("button");
     saveNote();
 
 }, false);
 
-// impTask_start.addEventListener('click', function (e){
-//     createTask("button","important", false);
-//     saveTasks(false);
-// }, false);
-//
-// speTask_start.addEventListener('click', function (e){
-//     createTask("button","special", false);
-//     saveTasks(false);
-//
-// }, false);
-
-// addHas.addEventListener('click', function (e){
-// //    TODO: ADD # AT THE END OF INPUT
-// }, false);
-
-function filterNotes(){
-    let input, filter, ul, li;
-    input = document.getElementById('filterNote');
-
+function filterElements(input, div) {
+    let filter, ul, li;
     filter = input.value.toUpperCase();
 
-    ul = document.getElementById("myUL_note");
-    li = ul.getElementsByTagName('li');
+    let container, text__todo;
+    let valueTitle, valueContent;
+    ul = document.getElementById(div);
 
-    let valueTitle,valueContent;
+    if (div === 'myUL') { //task
 
-    for (let i = 0; i < li.length; i++) {
+        container = ul.querySelectorAll('.todoBanMainContainer')
 
-        valueTitle = li[i].children[0].children[0].value;
-        valueContent = li[i].children[2].value;
+        // console.log(text__todo)
 
-        if (valueTitle.toUpperCase().indexOf(filter) > -1 ||
-            valueContent.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
+        for (let i = 0; i < container.length; i++) {
+            valueTitle = container[i].querySelector('.textTask').innerHTML;
+
+            // console.log(valueTitle)
+
+            if (valueTitle.toUpperCase().indexOf(filter) > -1) {
+                container[i].closest('.todoBanMain').classList.remove('hiddenTodo__filter');
+                // container[i].closest('.todoBanMain').querySelector('.collapsible').classList.remove('hiddenTodo__filter');
+            } else {
+                container[i].closest('.todoBanMain').classList.add('hiddenTodo__filter');
+                // container[i].closest('.todoBanMain').querySelector('.collapsible').classList.add('hiddenTodo__filter');
+            }
+        }
+
+    } else { //note
+        li = ul.getElementsByTagName('li');
+
+        for (let i = 0; i < li.length; i++) {
+
+            valueTitle = li[i].querySelector('input').value;
+            valueContent = li[i].querySelector('.contentNote').value;
+
+            if (valueTitle.toUpperCase().indexOf(filter) > -1 ||
+                valueContent.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
         }
     }
 }
 
-function toTop(element){
+
+function toTop(element) {
     const elem = element.parentElement.parentElement;
     compteurCard++;
     elem.setAttribute("data-name", compteurCard.toString());
 
     const classname = document.getElementsByClassName('noteCard');
     const divs = [];
-    for (let i = 0 ; i < classname.length; ++i) {
+    for (let i = 0; i < classname.length; ++i) {
         divs.push(classname[i]);
     }
-    divs.sort(function(a, b) {
+    divs.sort(function (a, b) {
         return a.dataset.name.localeCompare(b.dataset.name);
     });
 
 
-    divs.forEach(function(el) {
+    divs.forEach(function (el) {
         myUL_note.insertBefore(el, myUL_note.childNodes[0]);
     });
 }
 
-function changeColor(element){
+function changeColor(element) {
     //Ajout d'un test pour éviter de retomber directement sur la même couleur
     const elem = element.closest('.noteCard');
 
-    const colorNotes = ["rgb(181, 222, 255)","rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
+    const colorNotes = ["rgb(181, 222, 255)", "rgb(252, 255, 166)", "rgb(193, 255, 215)", "rgb(240, 217, 255)"]
 
     const index = colorNotes.indexOf(elem.style.background);
     if (index > -1) {
         colorNotes.splice(index, 1);
     }
-    elem.style.background = colorNotes[Math.floor(Math.random()*colorNotes.length)];
+    elem.style.background = colorNotes[Math.floor(Math.random() * colorNotes.length)];
 }
 
 function removeNote(element) {
     element.parentElement.parentElement.parentElement.classList.add('slideOut')
-    setTimeout(function (){
+    setTimeout(function () {
         element.parentElement.parentElement.parentElement.remove();
     }, 500)
 }
 
 let mouse = false;
 
-function mouseEnter(element){
+function mouseEnter(element) {
     mouse = true;
     infoNote(element);
 }
 
-function mouseLeave(element){
-    setTimeout(function (){
+function mouseLeave(element) {
+    setTimeout(function () {
         mouse = false;
         infoNote(element);
-    },100)
+    }, 100)
 }
 
-function infoNote(element){
-    const res =  element.parentElement.parentElement.parentElement.children[1];
-    if(mouse){
+function infoNote(element) {
+    const res = element.parentElement.parentElement.parentElement.children[1];
+    if (mouse) {
         element.classList.add('expendNoteOption_active'); //i
         res.classList.add('expendNoteOption'); //option
-        res.onmouseleave = function(){mouseLeave(this)};
-    }else{
+        res.onmouseleave = function () {
+            mouseLeave(this)
+        };
+    } else {
         res.children[0].children[0].children[1].children[0].classList.remove('expendNoteOption_active');
         element.classList.remove('expendNoteOption');
     }
 }
 
-function createNote(keypress,nb,class_note,title_note,content,style){
+function createNote(keypress, nb, class_note, title_note, content, style) {
     compteurCard++;
     const lin = document.createElement("li");
     const div = document.createElement("div");
@@ -1879,17 +2052,23 @@ function createNote(keypress,nb,class_note,title_note,content,style){
     cont_in.setAttribute("placeholder", "Contenu");
     cont_in.setAttribute("onkeyup", "SizeTextarea(this)");
     lin.classList.add('noteCard');
-    lin.oncontextmenu= rightClickNote;
+    lin.oncontextmenu = rightClickNote;
 
-    cont_in.onkeyup = function(){saveNote()};
-    titre_in.onkeyup = function(){saveNote()};
+    cont_in.onkeyup = function () {
+        saveNote()
+    };
+    titre_in.onkeyup = function () {
+        saveNote()
+    };
 
     const itagi = document.createElement("i");
 
     itagi.classList.add("fas");
     itagi.classList.add("fa-info-circle");
 
-    itagi.onmouseover = function(){mouseEnter(this)};
+    itagi.onmouseover = function () {
+        mouseEnter(this)
+    };
 
     // divicon.appendChild(itagi);
 
@@ -1903,16 +2082,25 @@ function createNote(keypress,nb,class_note,title_note,content,style){
 
     itagp.classList.add("fas");
     itagp.classList.add("fa-palette");
-    itagp.onclick = function(){changeColor(this);saveNote()};
+    itagp.onclick = function () {
+        changeColor(this);
+        saveNote()
+    };
 
     itagtt.classList.add("fas");
     itagtt.classList.add("fa-chevron-circle-up");
-    itagtt.onclick = function(){toTop(this);saveNote();};
+    itagtt.onclick = function () {
+        toTop(this);
+        saveNote();
+    };
 
     itagtl.classList.add("fas");
     // itagtl.classList.add("fa-link");
     itagtl.classList.add("fa-share-square");
-    itagtl.onclick = function(){linkToNote(this);saveNote();};
+    itagtl.onclick = function () {
+        linkToNote(this);
+        saveNote();
+    };
 
     // divOption.appendChild(itagtt);
     // divOption.appendChild(itagp);
@@ -1923,7 +2111,10 @@ function createNote(keypress,nb,class_note,title_note,content,style){
     span.classList.add("fas");
     span.classList.add("fa-times");
 
-    span.onclick = function(){removeNote(this);saveNote();};
+    span.onclick = function () {
+        removeNote(this);
+        saveNote();
+    };
 
     //FONCTION setToTop()
     // divicon.appendChild(itagtt);
@@ -1939,7 +2130,7 @@ function createNote(keypress,nb,class_note,title_note,content,style){
     lin.appendChild(cont_in);
     lin.appendChild(txt_link_todo);
 
-    if(keypress === "button"){
+    if (keypress === "button") {
         let hour = getDate("h");
         let date_act = getDateDay("/", "FR");
 
@@ -1947,9 +2138,9 @@ function createNote(keypress,nb,class_note,title_note,content,style){
         lin.setAttribute("data-date", date_act);
 
         lin.setAttribute("data-name", compteurCard);
-        lin.style.background = colorNotes[Math.floor(Math.random()*colorNotes.length)];
+        lin.style.background = colorNotes[Math.floor(Math.random() * colorNotes.length)];
         myUL_note.appendChild(lin);
-    }else{ //LS
+    } else { //LS
         lin.style.background = style;
         titre_in.value = title_note;
         cont_in.innerHTML = content
@@ -1959,6 +2150,7 @@ function createNote(keypress,nb,class_note,title_note,content,style){
 }
 
 let i = 0;
+
 function SizeTextarea(e) {
     // e.target.style.height = el.offsetHeight + el.offsetHeight / 4;
 }
@@ -1975,20 +2167,23 @@ function SizeTextarea(e) {
 
 //----------------------------------------------------------------------
 const url = "https://nicolasvaillant.net/local/prive/todo/tempfiles/temp.php";
-function saveData(){
+
+function saveData() {
     post(url, {value: xxxxxxx}).then(r =>
         console.log(r)
     );
 }
-window.post = function(url, data) {
+
+window.post = function (url, data) {
     return fetch(url, {method: "POST", body: JSON.stringify(data)});
 }
-window.get = function(url) {
+window.get = function (url) {
     return fetch(url, {method: "GET", mode: "cors"});
 }
-function getData(){
+
+function getData() {
     const xmltype_2 = new XMLHttpRequest();
-    xmltype_2.onreadystatechange = function() {
+    xmltype_2.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             console.log(JSON.parse(this.responseText));
             // const myObj = JSON.parse(this.responseText);
@@ -1998,6 +2193,7 @@ function getData(){
     xmltype_2.open("GET", "https://nicolasvaillant.net/local/prive/todo/tempfiles/results.php", true);
     xmltype_2.send();
 }
+
 //----------------------------------------------------------------------
 
 
@@ -2017,12 +2213,16 @@ if (currentTheme === "dark") {
 //     localStorage.setItem("theme", theme);
 // })
 
-refresh_but.addEventListener('click', function (){
+//Rafraichissement forcé de la sauvegarde
+refresh_but.addEventListener('click', function () {
     refresh_but_icon.classList.toggle("spinModeAll");
 
-    setTimeout(function(){
+    //TODO : DESIGN de l'alerte à modifier [2]
+    alert("Sauvegarde forçée.")
+
+    setTimeout(function () {
         const localStorageTodos = JSON.parse(localStorage.getItem("todos_test"));
-        lastSaveTime.innerHTML =  localStorageTodos.s;
+        lastSaveTime.innerHTML = localStorageTodos.s;
     }, 100);
 
     menu.parentElement.classList.remove('clickMenu');
@@ -2030,52 +2230,53 @@ refresh_but.addEventListener('click', function (){
 
     saveTasks(getDate("h"));
 });
-account.addEventListener('click', function (e){
-    if(e.target.tagName === 'I'){
+account.addEventListener('click', function (e) {
+    if (e.target.tagName === 'I') {
         selector.classList.toggle('selectorVisibility')
     }
 });
 
-function chooseUser(id = "check_user_1"){
+function chooseUser(id = "check_user_1") {
     console.log(id)
 }
+
 const filterTask = document.querySelector('.filter_selector');
-filterTask.addEventListener('click', function (e){
-    if(e.target.tagName === "P" || e.target.tagName === "I"){
+filterTask.addEventListener('click', function (e) {
+    if (e.target.tagName === "P" || e.target.tagName === "I") {
         document.querySelector('.filter_selector').classList.add('bumpOnClick');
-        setTimeout(function (){
+        setTimeout(function () {
             document.querySelector('.filter_selector').classList.remove('bumpOnClick')
-        },200)
+        }, 200)
         document.querySelector('.categories').classList.toggle('categories_show')
-    }else{
+    } else {
         document.querySelector('.categories').classList.remove('categories_show')
     }
 });
 
 const shareAll = document.querySelector('.shareAll');
-shareAll.addEventListener('click', function (e){
+shareAll.addEventListener('click', function (e) {
     let shareAll_array = [];
     let shareAll_array_hast = [];
-    for(let i = 0 ; i < myUL.childElementCount ; i++){
+    for (let i = 0; i < myUL.childElementCount; i++) {
         shareAll_array.push(myUL.children[i].querySelector('.textTask').innerHTML);
         //TODO : add hastags to localsave
         shareAll_array_hast.push(myUL.children[i].children[1].children[1].children[1].innerHTML);
     }
     document.querySelector('.shareAllContainer').classList.add('bumpOnClick');
-    setTimeout(function (){
+    setTimeout(function () {
         document.querySelector('.shareAllContainer').classList.remove('bumpOnClick')
-    },200)
+    }, 200)
 
     share("All todos", shareAll_array, "todo")
 
 });
 
-function share(title, content, type){
+function share(title, content, type) {
     let multi = "";
     let tit;
-    if(type === "todo"){
+    if (type === "todo") {
         if (Array.isArray(content)) {
-            for(let i = 0 ; i < content.length ; i++){
+            for (let i = 0; i < content.length; i++) {
                 multi += "- " + `${content[i]}` + "\n";
             }
             tit = "Todo list";
@@ -2083,7 +2284,7 @@ function share(title, content, type){
             multi = content;
             tit = "Todo : " + title;
         }
-    }else{
+    } else {
         multi = content;
         tit = "Note : " + title;
     }
@@ -2095,79 +2296,90 @@ function share(title, content, type){
     });
 }
 
-function rightClickNote(e){
+function rightClickNote(e) {
     e.preventDefault();
     document.getElementById(
         "contextMenu").style.display = "none";
     const parent = e.target.closest('.noteCard');
 
     parent.classList.add('bumpOnRClick');
-    setTimeout(function (){
+    setTimeout(function () {
         parent.classList.remove('bumpOnRClick')
-    },200)
+    }, 200)
 
-    function zone1_note(parent){
-
-    }
-    function zone2_note(parent){
+    function zone1_note(parent) {
 
     }
-    function zone3_note(parent){
+
+    function zone2_note(parent) {
+
+    }
+
+    function zone3_note(parent) {
 
     }
 
     if (document.getElementById("contextMenuNote").style.display === "block")
         hideMenu();
-    else{
+    else {
         const menu = document.getElementById("contextMenuNote")
         menu.style.display = 'flex';
         menu.style.left = e.pageX + "px";
         menu.style.top = e.pageY + "px";
 
-        menu.children[0].children[0].onclick = function(){zone1_note(parent);saveTasks(getDate("h"));};
-        menu.children[0].children[1].onclick = function(){zone2_note(parent);saveTasks(getDate("h"));};
-        menu.children[0].children[2].onclick = function(){zone3_note(parent);saveTasks(getDate("h"));};
+        menu.children[0].children[0].onclick = function () {
+            zone1_note(parent);
+            saveTasks(getDate("h"));
+        };
+        menu.children[0].children[1].onclick = function () {
+            zone2_note(parent);
+            saveTasks(getDate("h"));
+        };
+        menu.children[0].children[2].onclick = function () {
+            zone3_note(parent);
+            saveTasks(getDate("h"));
+        };
     }
 }
 
-function saveNote(){
+function saveNote() {
     const containerNote = document.querySelector('#myUL_note');
     const containerNoteChildren = containerNote.children;
 
     //CHILD-------------------------------------------
     let childClass = {
         length: 0,
-        findClass: function ajoutElem (elem) {
+        findClass: function ajoutElem(elem) {
             [].push.call(this, elem);
         }
     };
-    let childStyle= {
+    let childStyle = {
         length: 0,
-        findStyle: function ajoutElem (elem) {
+        findStyle: function ajoutElem(elem) {
             [].push.call(this, elem);
         }
     };
-    let childTitle= {
+    let childTitle = {
         length: 0,
-        findValue: function ajoutElem (elem) {
+        findValue: function ajoutElem(elem) {
             [].push.call(this, elem);
         }
     };
-    let childContent= {
+    let childContent = {
         length: 0,
-        findValueC: function ajoutElem (elem) {
+        findValueC: function ajoutElem(elem) {
             [].push.call(this, elem);
         }
     };
-    let childDataSet= {
+    let childDataSet = {
         length: 0,
-        findDataSet: function ajoutElem (elem) {
+        findDataSet: function ajoutElem(elem) {
             [].push.call(this, elem);
         }
     };
 
-    if(containerNoteChildren.length !== 0){
-        for(let i = 0 ; i < containerNoteChildren.length ; i++){
+    if (containerNoteChildren.length !== 0) {
+        for (let i = 0; i < containerNoteChildren.length; i++) {
             childClass.findClass(containerNoteChildren[i].className);
             childStyle.findStyle(containerNoteChildren[i].style.background);
             childTitle.findValue(containerNoteChildren[i].children[0].children[0].value);
@@ -2177,16 +2389,15 @@ function saveNote(){
     }
 
     const cNote = {
-        child_nb : containerNote.childElementCount,
-        child_className : childClass,
-        child_style : childStyle,
-        child_title : childTitle,
-        child_content : childContent,
-        childDataSet : childDataSet,
+        child_nb: containerNote.childElementCount,
+        child_className: childClass,
+        child_style: childStyle,
+        child_title: childTitle,
+        child_content: childContent,
+        childDataSet: childDataSet,
     }
     localStorage.setItem("Node_note", JSON.stringify(cNote));
 }
-
 
 
 function handleDragStart(e) {
@@ -2215,9 +2426,13 @@ function handleDragOver(e) {
     return false;
 }
 
-function handleDragEnter(e) {this.classList.add('over')}
+function handleDragEnter(e) {
+    this.classList.add('over')
+}
 
-function handleDragLeave(e) {this.classList.remove('over')}
+function handleDragLeave(e) {
+    this.classList.remove('over')
+}
 
 function handleDrop(e) {
     e.stopPropagation();

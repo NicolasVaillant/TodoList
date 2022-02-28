@@ -1,48 +1,49 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     
-    <link rel="icon" href="ressources/favicon/check.ico">
-    <link rel="icon" href="ressources/favicon/check_16.png" sizes="16x16" type="image/png">
-    <link rel="icon" href="ressources/favicon/check_32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="ressources/favicon/check_48.png" sizes="48x48" type="image/png">
-    <link rel="icon" href="ressources/favicon/check_64.png" sizes="64x-4" type="image/png">
+    <link href="ressources/favicon/check.ico" rel="icon">
+    <link href="ressources/favicon/check_16.png" rel="icon" sizes="16x16" type="image/png">
+    <link href="ressources/favicon/check_32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="ressources/favicon/check_48.png" rel="icon" sizes="48x48" type="image/png">
+    <link href="ressources/favicon/check_64.png" rel="icon" sizes="64x-4" type="image/png">
     
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/anim.css">
-    <link rel="stylesheet" href="css/root.css">
-    <link rel="stylesheet" href="css/tooltip.css">
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="css/dragdrop.css">
-
-    <link rel="stylesheet" href="css/mediaqueries/style_media_web.css">
-    <link rel="stylesheet" href="css/mediaqueries/style_media_alt.css">
-    <link rel="stylesheet" href="css/mediaqueries/style_media_mob.css">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/anim.css" rel="stylesheet">
+    <link href="css/root.css" rel="stylesheet">
+    <link href="css/tooltip.css" rel="stylesheet">
+    <link href="css/menu.css" rel="stylesheet">
+    <link href="css/dragdrop.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="css/attr.css">
+    <link href="css/mediaqueries/style_media_web.css" rel="stylesheet">
+    <link href="css/mediaqueries/style_media_alt.css" rel="stylesheet">
+    <link href="css/mediaqueries/style_media_mob.css" rel="stylesheet">
+    
+    <link href="css/attr.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <link href="fontawesome/css/all.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/0.6.1/progressbar.min.js"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/introjs.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/introjs.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/intro.min.js"></script>
     
-    <script src="js/script.js" defer></script>
-    <script src="js/backup.js" defer></script>
-    <script src="js/intro.js" defer></script>
-    <script src="js/speech.js" defer></script>
+    <script defer src="js/script.js"></script>
+    <script defer src="js/backup.js"></script>
+    <script defer src="js/intro.js"></script>
+    <script defer src="js/speech.js"></script>
     
     <title>Todo List</title>
 </head>
@@ -55,48 +56,40 @@
             <i class="fas fa-user-circle"></i>
         </div>
         <div class="selector">
-            <input id="check_user_1"
-                   type="radio"
-                   value="radio"
+            <input checked
+                   id="check_user_1"
                    name="check_user"
                    onclick="chooseUser(this.id)"
-                   checked>
-            <label id="check_user_1_lab" for="check_user_1">Nicolas</label>
-            <input id="check_user_2"
                    type="radio"
-                   value="radio"
+                   value="radio">
+            <label for="check_user_1" id="check_user_1_lab">Nicolas</label>
+            <input id="check_user_2"
                    name="check_user"
-                   onclick="chooseUser(this.id)">
-            <label id="check_user_2_lab" for="check_user_2">Thérence</label>
+                   onclick="chooseUser(this.id)"
+                   type="radio"
+                   value="radio">
+            <label for="check_user_2" id="check_user_2_lab">Thérence</label>
         </div>
     </div>
     <div class="container_header">
         <div class="save">
-            <p>Dernière sauvegarde à  <span class="lastSaveTime">00h00</span></p>
+            <p>Dernière sauvegarde à <span class="lastSaveTime">00h00</span></p>
             <div class="color-mode">
-<!--                <div class="tooltip" id="clickMenu1">-->
-<!--                    <button class="button_tooltip" id="tooltip_0"><i id="rb" class="fas fa-sync-alt"></i></button>-->
-<!--                    <div class="label_tooltip" id="for_tooltip_0"><p>Synchroniser</p></div>-->
-<!--                </div>-->
-                <div class="menu"  id="clickMenu2">
-                    <i id="menu" class="fas fa-ellipsis-h"></i>
+                <!--                <div class="tooltip" id="clickMenu1">-->
+                <!--                    <button class="button_tooltip" id="tooltip_0"><i id="rb" class="fas fa-sync-alt"></i></button>-->
+                <!--                    <div class="label_tooltip" id="for_tooltip_0"><p>Synchroniser</p></div>-->
+                <!--                </div>-->
+                <div class="menu" id="clickMenu2">
+                    <i class="fas fa-ellipsis-h" id="menu"></i>
                     <div class="menu_der">
                         <ul>
-                            <li  id="rb" data-state="allow">
-                                <i id="rb_icon" class="fas fa-sync-alt" data-state="allow"></i>
+                            <li data-state="allow" id="rb">
+                                <i class="fas fa-sync-alt" data-state="allow" id="rb_icon"></i>
                                 <p>Synchroniser</p>
                             </li>
-                            <li id="first_label_menu" data-state="disabled">
-                                <i id="dm" class="fas fa-adjust" data-state="disabled"></i>
+                            <li data-state="disabled" id="first_label_menu">
+                                <i class="fas fa-adjust" data-state="disabled" id="dm"></i>
                                 <p>Mode sombre (soon)</p>
-                            </li>
-                            <li id="switchDirection" data-state="disabled">
-                                <!--onclick="switchDirection(this)"-->
-                                <div class="iconDirection">
-                                    <div class="square1"></div>
-                                    <div class="square2"></div>
-                                </div>
-                                <p class="flexDirectionMode">View Ligne (soon)</p>
                             </li>
                             <li>
                                 <a href="https://nicolasvaillant.net">
@@ -112,7 +105,7 @@
     </div>
     <div class="content">
         <div class="todoContainer">
-            <div id="myDIV" class="header">
+            <div class="header" id="myDIV">
                 <div class="headerOne">
                     <h2 class="title--header">Todo List</h2>
                     <div class="shareAllContainer">
@@ -121,7 +114,10 @@
                 </div>
                 <div class="addTask_bar">
                     <label for="searchBar--todo" id="searchBar">
-                        <input type="text" id="searchBar--todo" placeholder="Rechercher une tâche">
+                        <input id="searchBar--todo"
+                               onkeyup="filterElements(this, 'myUL')"
+                               placeholder="Rechercher une tâche"
+                               type="text">
                         <span class="speechTodo">
                             <i class="fas fa-microphone"></i>
                         </span>
@@ -131,38 +127,38 @@
                         <div class="filter_selector" data-display="none">
                             <p><span id="nb_label"></span>Filtre<i class="fas fa-chevron-down"></i></p>
                             <div class="categories">
-                                <input id="all"
-                                       type="radio"
-                                       value="radio"
+                                <input checked
+                                       id="all"
                                        name="categories"
                                        onclick="filterTasks(this.id)"
-                                       checked>
+                                       type="radio"
+                                       value="radio">
                                 <label for="all">All</label>
                                 <input id="importantTasks"
-                                       type="radio"
-                                       value="radio"
                                        name="categories"
-                                       onclick="filterTasks(this.id)">
+                                       onclick="filterTasks(this.id)"
+                                       type="radio"
+                                       value="radio">
                                 <label for="importantTasks">Important</label>
                                 <input id="specialTasks"
-                                       type="radio"
-                                       value="radio"
                                        name="categories"
-                                       onclick="filterTasks(this.id)">
+                                       onclick="filterTasks(this.id)"
+                                       type="radio"
+                                       value="radio">
                                 <label for="specialTasks">Spécial</label>
                                 <input id="reminder"
-                                       type="radio"
-                                       value="radio"
                                        name="categories"
-                                       onclick="filterTasks(this.id)">
-                                <label for="reminder" data-state="disabled">
+                                       onclick="filterTasks(this.id)"
+                                       type="radio"
+                                       value="radio">
+                                <label data-state="disabled" for="reminder">
                                     <i class="fas fa-clock"></i>
                                 </label>
-<!--                                <input id="share"-->
-<!--                                       type="radio"-->
-<!--                                       value="radio"-->
-<!--                                       name="categories"-->
-<!--                                       onclick="filterTasks(this.id)">-->
+                                <!--                                <input id="share"-->
+                                <!--                                       type="radio"-->
+                                <!--                                       value="radio"-->
+                                <!--                                       name="categories"-->
+                                <!--                                       onclick="filterTasks(this.id)">-->
                                 <!--                    <label for="share">-->
                                 <!--                        <i class="fas fa-share-square"></i>-->
                                 <!--                    </label>-->
@@ -180,39 +176,39 @@
             <div class="tutoTodo"
                  data-hint="Le clic droit est aussi personnalisé !"
                  data-hintButtonLabel="Compris"
-                 data-hintShowButton="false"
-                 data-hintPosition="middle-middle">
+                 data-hintPosition="middle-middle"
+                 data-hintShowButton="false">
                 <div class="todoBanMain"
-                     id="todoBanMainID"
-                     data-num="0"
-                     data-hour="1h11"
                      data-date="1/1/2000"
                      data-hierarchy="1"
-                     data-reminder="none"
-                     data-title="Exemple de tâche"
+                     data-hour="1h11"
                      data-intro="Une tâche déroulée affiche aussi des paramètres supplémentaires et les sous-tâches ! OwO"
-                     data-step="5">
+                     data-num="0"
+                     data-reminder="none"
+                     data-step="5"
+                     data-title="Exemple de tâche"
+                     id="todoBanMainID">
                     <ul class="collapsible">
                         <li class="active">
-                            <div class="collapsible-header" tabindex="0"
-                                 data-title="Exemple de tâche"
-                                 data-intro="Dérouler la tâche en cliqant sur la flèche déroulante.
+                            <div class="collapsible-header" data-intro="Dérouler la tâche en cliqant sur la flèche déroulante.
                                  Survoler une tâche permet d'afficher des boutons supplémentaires."
-                                 data-step="4">
+                                 data-step="4"
+                                 data-title="Exemple de tâche"
+                                 tabindex="0">
                                 <i class="fas fa-chevron-down expandChevron checkBox"></i>
                             </div>
                             <ul class="collapsible-body" style="display: block;padding: 0">
                                 <div class="collapsible_div_bodyContent">
                                     <li class="li_sub li_sub_disabled" data-hierarchy="1">
                                         <span class="disabled_li_sub_obj disabled_li_sub_obj_ACTIVE"></span>
-                                        <input type="checkbox" class="end" checked>
-                                        <input type="text" class="input_sub" value="Pain aux céréales">
+                                        <input checked class="end" type="checkbox">
+                                        <input class="input_sub" type="text" value="Pain aux céréales">
                                         <span class="close fas fa-times"></span>
                                     </li>
                                     <li class="li_sub" data-hierarchy="1">
                                         <span class="disabled_li_sub_obj"></span>
-                                        <input type="checkbox" class="end">
-                                        <input type="text" class="input_sub" value="Poisson frais">
+                                        <input class="end" type="checkbox">
+                                        <input class="input_sub" type="text" value="Poisson frais">
                                         <span class="close fas fa-times"></span>
                                     </li>
                                     <div class="collapsible_div_bodyContent_staticContent">
@@ -239,9 +235,9 @@
                                     <p class="canvasChart_p">2</p>
                                     <svg viewBox="0 0 100 100">
                                         <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
-                                              stroke="#cbbcbc" stroke-width="1" fill-opacity="0"></path>
+                                              fill-opacity="0" stroke="#cbbcbc" stroke-width="1"></path>
                                         <path d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
-                                              stroke="#9122b6" stroke-width="10" fill-opacity="0"
+                                              fill-opacity="0" stroke="#9122b6" stroke-width="10"
                                               style="stroke-dasharray: 282.783, 282.783; stroke-dashoffset: 0;"></path>
                                     </svg>
                                 </div>
@@ -260,15 +256,25 @@
                 <ul class="topBar--ul">
                     <li class="label--frame">
                         <label>
-                            <input type="checkbox" data-display="hidden">
+                            <input data-display="hidden" type="checkbox">
                         </label>
                     </li>
-                    <li class="label--frame label--txt">Nom de la tâche</li>
-                    <li class="label--frame label--has">Hashtag</li>
-                    <li class="label--frame label--clock"><i class="fas fa-clock"></i></li>
-                    <li class="label--frame label--time">DeadLine</li>
-                    <li class="label--frame label--chart">Chart</li>
-                    <li class="label--frame label--creator">Créateur</li>
+                    <li class="label--frame label--txt active--label">
+                        <p class="label--frame--sw--state">Nom de la tâche</p>
+                        <i class="fas fa-list-ul label--frame--ns"></i>
+                    </li>
+                    <li class="label--frame label--has active--label">
+                        <p class="label--frame--sw--state">Hashtag</p>
+                        <p class="label--frame--ns">#</p>
+                    </li>
+                    <li class="label--frame label--clock active--label"><i class="fas fa-clock"></i></li>
+                    <li class="label--frame label--time active--label"><p>DeadLine</p></li>
+                    <li class="label--frame label--chart active--label"><i class="fas fa-chart-pie"></i>
+                    </li>
+                    <li class="label--frame label--creator active--label">
+                        <p class="label--frame--sw--state">Créateur</p>
+                        <i class="fab fa-creative-commons label--frame--ns"></i>
+                    </li>
                 </ul>
             </div>
             
@@ -278,46 +284,77 @@
             <div class="newTodo">
                 <div class="container--nt">
                     <div class="new_todo">
-                        <i class="fas fa-plus"></i>
-                        <label for="myInput" id="myInput_label">
-                            <input type="text" id="myInput" placeholder="Ajouter une tâche"
-                                   data-title="Ajouter une tâche"
-                                   data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.'
-                                   data-step="1">
-                        </label>
-                    </div>
-                    <div class="filterTop" data-display="hidden">
-                        <label for="pickerHour">
-                            <input type="datetime-local" id="pickerHour">
-                        </label>
-                        <div class="filterTop_selector"
-                             data-title="Paramètres"
-                             data-intro='Sélectionner un paramètre à associer à votre tâche.'
-                             data-step="2">
-                            <!--                            <i id="addHas" class="fas fa-hashtag"></i>-->
-                            <div class="tooltip">
-                                <button class="button_tooltip" id="tooltip_3"><i id="clockChoice" class="fas fa-clock"  onclick="createTaskButton(this.id)"></i></button>
-                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_3"><p>Ajouter un rappel dans le temps</p></div>-->
-                            </div>
-                            <div class="tooltip">
-                                <button class="button_tooltip" id="tooltip_4"><i id="impTask_start" class="fas fa-exclamation-circle" onclick="createTaskButton(this.id)"></i></button>
-                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_4"><p>Créer une tâche importante</p></div>-->
-                            </div>
-                            <div class="tooltip">
-                                <button class="button_tooltip" id="tooltip_5"><i id="speTask_start" class="fas fa-star" onclick="createTaskButton(this.id)"></i></button>
-                                <!--                                <div class="label_tooltip ss_sub" id="for_tooltip_5"><p>Créer une tâche spéciale</p></div>-->
-                            </div>
+                        <div class="more--todo">
+                            <i class="fas fa-plus more--todo--but"></i>
+                            <span class="more--todo--content">
+                                <div class="filterTop" data-display="">
+                                    <span class="filterTop_selector"
+                                          data-intro='Sélectionner un paramètre à associer à votre tâche.'
+                                          data-step="2"
+                                          data-title="Paramètres">
+                                        <div class="tooltip">
+                                            <button class="button_tooltip" id="tooltip_4">
+                                                <i class="fas fa-exclamation-circle"
+                                                   id="impTask_start"
+                                                   onclick="createTaskButton(this.id)"></i>
+                                            </button>
+                                        </div>
+                                        <div class="tooltip">
+                                            <button class="button_tooltip" id="tooltip_5">
+                                                <i class="fas fa-star"
+                                                   id="speTask_start"
+                                                   onclick="createTaskButton(this.id)"></i>
+                                            </button>
+                                        </div>
+                                        <div class="tooltip">
+                                            <button class="button_tooltip" id="tooltip_3">
+                                                <i class="fas fa-clock"
+                                                   id="clockChoice"
+                                                   onclick="createTaskButton(this.id)"></i>
+                                            </button>
+                                        </div>
+                                        <div class="datetime--container">
+                                            <label for="pickerHour">
+                                                <input id="pickerHour" type="datetime-local">
+                                            </label>
+                                        </div>
+                                        <div class="tooltip">
+                                            <button class="button_tooltip" id="tooltip_6">
+                                                <i class="fas fa-hashtag"
+                                                   id="hashtag_button"
+                                                   onclick="createTaskButton(this.id)"></i>
+                                            </button>
+                                        </div>
+                                        <div class="hashtag--container">
+                                            <label for="hashtag--creation">
+                                                <input id="hashtag--creation"
+                                                       placeholder="#..." type="text">
+                                            </label>
+                                        </div>
+                                        <button class="sendRequest"
+                                                data-intro='Cliquer sur "Créer" pour ajouter un tâche paramétrée.'
+                                                data-step="3"
+                                                data-title="Créer une tâche"
+                                                id="button_start"
+                                                onclick="createTaskButton(this.id)"
+                                                type="button">
+                                        Créer <i class="fas fa-arrow-alt-circle-right"></i>
+                                    </button>
+                                    </span>
+                                    <span class="filterTop--subHeadLine">
+                                        <p class="filterTop--state"></p>
+                                    </span>
+                                </div>
+                            </span>
                         </div>
+                        <label for="myInput" id="myInput_label">
+                            <input data-intro='Appuyer sur "Entrer" pour ajouter une tâche directement.' data-step="1"
+                                   data-title="Ajouter une tâche"
+                                   id="myInput"
+                                   placeholder="Ajouter une tâche"
+                                   type="text">
+                        </label>
                     </div>
-<!--                    <button id="button_start"-->
-<!--                            class="sendRequest"-->
-<!--                            type="button"-->
-<!--                            onclick="createTaskButton(this.id)"-->
-<!--                            data-title="Créer une tâche"-->
-<!--                            data-intro='Cliquer sur "Créer" pour ajouter un tâche paramétrée.'-->
-<!--                            data-step="3">-->
-<!--                        Créer <i class="fas fa-arrow-alt-circle-right"></i>-->
-<!--                    </button>-->
                 </div>
             </div>
         </div>
@@ -331,16 +368,16 @@
                 </div>
                 <div class="addItems">
                     <label for="filterNote" id="filterNote_label">
-                        <input type="text"
-                               id="filterNote"
-                               onkeyup="filterNotes()"
-                               placeholder="Rechercher">
+                        <input id="filterNote"
+                               onkeyup="filterElements(this, 'myUL_note')"
+                               placeholder="Rechercher"
+                               type="text">
                         <span class="speechNote" data-state="disabled_">
                             <i class="fas fa-microphone"></i>
                         </span>
                     </label>
                     <div class="tooltip" id="tooltip_2"> <!-- butNote-->
-                        <button class="button_tooltip"> <i class="fas fa-plus-circle"></i></button>
+                        <button class="button_tooltip"><i class="fas fa-plus-circle"></i></button>
                         <div class="label_tooltip" id="for_tooltip_2"><p>Créer une note</p></div>
                     </div>
                 </div>
@@ -362,10 +399,10 @@
         <div id="modal__has"></div>
     </div>
 </div>
-<div id="contextMenu" class="context-menu"
+<div class="context-menu" id="contextMenu"
      style="display: none">
     <ul>
-        <li id="enTask">
+        <li id="endTask">
             <div class="i_div"><i id="i_zone_1"></i></div>
             <div><p class="txt_zone_1"></p></div>
         </li>
@@ -389,10 +426,12 @@
             </div>
             <div class="extend_share">
                 <ul>
-                    <li><i class="fas fa-quote-right"></i>
-                        Le contenu du todo</li>
-                    <li><i class="fas fa-sticky-note"></i>
-                        Le todo</li>
+                    <li id="share--text"><i class="fas fa-quote-right"></i>
+                        Le contenu de la tâche
+                    </li>
+                    <li id="share--task"><i class="fas fa-sticky-note"></i>
+                        La tâche
+                    </li>
                 </ul>
             </div>
         </li>
@@ -404,17 +443,17 @@
     </ul>
 </div>
 
-<div id="contextMenuNote" class="context-menu"
+<div class="context-menu" id="contextMenuNote"
      style="display: none">
     <ul>
         <li>
             <div class="i_div"><i class="fas fa-palette"></i></div>
             <div><p class="">Changer la couleur de la note</p></div>
         </li>
-<!--        <li>-->
-<!--            <div class="i_div"><i class="fas fa-chevron-circle-up"></i></div>-->
-<!--            <div><p class="">Mettre en avant</p></div>-->
-<!--        </li>-->
+        <!--        <li>-->
+        <!--            <div class="i_div"><i class="fas fa-chevron-circle-up"></i></div>-->
+        <!--            <div><p class="">Mettre en avant</p></div>-->
+        <!--        </li>-->
         <li>
             <div class="i_div"><i class="fas fa-share-square"></i></div>
             <div><p class="txt_zone_3">Partager le contenu</p></div>
